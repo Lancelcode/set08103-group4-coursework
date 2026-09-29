@@ -1,0 +1,41 @@
+1. Display countries from largest to smallest population in context of
+- world
+- continent
+- region
+2. Display top N populated countries (N is provided by user)
+- world
+- continent
+- region
+3. Display cities from largest to smallest population
+- world
+- continent
+- region
+- country
+- district
+4. Display top N populated cities (N is provided by user)
+- world
+- continent
+- region
+- country
+- district
+5. Calculate population living in cities and not in cities in each
+- world
+- continent
+- region
+6. Display the population of thr
+- world
+- continent
+- region
+- country
+- district
+- city
+7. Display the number who speak following languages
+- chinese
+- english
+- hindi
+- spanish
+- arabic
+8. Generate country report including
+- code
+- name
+- continent
