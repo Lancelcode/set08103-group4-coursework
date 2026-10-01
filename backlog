@@ -1,41 +1,72 @@
-1. Display countries from largest to smallest population in context of
-- world
-- continent
-- region
-2. Display top N populated countries (N is provided by user)
-- world
-- continent
-- region
-3. Display cities from largest to smallest population
-- world
-- continent
-- region
-- country
-- district
-4. Display top N populated cities (N is provided by user)
-- world
-- continent
-- region
-- country
-- district
-5. Calculate population living in cities and not in cities in each
-- world
-- continent
-- region
-6. Display the population of thr
-- world
-- continent
-- region
-- country
-- district
-- city
-7. Display the number who speak following languages
-- chinese
-- english
-- hindi
-- spanish
-- arabic
-8. Generate country report including
-- code
-- name
-- continent
+1. Create:
+  - Product Backlog
+  - Code of Conduct
+  - Use case diagram
+2. Set up:
+    1. GitHub repository
+    2. backlog
+    3. Dockerfile
+    4. JAR with Maven
+    5. Branches - master, develop, release
+3. Define
+  - tasks as user stories
+  - full use cases
+4. Produce code including
+  - comments
+  - functions that
+      1. Display countries from largest to smallest population in context of
+        - world
+        - continent
+        - region
+        2. Display top N populated countries (N is provided by user)
+        - world
+        - continent
+        - region
+        3. Display cities from largest to smallest population
+        - world
+        - continent
+        - region
+        - country
+        - district
+        4. Display top N populated cities (N is provided by user)
+        - world
+        - continent
+        - region
+        - country
+        - district
+        5. Calculate population living in cities and not in cities in each
+        - world
+        - continent
+        - region
+        6. Display the population of thr
+        - world
+        - continent
+        - region
+        - country
+        - district
+        - city
+        7. Display the number who speak following languages
+        - chinese
+        - english
+        - hindi
+        - spanish
+        - arabic
+        8. Generate country report including
+        - code
+        - name
+        - continent
+        - region
+        - population
+        - capital
+        9. Generate city report including
+        - name
+        - country
+        - population
+        10. Generate population report including
+        - the name of the continent/region/country
+        - the total population of the continent/region/country
+        - the total population of the continent/region/country living in cities (including %)
+        - the total population of the continent/region/country not living in cities (including a %)
+5. Define
+    - unit tests
+    - integration tests
