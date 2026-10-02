@@ -1,3 +1,42 @@
+# Maven build output
 target/
-.mvn/
+.mvn/wrapper/maven-wrapper.jar
+dependency-reduced-pom.xml
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+
+# IntelliJ IDEA
 .idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Compiled files and packages
+*.class
+*.jar
+*.war
+!.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Other editors
+.vscode/
+.classpath
+.project
+.settings/
+nbproject/
+
+# Local config and secrets
+.env
+*.env
+application-local.properties
