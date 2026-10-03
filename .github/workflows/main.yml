@@ -13,8 +13,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Compile with Maven
-        run: mvn compile
+      - name: Package JAR with Maven
+        run: mvn package
       - name: Build Docker Image
         run: docker build -t devopsimage .
       - name: Run image
