@@ -2,23 +2,24 @@ package com.napier.sem;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * Population reporting application. Connects to the MySQL world database
- * and prints reports.
+ * Population reporting application.
+ * Connects to the MySQL World database and prints reports.
  */
 public class App
 {
-    /** Database connection, null until connect() succeeds. */
+    /**
+     * Database connection.
+     */
     private Connection con = null;
 
     /**
-     * Entry point. Connects, prints the country report, then disconnects.
-     *
-     * @param args not used
+     * Entry point.
      */
     public static void main(String[] args)
     {
@@ -26,50 +27,26 @@ public class App
 
         app.connect();
 
-        System.out.println("World Population: " + app.getWorldPopulation());
-
-        System.out.println("\nPopulation by Continent:");
-        ArrayList<PopulationTotal> continents = app.getContinentPopulations();
-        for (PopulationTotal total : continents)
-        {
-            System.out.println(total.name + " | " + total.population);
-        }
-
-        System.out.println("\nPopulation by Region:");
-        ArrayList<PopulationTotal> regions = app.getRegionPopulations();
-        for (PopulationTotal total : regions)
-        {
-            System.out.println(total.name + " | " + total.population);
-        }
-
-        System.out.println("\nPopulation by District:");
-        ArrayList<PopulationTotal> districts = app.getDistrictPopulations();
-        for (PopulationTotal total : districts)
-        {
-            System.out.println(total.name + " | " + total.population);
-        }
-
-        System.out.println("\nPopulation by Country:");
+        // Existing country report.
         ArrayList<Country> countries = app.getCountries();
         app.displayCountries(countries);
 
-        System.out.println("\nPopulation by City:");
-        ArrayList<PopulationTotal> cities = app.getCityPopulations();
-        for (PopulationTotal total : cities)
-        {
-            System.out.println(total.name + " | " + total.population);
-        }
+        // Issue #14 - all cities in the world.
+        ArrayList<City> cities = app.getCities();
+        app.displayCities(cities);
 
         app.disconnect();
     }
 
     /**
-     * Connects to the world database. The host comes from the DB_HOST
-     * environment variable and defaults to localhost.
+     * Connects to the World database.
+     * DB_HOST is used when running through Docker/CI.
+     * localhost is used when running locally.
      */
     public void connect()
     {
         String host = System.getenv("DB_HOST");
+
         if (host == null || host.isEmpty())
         {
             host = "localhost";
@@ -78,10 +55,13 @@ public class App
         try
         {
             Class.forName("com.mysql.cj.jdbc.Driver");
+
             con = DriverManager.getConnection(
-                    "jdbc:mysql://" + host + ":3306/world?allowPublicKeyRetrieval=true&useSSL=false",
+                    "jdbc:mysql://" + host
+                            + ":3306/world?allowPublicKeyRetrieval=true&useSSL=false",
                     "root",
                     "root");
+
             System.out.println("Successfully connected to database");
         }
         catch (Exception e)
@@ -92,10 +72,9 @@ public class App
     }
 
     /**
-     * Gets all countries in the world, largest population first.
-     * A country with no recorded capital gets the capital "N/A".
+     * Gets all countries in the world ordered by population.
      *
-     * @return the countries, or an empty list if the query fails
+     * @return list of countries
      */
     public ArrayList<Country> getCountries()
     {
@@ -120,12 +99,14 @@ public class App
             while (rset.next())
             {
                 Country country = new Country();
+
                 country.code = rset.getString("Code");
                 country.name = rset.getString("Name");
                 country.continent = rset.getString("Continent");
                 country.region = rset.getString("Region");
                 country.population = rset.getLong("Population");
                 country.capital = rset.getString("Capital");
+
                 countries.add(country);
             }
         }
@@ -139,13 +120,340 @@ public class App
     }
 
     /**
-     * Prints a country report to the console.
+     * Gets all cities in the world ordered from largest
+     * population to smallest.
      *
-     * @param countries the countries to print
+     * @return list of cities
+     */
+    public ArrayList<City> getCities()
+    {
+        String query =
+                "SELECT ci.Name, co.Name AS Country, "
+                        + "ci.District, ci.Population "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "ORDER BY ci.Population DESC";
+
+        return getCitiesFromQuery(query);
+    }
+
+    /**
+     * Gets all cities in a continent.
+     *
+     * @param continent continent name
+     * @return matching cities
+     */
+    public ArrayList<City> getCitiesByContinent(String continent)
+    {
+        String query =
+                "SELECT ci.Name, co.Name AS Country, "
+                        + "ci.District, ci.Population "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "WHERE co.Continent = ? "
+                        + "ORDER BY ci.Population DESC";
+
+        return getCitiesFromQuery(query, continent);
+    }
+
+    /**
+     * Gets all cities in a region.
+     *
+     * @param region region name
+     * @return matching cities
+     */
+    public ArrayList<City> getCitiesByRegion(String region)
+    {
+        String query =
+                "SELECT ci.Name, co.Name AS Country, "
+                        + "ci.District, ci.Population "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "WHERE co.Region = ? "
+                        + "ORDER BY ci.Population DESC";
+
+        return getCitiesFromQuery(query, region);
+    }
+
+    /**
+     * Gets all cities in a country.
+     *
+     * @param country country name
+     * @return matching cities
+     */
+    public ArrayList<City> getCitiesByCountry(String country)
+    {
+        String query =
+                "SELECT ci.Name, co.Name AS Country, "
+                        + "ci.District, ci.Population "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "WHERE co.Name = ? "
+                        + "ORDER BY ci.Population DESC";
+
+        return getCitiesFromQuery(query, country);
+    }
+
+    /**
+     * Gets all cities in a district.
+     *
+     * @param district district name
+     * @return matching cities
+     */
+    public ArrayList<City> getCitiesByDistrict(String district)
+    {
+        String query =
+                "SELECT ci.Name, co.Name AS Country, "
+                        + "ci.District, ci.Population "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "WHERE ci.District = ? "
+                        + "ORDER BY ci.Population DESC";
+
+        return getCitiesFromQuery(query, district);
+    }
+
+    /**
+     * Gets the Top N populated cities in the world.
+     *
+     * @param n number of cities to return
+     * @return Top N cities
+     */
+    public ArrayList<City> getTopNCities(int n)
+    {
+        String query =
+                "SELECT ci.Name, co.Name AS Country, "
+                        + "ci.District, ci.Population "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "ORDER BY ci.Population DESC "
+                        + "LIMIT ?";
+
+        return getTopNCitiesFromQuery(query, n);
+    }
+
+    /**
+     * Gets the Top N populated cities in a continent.
+     */
+    public ArrayList<City> getTopNCitiesByContinent(
+            String continent, int n)
+    {
+        String query =
+                "SELECT ci.Name, co.Name AS Country, "
+                        + "ci.District, ci.Population "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "WHERE co.Continent = ? "
+                        + "ORDER BY ci.Population DESC "
+                        + "LIMIT ?";
+
+        return getTopNCitiesFromQuery(query, continent, n);
+    }
+
+    /**
+     * Gets the Top N populated cities in a region.
+     */
+    public ArrayList<City> getTopNCitiesByRegion(
+            String region, int n)
+    {
+        String query =
+                "SELECT ci.Name, co.Name AS Country, "
+                        + "ci.District, ci.Population "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "WHERE co.Region = ? "
+                        + "ORDER BY ci.Population DESC "
+                        + "LIMIT ?";
+
+        return getTopNCitiesFromQuery(query, region, n);
+    }
+
+    /**
+     * Gets the Top N populated cities in a country.
+     */
+    public ArrayList<City> getTopNCitiesByCountry(
+            String country, int n)
+    {
+        String query =
+                "SELECT ci.Name, co.Name AS Country, "
+                        + "ci.District, ci.Population "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "WHERE co.Name = ? "
+                        + "ORDER BY ci.Population DESC "
+                        + "LIMIT ?";
+
+        return getTopNCitiesFromQuery(query, country, n);
+    }
+
+    /**
+     * Gets the Top N populated cities in a district.
+     */
+    public ArrayList<City> getTopNCitiesByDistrict(
+            String district, int n)
+    {
+        String query =
+                "SELECT ci.Name, co.Name AS Country, "
+                        + "ci.District, ci.Population "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "WHERE ci.District = ? "
+                        + "ORDER BY ci.Population DESC "
+                        + "LIMIT ?";
+
+        return getTopNCitiesFromQuery(query, district, n);
+    }
+
+    /**
+     * Executes a city query with no filter.
+     */
+    private ArrayList<City> getCitiesFromQuery(String query)
+    {
+        ArrayList<City> cities = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return cities;
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rset = stmt.executeQuery())
+        {
+            addCitiesFromResultSet(rset, cities);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get cities");
+            System.out.println(e.getMessage());
+        }
+
+        return cities;
+    }
+
+    /**
+     * Executes a city query with one text filter.
+     */
+    private ArrayList<City> getCitiesFromQuery(
+            String query, String value)
+    {
+        ArrayList<City> cities = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return cities;
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setString(1, value);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                addCitiesFromResultSet(rset, cities);
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get cities");
+            System.out.println(e.getMessage());
+        }
+
+        return cities;
+    }
+
+    /**
+     * Executes a Top N city query with no text filter.
+     */
+    private ArrayList<City> getTopNCitiesFromQuery(
+            String query, int n)
+    {
+        ArrayList<City> cities = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return cities;
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setInt(1, n);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                addCitiesFromResultSet(rset, cities);
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get cities");
+            System.out.println(e.getMessage());
+        }
+
+        return cities;
+    }
+
+    /**
+     * Executes a Top N city query with one text filter.
+     */
+    private ArrayList<City> getTopNCitiesFromQuery(
+            String query, String value, int n)
+    {
+        ArrayList<City> cities = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return cities;
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setString(1, value);
+            stmt.setInt(2, n);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                addCitiesFromResultSet(rset, cities);
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get cities");
+            System.out.println(e.getMessage());
+        }
+
+        return cities;
+    }
+
+    /**
+     * Converts database rows into City objects.
+     */
+    private void addCitiesFromResultSet(
+            ResultSet rset, ArrayList<City> cities) throws Exception
+    {
+        while (rset.next())
+        {
+            City city = new City();
+
+            city.name = rset.getString("Name");
+            city.country = rset.getString("Country");
+            city.district = rset.getString("District");
+            city.population = rset.getLong("Population");
+
+            cities.add(city);
+        }
+    }
+
+    /**
+     * Prints a country report.
      */
     public void displayCountries(ArrayList<Country> countries)
     {
-        System.out.println("Code | Name | Continent | Region | Population | Capital");
+        System.out.println(
+                "Code | Name | Continent | Region | Population | Capital");
 
         for (Country country : countries)
         {
@@ -371,7 +679,25 @@ public class App
 
 
     /**
-     * Closes the database connection if one is open.
+     * Prints a city report.
+     */
+    public void displayCities(ArrayList<City> cities)
+    {
+        System.out.println(
+                "Name | Country | District | Population");
+
+        for (City city : cities)
+        {
+            System.out.println(
+                    city.name + " | "
+                            + city.country + " | "
+                            + city.district + " | "
+                            + city.population);
+        }
+    }
+
+    /**
+     * Closes the database connection.
      */
     public void disconnect()
     {
@@ -384,7 +710,8 @@ public class App
         }
         catch (Exception e)
         {
-            System.out.println("Error closing database connection");
+            System.out.println(
+                    "Error closing database connection");
         }
     }
 }
