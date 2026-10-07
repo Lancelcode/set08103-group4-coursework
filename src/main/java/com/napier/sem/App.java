@@ -78,14 +78,6 @@ public class App
      */
     public ArrayList<Country> getCountries()
     {
-        ArrayList<Country> countries = new ArrayList<>();
-
-        if (con == null)
-        {
-            System.out.println("No database connection");
-            return countries;
-        }
-
         String query =
                 "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
                         + "COALESCE(ci.Name, 'N/A') AS Capital "
@@ -93,38 +85,10 @@ public class App
                         + "LEFT JOIN city ci ON c.Capital = ci.ID "
                         + "ORDER BY c.Population DESC";
 
-        try (Statement stmt = con.createStatement();
-             ResultSet rset = stmt.executeQuery(query))
-        {
-            while (rset.next())
-            {
-                Country country = new Country();
-
-                country.code = rset.getString("Code");
-                country.name = rset.getString("Name");
-                country.continent = rset.getString("Continent");
-                country.region = rset.getString("Region");
-                country.population = rset.getLong("Population");
-                country.capital = rset.getString("Capital");
-
-                countries.add(country);
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println("Failed to get countries");
-            System.out.println(e.getMessage());
-        }
-
-        return countries;
+        return getCountriesFromQuery(query);
     }
 
-    /**
-     * Gets all cities in the world ordered from largest
-     * population to smallest.
-     *
-     * @return list of cities
-     */
+
 
     /**
      * Gets all countries in a continent ordered by population.
@@ -134,14 +98,6 @@ public class App
      */
     public ArrayList<Country> getCountriesByContinent(String continent)
     {
-        ArrayList<Country> countries = new ArrayList<>();
-
-        if (con == null)
-        {
-            System.out.println("No database connection");
-            return countries;
-        }
-
         String query =
                 "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
                         + "COALESCE(ci.Name, 'N/A') AS Capital "
@@ -150,34 +106,7 @@ public class App
                         + "WHERE c.Continent = ? "
                         + "ORDER BY c.Population DESC";
 
-        try (PreparedStatement stmt = con.prepareStatement(query))
-        {
-            stmt.setString(1, continent);
-
-            try (ResultSet rset = stmt.executeQuery())
-            {
-                while (rset.next())
-                {
-                    Country country = new Country();
-
-                    country.code = rset.getString("Code");
-                    country.name = rset.getString("Name");
-                    country.continent = rset.getString("Continent");
-                    country.region = rset.getString("Region");
-                    country.population = rset.getLong("Population");
-                    country.capital = rset.getString("Capital");
-
-                    countries.add(country);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println("Failed to get countries");
-            System.out.println(e.getMessage());
-        }
-
-        return countries;
+        return getCountriesFromQuery(query, continent);
     }
 
     /**
@@ -188,14 +117,6 @@ public class App
      */
     public ArrayList<Country> getCountriesByRegion(String region)
     {
-        ArrayList<Country> countries = new ArrayList<>();
-
-        if (con == null)
-        {
-            System.out.println("No database connection");
-            return countries;
-        }
-
         String query =
                 "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
                         + "COALESCE(ci.Name, 'N/A') AS Capital "
@@ -204,34 +125,7 @@ public class App
                         + "WHERE c.Region = ? "
                         + "ORDER BY c.Population DESC";
 
-        try (PreparedStatement stmt = con.prepareStatement(query))
-        {
-            stmt.setString(1, region);
-
-            try (ResultSet rset = stmt.executeQuery())
-            {
-                while (rset.next())
-                {
-                    Country country = new Country();
-
-                    country.code = rset.getString("Code");
-                    country.name = rset.getString("Name");
-                    country.continent = rset.getString("Continent");
-                    country.region = rset.getString("Region");
-                    country.population = rset.getLong("Population");
-                    country.capital = rset.getString("Capital");
-
-                    countries.add(country);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println("Failed to get countries");
-            System.out.println(e.getMessage());
-        }
-
-        return countries;
+        return getCountriesFromQuery(query, region);
     }
 
     /**
@@ -242,20 +136,6 @@ public class App
      */
     public ArrayList<Country> getTopNCountries(int n)
     {
-        ArrayList<Country> countries = new ArrayList<>();
-
-        if (con == null)
-        {
-            System.out.println("No database connection");
-            return countries;
-        }
-
-        if (n <= 0)
-        {
-            System.out.println("N must be greater than 0");
-            return countries;
-        }
-
         String query =
                 "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
                         + "COALESCE(ci.Name, 'N/A') AS Capital "
@@ -264,34 +144,7 @@ public class App
                         + "ORDER BY c.Population DESC "
                         + "LIMIT ?";
 
-        try (PreparedStatement stmt = con.prepareStatement(query))
-        {
-            stmt.setInt(1, n);
-
-            try (ResultSet rset = stmt.executeQuery())
-            {
-                while (rset.next())
-                {
-                    Country country = new Country();
-
-                    country.code = rset.getString("Code");
-                    country.name = rset.getString("Name");
-                    country.continent = rset.getString("Continent");
-                    country.region = rset.getString("Region");
-                    country.population = rset.getLong("Population");
-                    country.capital = rset.getString("Capital");
-
-                    countries.add(country);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println("Failed to get countries");
-            System.out.println(e.getMessage());
-        }
-
-        return countries;
+        return getTopNCountriesFromQuery(query, n);
     }
 
     /**
@@ -303,20 +156,6 @@ public class App
      */
     public ArrayList<Country> getTopNCountriesByContinent(String continent, int n)
     {
-        ArrayList<Country> countries = new ArrayList<>();
-
-        if (con == null)
-        {
-            System.out.println("No database connection");
-            return countries;
-        }
-
-        if (n <= 0)
-        {
-            System.out.println("N must be greater than 0");
-            return countries;
-        }
-
         String query =
                 "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
                         + "COALESCE(ci.Name, 'N/A') AS Capital "
@@ -326,26 +165,78 @@ public class App
                         + "ORDER BY c.Population DESC "
                         + "LIMIT ?";
 
+        return getTopNCountriesFromQuery(query, continent, n);
+    }
+
+    /**
+     * Gets top N populated countries in a region.
+     *
+     * @param region region name
+     * @param n number of countries to return
+     * @return top N countries in the region
+     */
+    public ArrayList<Country> getTopNCountriesByRegion(String region, int n)
+    {
+        String query =
+                "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
+                        + "COALESCE(ci.Name, 'N/A') AS Capital "
+                        + "FROM country c "
+                        + "LEFT JOIN city ci ON c.Capital = ci.ID "
+                        + "WHERE c.Region = ? "
+                        + "ORDER BY c.Population DESC "
+                        + "LIMIT ?";
+
+        return getTopNCountriesFromQuery(query, region, n);
+    }
+
+    /**
+     * Executes a country query with no filter.
+     */
+    private ArrayList<Country> getCountriesFromQuery(String query)
+    {
+        ArrayList<Country> countries = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return countries;
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rset = stmt.executeQuery())
+        {
+            addCountriesFromResultSet(rset, countries);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get countries");
+            System.out.println(e.getMessage());
+        }
+
+        return countries;
+    }
+
+    /**
+     * Executes a country query with one text filter.
+     */
+    private ArrayList<Country> getCountriesFromQuery(
+            String query, String value)
+    {
+        ArrayList<Country> countries = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return countries;
+        }
+
         try (PreparedStatement stmt = con.prepareStatement(query))
         {
-            stmt.setString(1, continent);
-            stmt.setInt(2, n);
+            stmt.setString(1, value);
 
             try (ResultSet rset = stmt.executeQuery())
             {
-                while (rset.next())
-                {
-                    Country country = new Country();
-
-                    country.code = rset.getString("Code");
-                    country.name = rset.getString("Name");
-                    country.continent = rset.getString("Continent");
-                    country.region = rset.getString("Region");
-                    country.population = rset.getLong("Population");
-                    country.capital = rset.getString("Capital");
-
-                    countries.add(country);
-                }
+                addCountriesFromResultSet(rset, countries);
             }
         }
         catch (Exception e)
@@ -358,13 +249,10 @@ public class App
     }
 
     /**
-     * Gets top N populated countries in a region.
-     *
-     * @param region region name
-     * @param n number of countries to return
-     * @return top N countries in the region
+     * Executes a Top N country query with no text filter.
      */
-    public ArrayList<Country> getTopNCountriesByRegion(String region, int n)
+    private ArrayList<Country> getTopNCountriesFromQuery(
+            String query, int n)
     {
         ArrayList<Country> countries = new ArrayList<>();
 
@@ -380,35 +268,13 @@ public class App
             return countries;
         }
 
-        String query =
-                "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
-                        + "COALESCE(ci.Name, 'N/A') AS Capital "
-                        + "FROM country c "
-                        + "LEFT JOIN city ci ON c.Capital = ci.ID "
-                        + "WHERE c.Region = ? "
-                        + "ORDER BY c.Population DESC "
-                        + "LIMIT ?";
-
         try (PreparedStatement stmt = con.prepareStatement(query))
         {
-            stmt.setString(1, region);
-            stmt.setInt(2, n);
+            stmt.setInt(1, n);
 
             try (ResultSet rset = stmt.executeQuery())
             {
-                while (rset.next())
-                {
-                    Country country = new Country();
-
-                    country.code = rset.getString("Code");
-                    country.name = rset.getString("Name");
-                    country.continent = rset.getString("Continent");
-                    country.region = rset.getString("Region");
-                    country.population = rset.getLong("Population");
-                    country.capital = rset.getString("Capital");
-
-                    countries.add(country);
-                }
+                addCountriesFromResultSet(rset, countries);
             }
         }
         catch (Exception e)
@@ -420,7 +286,72 @@ public class App
         return countries;
     }
 
+    /**
+     * Executes a Top N country query with one text filter.
+     */
+    private ArrayList<Country> getTopNCountriesFromQuery(
+            String query, String value, int n)
+    {
+        ArrayList<Country> countries = new ArrayList<>();
 
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return countries;
+        }
+
+        if (n <= 0)
+        {
+            System.out.println("N must be greater than 0");
+            return countries;
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setString(1, value);
+            stmt.setInt(2, n);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                addCountriesFromResultSet(rset, countries);
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get countries");
+            System.out.println(e.getMessage());
+        }
+
+        return countries;
+    }
+
+    /**
+     * Converts database rows into Country objects.
+     */
+    private void addCountriesFromResultSet(
+            ResultSet rset, ArrayList<Country> countries) throws Exception
+    {
+        while (rset.next())
+        {
+            Country country = new Country();
+
+            country.code = rset.getString("Code");
+            country.name = rset.getString("Name");
+            country.continent = rset.getString("Continent");
+            country.region = rset.getString("Region");
+            country.population = rset.getLong("Population");
+            country.capital = rset.getString("Capital");
+
+            countries.add(country);
+        }
+    }
+
+    /**
+     * Gets all cities in the world ordered from largest
+     * population to smallest.
+     *
+     * @return list of cities
+     */
     public ArrayList<City> getCities()
     {
         String query =
