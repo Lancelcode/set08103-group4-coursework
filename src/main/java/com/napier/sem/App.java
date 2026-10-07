@@ -35,6 +35,10 @@ public class App
         ArrayList<City> cities = app.getCities();
         app.displayCities(cities);
 
+        // Issue #15 - all capital cities in the world.
+        ArrayList<CapitalCity> capitalCities = app.getCapitalCities();
+        app.displayCapitalCities(capitalCities);
+
         app.disconnect();
     }
 
@@ -366,9 +370,6 @@ public class App
 
     /**
      * Gets all cities in a continent.
-     *
-     * @param continent continent name
-     * @return matching cities
      */
     public ArrayList<City> getCitiesByContinent(String continent)
     {
@@ -385,9 +386,6 @@ public class App
 
     /**
      * Gets all cities in a region.
-     *
-     * @param region region name
-     * @return matching cities
      */
     public ArrayList<City> getCitiesByRegion(String region)
     {
@@ -404,9 +402,6 @@ public class App
 
     /**
      * Gets all cities in a country.
-     *
-     * @param country country name
-     * @return matching cities
      */
     public ArrayList<City> getCitiesByCountry(String country)
     {
@@ -423,9 +418,6 @@ public class App
 
     /**
      * Gets all cities in a district.
-     *
-     * @param district district name
-     * @return matching cities
      */
     public ArrayList<City> getCitiesByDistrict(String district)
     {
@@ -442,9 +434,6 @@ public class App
 
     /**
      * Gets the Top N populated cities in the world.
-     *
-     * @param n number of cities to return
-     * @return Top N cities
      */
     public ArrayList<City> getTopNCities(int n)
     {
@@ -531,9 +520,6 @@ public class App
         return getTopNCitiesFromQuery(query, district, n);
     }
 
-    /**
-     * Executes a city query with no filter.
-     */
     private ArrayList<City> getCitiesFromQuery(String query)
     {
         ArrayList<City> cities = new ArrayList<>();
@@ -558,9 +544,6 @@ public class App
         return cities;
     }
 
-    /**
-     * Executes a city query with one text filter.
-     */
     private ArrayList<City> getCitiesFromQuery(
             String query, String value)
     {
@@ -590,9 +573,6 @@ public class App
         return cities;
     }
 
-    /**
-     * Executes a Top N city query with no text filter.
-     */
     private ArrayList<City> getTopNCitiesFromQuery(
             String query, int n)
     {
@@ -622,9 +602,6 @@ public class App
         return cities;
     }
 
-    /**
-     * Executes a Top N city query with one text filter.
-     */
     private ArrayList<City> getTopNCitiesFromQuery(
             String query, String value, int n)
     {
@@ -655,9 +632,6 @@ public class App
         return cities;
     }
 
-    /**
-     * Converts database rows into City objects.
-     */
     private void addCitiesFromResultSet(
             ResultSet rset, ArrayList<City> cities) throws Exception
     {
@@ -694,11 +668,8 @@ public class App
         }
     }
 
-
     /**
      * Gets the total population of the world.
-     *
-     * @return the total world population
      */
     public long getWorldPopulation()
     {
@@ -708,7 +679,8 @@ public class App
             return 0;
         }
 
-        String query = "SELECT SUM(Population) AS TotalPopulation FROM country";
+        String query =
+                "SELECT SUM(Population) AS TotalPopulation FROM country";
 
         try (Statement stmt = con.createStatement();
              ResultSet rset = stmt.executeQuery(query))
@@ -727,11 +699,8 @@ public class App
         return 0;
     }
 
-
     /**
      * Gets the total population for each continent.
-     *
-     * @return a list containing one population total for each continent
      */
     public ArrayList<PopulationTotal> getContinentPopulations()
     {
@@ -771,8 +740,6 @@ public class App
 
     /**
      * Gets the total population for each region.
-     *
-     * @return a list containing one population total for each region
      */
     public ArrayList<PopulationTotal> getRegionPopulations()
     {
@@ -812,8 +779,6 @@ public class App
 
     /**
      * Gets the total population for each district within each country.
-     *
-     * @return a list containing district population totals
      */
     public ArrayList<PopulationTotal> getDistrictPopulations()
     {
@@ -860,8 +825,6 @@ public class App
 
     /**
      * Gets the population of each city.
-     *
-     * @return a list containing the population of each city
      */
     public ArrayList<PopulationTotal> getCityPopulations()
     {
@@ -904,7 +867,6 @@ public class App
         return totals;
     }
 
-
     /**
      * Prints a city report.
      */
@@ -920,6 +882,262 @@ public class App
                             + city.country + " | "
                             + city.district + " | "
                             + city.population);
+        }
+    }
+
+    /**
+     * Gets all capital cities in the world, largest population first.
+     */
+    public ArrayList<CapitalCity> getCapitalCities()
+    {
+        String query =
+                "SELECT ci.Name, c.Name AS Country, ci.Population "
+                        + "FROM country c "
+                        + "JOIN city ci ON c.Capital = ci.ID "
+                        + "ORDER BY ci.Population DESC";
+
+        return getCapitalCitiesFromQuery(query);
+    }
+
+    /**
+     * Gets all capital cities in a continent.
+     */
+    public ArrayList<CapitalCity> getCapitalCitiesByContinent(
+            String continent)
+    {
+        String query =
+                "SELECT ci.Name, c.Name AS Country, ci.Population "
+                        + "FROM country c "
+                        + "JOIN city ci ON c.Capital = ci.ID "
+                        + "WHERE c.Continent = ? "
+                        + "ORDER BY ci.Population DESC";
+
+        return getCapitalCitiesFromQuery(query, continent);
+    }
+
+    /**
+     * Gets all capital cities in a region.
+     */
+    public ArrayList<CapitalCity> getCapitalCitiesByRegion(
+            String region)
+    {
+        String query =
+                "SELECT ci.Name, c.Name AS Country, ci.Population "
+                        + "FROM country c "
+                        + "JOIN city ci ON c.Capital = ci.ID "
+                        + "WHERE c.Region = ? "
+                        + "ORDER BY ci.Population DESC";
+
+        return getCapitalCitiesFromQuery(query, region);
+    }
+
+    /**
+     * Gets the Top N populated capital cities in the world.
+     */
+    public ArrayList<CapitalCity> getTopNCapitalCities(int n)
+    {
+        String query =
+                "SELECT ci.Name, c.Name AS Country, ci.Population "
+                        + "FROM country c "
+                        + "JOIN city ci ON c.Capital = ci.ID "
+                        + "ORDER BY ci.Population DESC "
+                        + "LIMIT ?";
+
+        return getTopNCapitalCitiesFromQuery(query, n);
+    }
+
+    /**
+     * Gets the Top N populated capital cities in a continent.
+     */
+    public ArrayList<CapitalCity> getTopNCapitalCitiesByContinent(
+            String continent, int n)
+    {
+        String query =
+                "SELECT ci.Name, c.Name AS Country, ci.Population "
+                        + "FROM country c "
+                        + "JOIN city ci ON c.Capital = ci.ID "
+                        + "WHERE c.Continent = ? "
+                        + "ORDER BY ci.Population DESC "
+                        + "LIMIT ?";
+
+        return getTopNCapitalCitiesFromQuery(query, continent, n);
+    }
+
+    /**
+     * Gets the Top N populated capital cities in a region.
+     */
+    public ArrayList<CapitalCity> getTopNCapitalCitiesByRegion(
+            String region, int n)
+    {
+        String query =
+                "SELECT ci.Name, c.Name AS Country, ci.Population "
+                        + "FROM country c "
+                        + "JOIN city ci ON c.Capital = ci.ID "
+                        + "WHERE c.Region = ? "
+                        + "ORDER BY ci.Population DESC "
+                        + "LIMIT ?";
+
+        return getTopNCapitalCitiesFromQuery(query, region, n);
+    }
+
+    /**
+     * Executes a capital city query with no filter.
+     */
+    private ArrayList<CapitalCity> getCapitalCitiesFromQuery(
+            String query)
+    {
+        ArrayList<CapitalCity> capitalCities = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return capitalCities;
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rset = stmt.executeQuery())
+        {
+            addCapitalCitiesFromResultSet(rset, capitalCities);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get capital cities");
+            System.out.println(e.getMessage());
+        }
+
+        return capitalCities;
+    }
+
+    /**
+     * Executes a capital city query with one text filter.
+     */
+    private ArrayList<CapitalCity> getCapitalCitiesFromQuery(
+            String query, String value)
+    {
+        ArrayList<CapitalCity> capitalCities = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return capitalCities;
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setString(1, value);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                addCapitalCitiesFromResultSet(rset, capitalCities);
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get capital cities");
+            System.out.println(e.getMessage());
+        }
+
+        return capitalCities;
+    }
+
+    /**
+     * Executes a Top N capital city query.
+     */
+    private ArrayList<CapitalCity> getTopNCapitalCitiesFromQuery(
+            String query, int n)
+    {
+        ArrayList<CapitalCity> capitalCities = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return capitalCities;
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setInt(1, n);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                addCapitalCitiesFromResultSet(rset, capitalCities);
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get capital cities");
+            System.out.println(e.getMessage());
+        }
+
+        return capitalCities;
+    }
+
+    /**
+     * Executes a filtered Top N capital city query.
+     */
+    private ArrayList<CapitalCity> getTopNCapitalCitiesFromQuery(
+            String query, String value, int n)
+    {
+        ArrayList<CapitalCity> capitalCities = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return capitalCities;
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setString(1, value);
+            stmt.setInt(2, n);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                addCapitalCitiesFromResultSet(rset, capitalCities);
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get capital cities");
+            System.out.println(e.getMessage());
+        }
+
+        return capitalCities;
+    }
+
+    /**
+     * Converts database rows into CapitalCity objects.
+     */
+    private void addCapitalCitiesFromResultSet(
+            ResultSet rset,
+            ArrayList<CapitalCity> capitalCities) throws Exception
+    {
+        while (rset.next())
+        {
+            CapitalCity capitalCity = new CapitalCity();
+
+            capitalCity.name = rset.getString("Name");
+            capitalCity.country = rset.getString("Country");
+            capitalCity.population = rset.getLong("Population");
+
+            capitalCities.add(capitalCity);
+        }
+    }
+
+    /**
+     * Prints a capital city report.
+     */
+    public void displayCapitalCities(
+            ArrayList<CapitalCity> capitalCities)
+    {
+        System.out.println("Name | Country | Population");
+
+        for (CapitalCity capitalCity : capitalCities)
+        {
+            System.out.println(
+                    capitalCity.name + " | "
+                            + capitalCity.country + " | "
+                            + capitalCity.population);
         }
     }
 
