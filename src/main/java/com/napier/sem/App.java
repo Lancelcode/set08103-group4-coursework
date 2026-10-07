@@ -234,6 +234,66 @@ public class App
         return countries;
     }
 
+    /**
+     * Gets top N populated countries in the world.
+     *
+     * @param n number of countries to return
+     * @return top N countries
+     */
+    public ArrayList<Country> getTopNCountries(int n)
+    {
+        ArrayList<Country> countries = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return countries;
+        }
+
+        if (n <= 0)
+        {
+            System.out.println("N must be greater than 0");
+            return countries;
+        }
+
+        String query =
+                "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
+                        + "COALESCE(ci.Name, 'N/A') AS Capital "
+                        + "FROM country c "
+                        + "LEFT JOIN city ci ON c.Capital = ci.ID "
+                        + "ORDER BY c.Population DESC "
+                        + "LIMIT ?";
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setInt(1, n);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                while (rset.next())
+                {
+                    Country country = new Country();
+
+                    country.code = rset.getString("Code");
+                    country.name = rset.getString("Name");
+                    country.continent = rset.getString("Continent");
+                    country.region = rset.getString("Region");
+                    country.population = rset.getLong("Population");
+                    country.capital = rset.getString("Capital");
+
+                    countries.add(country);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get countries");
+            System.out.println(e.getMessage());
+        }
+
+        return countries;
+    }
+
 
     public ArrayList<City> getCities()
     {
