@@ -47,5 +47,5 @@ The user requests the population of a place.
 **DUE DATE**: Code Review 3
 
 ## LINKS
-- User story: US05 (#17), follow-up #47
+- User story: US05 (#17), follow-up #53
 - Use case diagram: `docs/diagrams/use-case-diagram.png`
