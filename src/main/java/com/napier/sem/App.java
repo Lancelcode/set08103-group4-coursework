@@ -1,5 +1,7 @@
 package com.napier.sem;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -39,8 +41,8 @@ public class App
     }
 
     /**
-     * Connects to the World database.
-     * DB_HOST is used when running through Docker/CI.
+     * Connects to the World database, retrying until MySQL is ready.
+     * DB_HOST is used when running through Docker/CI,
      * localhost is used when running locally.
      */
     public void connect()
@@ -52,23 +54,63 @@ public class App
             host = "localhost";
         }
 
+        connect(host, 10, 5000);
+    }
+
+    /**
+     * Connects to the World database, retrying a fixed number of times.
+     *
+     * @param host database host name
+     * @param retries how many attempts to make before giving up
+     * @param delayMs milliseconds to wait between attempts
+     */
+    public void connect(String host, int retries, int delayMs)
+    {
         try
         {
             Class.forName("com.mysql.cj.jdbc.Driver");
-
-            con = DriverManager.getConnection(
-                    "jdbc:mysql://" + host
-                            + ":3306/world?allowPublicKeyRetrieval=true&useSSL=false",
-                    "root",
-                    "root");
-
-            System.out.println("Successfully connected to database");
         }
-        catch (Exception e)
+        catch (ClassNotFoundException e)
         {
-            System.out.println("Failed to connect to database");
-            System.out.println(e.getMessage());
+            System.out.println("Could not load MySQL driver");
+            return;
         }
+
+        for (int attempt = 1; attempt <= retries; attempt++)
+        {
+            System.out.println("Connecting to database (attempt "
+                    + attempt + " of " + retries + ")...");
+
+            try
+            {
+                con = DriverManager.getConnection(
+                        "jdbc:mysql://" + host
+                                + ":3306/world?allowPublicKeyRetrieval=true&useSSL=false",
+                        "root",
+                        "root");
+
+                System.out.println("Successfully connected to database");
+                return;
+            }
+            catch (SQLException e)
+            {
+                System.out.println("Failed to connect: " + e.getMessage());
+            }
+
+            // Wait before the next attempt so MySQL has time to start
+            try
+            {
+                Thread.sleep(delayMs);
+            }
+            catch (InterruptedException e)
+            {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+
+        System.out.println("Could not connect to database after "
+                + retries + " attempts");
     }
 
     /**
