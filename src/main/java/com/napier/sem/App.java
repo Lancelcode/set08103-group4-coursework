@@ -11,8 +11,7 @@ import java.util.ArrayList;
  * Population reporting application.
  * Connects to the MySQL World database and prints reports.
  */
-public class App
-{
+public class App {
     /**
      * Database connection.
      */
@@ -21,8 +20,7 @@ public class App
     /**
      * Entry point.
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         App app = new App();
 
         app.connect();
@@ -35,6 +33,15 @@ public class App
         ArrayList<City> cities = app.getCities();
         app.displayCities(cities);
 
+// Issue #16 - city and non-city population breakdown.
+        System.out.println("\nCONTINENT POPULATION BREAKDOWN");
+        app.displayPopulationBreakdowns(app.getContinentBreakdowns());
+
+        System.out.println("\nREGION POPULATION BREAKDOWN");
+        app.displayPopulationBreakdowns(app.getRegionBreakdowns());
+
+        System.out.println("\nCOUNTRY POPULATION BREAKDOWN");
+        app.displayPopulationBreakdowns(app.getCountryBreakdowns());
         app.disconnect();
     }
 
@@ -43,17 +50,14 @@ public class App
      * DB_HOST is used when running through Docker/CI.
      * localhost is used when running locally.
      */
-    public void connect()
-    {
+    public void connect() {
         String host = System.getenv("DB_HOST");
 
-        if (host == null || host.isEmpty())
-        {
+        if (host == null || host.isEmpty()) {
             host = "localhost";
         }
 
-        try
-        {
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection(
@@ -63,9 +67,7 @@ public class App
                     "root");
 
             System.out.println("Successfully connected to database");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to connect to database");
             System.out.println(e.getMessage());
         }
@@ -76,8 +78,7 @@ public class App
      *
      * @return list of countries
      */
-    public ArrayList<Country> getCountries()
-    {
+    public ArrayList<Country> getCountries() {
         String query =
                 "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
                         + "COALESCE(ci.Name, 'N/A') AS Capital "
@@ -89,15 +90,13 @@ public class App
     }
 
 
-
     /**
      * Gets all countries in a continent ordered by population.
      *
      * @param continent continent name
      * @return matching countries
      */
-    public ArrayList<Country> getCountriesByContinent(String continent)
-    {
+    public ArrayList<Country> getCountriesByContinent(String continent) {
         String query =
                 "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
                         + "COALESCE(ci.Name, 'N/A') AS Capital "
@@ -115,8 +114,7 @@ public class App
      * @param region region name
      * @return matching countries
      */
-    public ArrayList<Country> getCountriesByRegion(String region)
-    {
+    public ArrayList<Country> getCountriesByRegion(String region) {
         String query =
                 "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
                         + "COALESCE(ci.Name, 'N/A') AS Capital "
@@ -134,8 +132,7 @@ public class App
      * @param n number of countries to return
      * @return top N countries
      */
-    public ArrayList<Country> getTopNCountries(int n)
-    {
+    public ArrayList<Country> getTopNCountries(int n) {
         String query =
                 "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
                         + "COALESCE(ci.Name, 'N/A') AS Capital "
@@ -151,11 +148,10 @@ public class App
      * Gets top N populated countries in a continent.
      *
      * @param continent continent name
-     * @param n number of countries to return
+     * @param n         number of countries to return
      * @return top N countries in the continent
      */
-    public ArrayList<Country> getTopNCountriesByContinent(String continent, int n)
-    {
+    public ArrayList<Country> getTopNCountriesByContinent(String continent, int n) {
         String query =
                 "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
                         + "COALESCE(ci.Name, 'N/A') AS Capital "
@@ -172,11 +168,10 @@ public class App
      * Gets top N populated countries in a region.
      *
      * @param region region name
-     * @param n number of countries to return
+     * @param n      number of countries to return
      * @return top N countries in the region
      */
-    public ArrayList<Country> getTopNCountriesByRegion(String region, int n)
-    {
+    public ArrayList<Country> getTopNCountriesByRegion(String region, int n) {
         String query =
                 "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, "
                         + "COALESCE(ci.Name, 'N/A') AS Capital "
@@ -192,23 +187,18 @@ public class App
     /**
      * Executes a country query with no filter.
      */
-    private ArrayList<Country> getCountriesFromQuery(String query)
-    {
+    private ArrayList<Country> getCountriesFromQuery(String query) {
         ArrayList<Country> countries = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return countries;
         }
 
         try (PreparedStatement stmt = con.prepareStatement(query);
-             ResultSet rset = stmt.executeQuery())
-        {
+             ResultSet rset = stmt.executeQuery()) {
             addCountriesFromResultSet(rset, countries);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get countries");
             System.out.println(e.getMessage());
         }
@@ -220,27 +210,21 @@ public class App
      * Executes a country query with one text filter.
      */
     private ArrayList<Country> getCountriesFromQuery(
-            String query, String value)
-    {
+            String query, String value) {
         ArrayList<Country> countries = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return countries;
         }
 
-        try (PreparedStatement stmt = con.prepareStatement(query))
-        {
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, value);
 
-            try (ResultSet rset = stmt.executeQuery())
-            {
+            try (ResultSet rset = stmt.executeQuery()) {
                 addCountriesFromResultSet(rset, countries);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get countries");
             System.out.println(e.getMessage());
         }
@@ -252,33 +236,26 @@ public class App
      * Executes a Top N country query with no text filter.
      */
     private ArrayList<Country> getTopNCountriesFromQuery(
-            String query, int n)
-    {
+            String query, int n) {
         ArrayList<Country> countries = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return countries;
         }
 
-        if (n <= 0)
-        {
+        if (n <= 0) {
             System.out.println("N must be greater than 0");
             return countries;
         }
 
-        try (PreparedStatement stmt = con.prepareStatement(query))
-        {
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setInt(1, n);
 
-            try (ResultSet rset = stmt.executeQuery())
-            {
+            try (ResultSet rset = stmt.executeQuery()) {
                 addCountriesFromResultSet(rset, countries);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get countries");
             System.out.println(e.getMessage());
         }
@@ -290,34 +267,27 @@ public class App
      * Executes a Top N country query with one text filter.
      */
     private ArrayList<Country> getTopNCountriesFromQuery(
-            String query, String value, int n)
-    {
+            String query, String value, int n) {
         ArrayList<Country> countries = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return countries;
         }
 
-        if (n <= 0)
-        {
+        if (n <= 0) {
             System.out.println("N must be greater than 0");
             return countries;
         }
 
-        try (PreparedStatement stmt = con.prepareStatement(query))
-        {
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, value);
             stmt.setInt(2, n);
 
-            try (ResultSet rset = stmt.executeQuery())
-            {
+            try (ResultSet rset = stmt.executeQuery()) {
                 addCountriesFromResultSet(rset, countries);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get countries");
             System.out.println(e.getMessage());
         }
@@ -329,10 +299,8 @@ public class App
      * Converts database rows into Country objects.
      */
     private void addCountriesFromResultSet(
-            ResultSet rset, ArrayList<Country> countries) throws Exception
-    {
-        while (rset.next())
-        {
+            ResultSet rset, ArrayList<Country> countries) throws Exception {
+        while (rset.next()) {
             Country country = new Country();
 
             country.code = rset.getString("Code");
@@ -352,8 +320,7 @@ public class App
      *
      * @return list of cities
      */
-    public ArrayList<City> getCities()
-    {
+    public ArrayList<City> getCities() {
         String query =
                 "SELECT ci.Name, co.Name AS Country, "
                         + "ci.District, ci.Population "
@@ -370,8 +337,7 @@ public class App
      * @param continent continent name
      * @return matching cities
      */
-    public ArrayList<City> getCitiesByContinent(String continent)
-    {
+    public ArrayList<City> getCitiesByContinent(String continent) {
         String query =
                 "SELECT ci.Name, co.Name AS Country, "
                         + "ci.District, ci.Population "
@@ -389,8 +355,7 @@ public class App
      * @param region region name
      * @return matching cities
      */
-    public ArrayList<City> getCitiesByRegion(String region)
-    {
+    public ArrayList<City> getCitiesByRegion(String region) {
         String query =
                 "SELECT ci.Name, co.Name AS Country, "
                         + "ci.District, ci.Population "
@@ -408,8 +373,7 @@ public class App
      * @param country country name
      * @return matching cities
      */
-    public ArrayList<City> getCitiesByCountry(String country)
-    {
+    public ArrayList<City> getCitiesByCountry(String country) {
         String query =
                 "SELECT ci.Name, co.Name AS Country, "
                         + "ci.District, ci.Population "
@@ -427,8 +391,7 @@ public class App
      * @param district district name
      * @return matching cities
      */
-    public ArrayList<City> getCitiesByDistrict(String district)
-    {
+    public ArrayList<City> getCitiesByDistrict(String district) {
         String query =
                 "SELECT ci.Name, co.Name AS Country, "
                         + "ci.District, ci.Population "
@@ -446,8 +409,7 @@ public class App
      * @param n number of cities to return
      * @return Top N cities
      */
-    public ArrayList<City> getTopNCities(int n)
-    {
+    public ArrayList<City> getTopNCities(int n) {
         String query =
                 "SELECT ci.Name, co.Name AS Country, "
                         + "ci.District, ci.Population "
@@ -463,8 +425,7 @@ public class App
      * Gets the Top N populated cities in a continent.
      */
     public ArrayList<City> getTopNCitiesByContinent(
-            String continent, int n)
-    {
+            String continent, int n) {
         String query =
                 "SELECT ci.Name, co.Name AS Country, "
                         + "ci.District, ci.Population "
@@ -481,8 +442,7 @@ public class App
      * Gets the Top N populated cities in a region.
      */
     public ArrayList<City> getTopNCitiesByRegion(
-            String region, int n)
-    {
+            String region, int n) {
         String query =
                 "SELECT ci.Name, co.Name AS Country, "
                         + "ci.District, ci.Population "
@@ -499,8 +459,7 @@ public class App
      * Gets the Top N populated cities in a country.
      */
     public ArrayList<City> getTopNCitiesByCountry(
-            String country, int n)
-    {
+            String country, int n) {
         String query =
                 "SELECT ci.Name, co.Name AS Country, "
                         + "ci.District, ci.Population "
@@ -517,8 +476,7 @@ public class App
      * Gets the Top N populated cities in a district.
      */
     public ArrayList<City> getTopNCitiesByDistrict(
-            String district, int n)
-    {
+            String district, int n) {
         String query =
                 "SELECT ci.Name, co.Name AS Country, "
                         + "ci.District, ci.Population "
@@ -534,23 +492,18 @@ public class App
     /**
      * Executes a city query with no filter.
      */
-    private ArrayList<City> getCitiesFromQuery(String query)
-    {
+    private ArrayList<City> getCitiesFromQuery(String query) {
         ArrayList<City> cities = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return cities;
         }
 
         try (PreparedStatement stmt = con.prepareStatement(query);
-             ResultSet rset = stmt.executeQuery())
-        {
+             ResultSet rset = stmt.executeQuery()) {
             addCitiesFromResultSet(rset, cities);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get cities");
             System.out.println(e.getMessage());
         }
@@ -562,27 +515,21 @@ public class App
      * Executes a city query with one text filter.
      */
     private ArrayList<City> getCitiesFromQuery(
-            String query, String value)
-    {
+            String query, String value) {
         ArrayList<City> cities = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return cities;
         }
 
-        try (PreparedStatement stmt = con.prepareStatement(query))
-        {
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, value);
 
-            try (ResultSet rset = stmt.executeQuery())
-            {
+            try (ResultSet rset = stmt.executeQuery()) {
                 addCitiesFromResultSet(rset, cities);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get cities");
             System.out.println(e.getMessage());
         }
@@ -594,27 +541,21 @@ public class App
      * Executes a Top N city query with no text filter.
      */
     private ArrayList<City> getTopNCitiesFromQuery(
-            String query, int n)
-    {
+            String query, int n) {
         ArrayList<City> cities = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return cities;
         }
 
-        try (PreparedStatement stmt = con.prepareStatement(query))
-        {
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setInt(1, n);
 
-            try (ResultSet rset = stmt.executeQuery())
-            {
+            try (ResultSet rset = stmt.executeQuery()) {
                 addCitiesFromResultSet(rset, cities);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get cities");
             System.out.println(e.getMessage());
         }
@@ -626,28 +567,22 @@ public class App
      * Executes a Top N city query with one text filter.
      */
     private ArrayList<City> getTopNCitiesFromQuery(
-            String query, String value, int n)
-    {
+            String query, String value, int n) {
         ArrayList<City> cities = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return cities;
         }
 
-        try (PreparedStatement stmt = con.prepareStatement(query))
-        {
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, value);
             stmt.setInt(2, n);
 
-            try (ResultSet rset = stmt.executeQuery())
-            {
+            try (ResultSet rset = stmt.executeQuery()) {
                 addCitiesFromResultSet(rset, cities);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get cities");
             System.out.println(e.getMessage());
         }
@@ -659,10 +594,8 @@ public class App
      * Converts database rows into City objects.
      */
     private void addCitiesFromResultSet(
-            ResultSet rset, ArrayList<City> cities) throws Exception
-    {
-        while (rset.next())
-        {
+            ResultSet rset, ArrayList<City> cities) throws Exception {
+        while (rset.next()) {
             City city = new City();
 
             city.name = rset.getString("Name");
@@ -677,13 +610,11 @@ public class App
     /**
      * Prints a country report.
      */
-    public void displayCountries(ArrayList<Country> countries)
-    {
+    public void displayCountries(ArrayList<Country> countries) {
         System.out.println(
                 "Code | Name | Continent | Region | Population | Capital");
 
-        for (Country country : countries)
-        {
+        for (Country country : countries) {
             System.out.println(
                     country.code + " | "
                             + country.name + " | "
@@ -700,10 +631,8 @@ public class App
      *
      * @return the total world population
      */
-    public long getWorldPopulation()
-    {
-        if (con == null)
-        {
+    public long getWorldPopulation() {
+        if (con == null) {
             System.out.println("No database connection");
             return 0;
         }
@@ -711,15 +640,11 @@ public class App
         String query = "SELECT SUM(Population) AS TotalPopulation FROM country";
 
         try (Statement stmt = con.createStatement();
-             ResultSet rset = stmt.executeQuery(query))
-        {
-            if (rset.next())
-            {
+             ResultSet rset = stmt.executeQuery(query)) {
+            if (rset.next()) {
                 return rset.getLong("TotalPopulation");
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get world population");
             System.out.println(e.getMessage());
         }
@@ -733,12 +658,10 @@ public class App
      *
      * @return a list containing one population total for each continent
      */
-    public ArrayList<PopulationTotal> getContinentPopulations()
-    {
+    public ArrayList<PopulationTotal> getContinentPopulations() {
         ArrayList<PopulationTotal> totals = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return totals;
         }
@@ -750,18 +673,14 @@ public class App
                         + "ORDER BY TotalPopulation DESC";
 
         try (Statement stmt = con.createStatement();
-             ResultSet rset = stmt.executeQuery(query))
-        {
-            while (rset.next())
-            {
+             ResultSet rset = stmt.executeQuery(query)) {
+            while (rset.next()) {
                 PopulationTotal total = new PopulationTotal();
                 total.name = rset.getString("Continent");
                 total.population = rset.getLong("TotalPopulation");
                 totals.add(total);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get continent populations");
             System.out.println(e.getMessage());
         }
@@ -774,12 +693,10 @@ public class App
      *
      * @return a list containing one population total for each region
      */
-    public ArrayList<PopulationTotal> getRegionPopulations()
-    {
+    public ArrayList<PopulationTotal> getRegionPopulations() {
         ArrayList<PopulationTotal> totals = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return totals;
         }
@@ -791,18 +708,14 @@ public class App
                         + "ORDER BY TotalPopulation DESC";
 
         try (Statement stmt = con.createStatement();
-             ResultSet rset = stmt.executeQuery(query))
-        {
-            while (rset.next())
-            {
+             ResultSet rset = stmt.executeQuery(query)) {
+            while (rset.next()) {
                 PopulationTotal total = new PopulationTotal();
                 total.name = rset.getString("Region");
                 total.population = rset.getLong("TotalPopulation");
                 totals.add(total);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get region populations");
             System.out.println(e.getMessage());
         }
@@ -815,12 +728,10 @@ public class App
      *
      * @return a list containing district population totals
      */
-    public ArrayList<PopulationTotal> getDistrictPopulations()
-    {
+    public ArrayList<PopulationTotal> getDistrictPopulations() {
         ArrayList<PopulationTotal> totals = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return totals;
         }
@@ -834,10 +745,8 @@ public class App
                         + "ORDER BY TotalPopulation DESC";
 
         try (Statement stmt = con.createStatement();
-             ResultSet rset = stmt.executeQuery(query))
-        {
-            while (rset.next())
-            {
+             ResultSet rset = stmt.executeQuery(query)) {
+            while (rset.next()) {
                 PopulationTotal total = new PopulationTotal();
 
                 total.name = rset.getString("Country")
@@ -848,9 +757,7 @@ public class App
 
                 totals.add(total);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get district populations");
             System.out.println(e.getMessage());
         }
@@ -863,12 +770,10 @@ public class App
      *
      * @return a list containing the population of each city
      */
-    public ArrayList<PopulationTotal> getCityPopulations()
-    {
+    public ArrayList<PopulationTotal> getCityPopulations() {
         ArrayList<PopulationTotal> totals = new ArrayList<>();
 
-        if (con == null)
-        {
+        if (con == null) {
             System.out.println("No database connection");
             return totals;
         }
@@ -880,10 +785,8 @@ public class App
                         + "ORDER BY ci.Population DESC";
 
         try (Statement stmt = con.createStatement();
-             ResultSet rset = stmt.executeQuery(query))
-        {
-            while (rset.next())
-            {
+             ResultSet rset = stmt.executeQuery(query)) {
+            while (rset.next()) {
                 PopulationTotal total = new PopulationTotal();
 
                 total.name = rset.getString("Country")
@@ -894,9 +797,7 @@ public class App
 
                 totals.add(total);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to get city populations");
             System.out.println(e.getMessage());
         }
@@ -908,13 +809,11 @@ public class App
     /**
      * Prints a city report.
      */
-    public void displayCities(ArrayList<City> cities)
-    {
+    public void displayCities(ArrayList<City> cities) {
         System.out.println(
                 "Name | Country | District | Population");
 
-        for (City city : cities)
-        {
+        for (City city : cities) {
             System.out.println(
                     city.name + " | "
                             + city.country + " | "
@@ -926,19 +825,122 @@ public class App
     /**
      * Closes the database connection.
      */
-    public void disconnect()
-    {
-        try
-        {
-            if (con != null)
-            {
+    public void disconnect() {
+        try {
+            if (con != null) {
                 con.close();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(
                     "Error closing database connection");
+        }
+    }
+
+    /**
+     * Gets the city and non-city breakdown for each continent.
+     */
+    public ArrayList<PopulationBreakdown> getContinentBreakdowns() {
+        String query =
+                "SELECT co.Continent AS Name, "
+                        + "SUM(co.Population) AS TotalPopulation, "
+                        + "SUM(COALESCE(cp.CityPopulation, 0)) AS CityPopulation "
+                        + "FROM country co "
+                        + "LEFT JOIN ("
+                        + "SELECT CountryCode, SUM(Population) AS CityPopulation "
+                        + "FROM city GROUP BY CountryCode"
+                        + ") cp ON cp.CountryCode = co.Code "
+                        + "GROUP BY co.Continent "
+                        + "ORDER BY TotalPopulation DESC, Name";
+
+        return getPopulationBreakdowns(query);
+    }
+
+    /**
+     * Gets the city and non-city breakdown for each region.
+     */
+    public ArrayList<PopulationBreakdown> getRegionBreakdowns() {
+        String query =
+                "SELECT co.Region AS Name, "
+                        + "SUM(co.Population) AS TotalPopulation, "
+                        + "SUM(COALESCE(cp.CityPopulation, 0)) AS CityPopulation "
+                        + "FROM country co "
+                        + "LEFT JOIN ("
+                        + "SELECT CountryCode, SUM(Population) AS CityPopulation "
+                        + "FROM city GROUP BY CountryCode"
+                        + ") cp ON cp.CountryCode = co.Code "
+                        + "GROUP BY co.Region "
+                        + "ORDER BY TotalPopulation DESC, Name";
+
+        return getPopulationBreakdowns(query);
+    }
+
+    /**
+     * Gets the city and non-city breakdown for each country.
+     */
+    public ArrayList<PopulationBreakdown> getCountryBreakdowns() {
+        String query =
+                "SELECT co.Name AS Name, "
+                        + "co.Population AS TotalPopulation, "
+                        + "COALESCE(cp.CityPopulation, 0) AS CityPopulation "
+                        + "FROM country co "
+                        + "LEFT JOIN ("
+                        + "SELECT CountryCode, SUM(Population) AS CityPopulation "
+                        + "FROM city GROUP BY CountryCode"
+                        + ") cp ON cp.CountryCode = co.Code "
+                        + "ORDER BY TotalPopulation DESC, Name";
+
+        return getPopulationBreakdowns(query);
+    }
+
+    /**
+     * Reads population breakdown rows from the database.
+     * City populations are summed per country before joining,
+     * so each country's total population is counted once.
+     */
+    private ArrayList<PopulationBreakdown> getPopulationBreakdowns(
+            String query) {
+        ArrayList<PopulationBreakdown> breakdowns = new ArrayList<>();
+
+        if (con == null) {
+            throw new IllegalStateException("No database connection");
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rset = stmt.executeQuery()) {
+            while (rset.next()) {
+                PopulationBreakdown breakdown = new PopulationBreakdown();
+                breakdown.name = rset.getString("Name");
+                breakdown.totalPopulation = rset.getLong("TotalPopulation");
+                breakdown.cityPopulation = rset.getLong("CityPopulation");
+                breakdowns.add(breakdown);
+            }
+        } catch (java.sql.SQLException e) {
+            throw new IllegalStateException(
+                    "Failed to get population breakdown", e);
+        }
+
+        return breakdowns;
+    }
+
+    /**
+     * Prints population totals and percentages.
+     */
+    public void displayPopulationBreakdowns(
+            ArrayList<PopulationBreakdown> breakdowns) {
+        System.out.println(
+                "Name | Total Population | City Population | City % "
+                        + "| Non-city Population | Non-city %");
+
+        for (PopulationBreakdown breakdown : breakdowns) {
+            System.out.printf(
+                    java.util.Locale.UK,
+                    "%s | %d | %d | %.2f%% | %d | %.2f%%%n",
+                    breakdown.name,
+                    breakdown.totalPopulation,
+                    breakdown.cityPopulation,
+                    breakdown.getCityPercentage(),
+                    breakdown.getNonCityPopulation(),
+                    breakdown.getNonCityPercentage());
         }
     }
 }
