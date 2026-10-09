@@ -13,8 +13,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Compile with Maven
-        run: mvn compile
+          cache: maven
+      - name: Package JAR with Maven
+        run: mvn -B package
+      - name: Check the JAR exists
+        run: test -f target/set08103-group4-jar-with-dependencies.jar
       - name: Build Docker Image
         run: docker build -t devopsimage .
       - name: Run image
