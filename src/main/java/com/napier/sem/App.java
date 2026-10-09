@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Population reporting application.
@@ -21,7 +21,11 @@ public class App
     private Connection con = null;
 
     /**
-     * Entry point.
+     * Entry point. Connects to the database, then shows the report menu.
+     * Run with --all to print every report once with sample input
+     * (used in Docker and CI, where nobody can type a choice).
+     *
+     * @param args optional "--all"
      */
     public static void main(String[] args)
     {
@@ -29,19 +33,35 @@ public class App
 
         app.connect();
 
-        // Existing country report.
-        ArrayList<Country> countries = app.getCountries();
-        app.displayCountries(countries);
+        // Exit with an error code so CI fails if the database is not reachable
+        if (!app.isConnected())
+        {
+            System.out.println("Exiting: no database connection");
+            System.exit(1);
+        }
 
-        // Issue #14 - all cities in the world.
-        ArrayList<City> cities = app.getCities();
-        app.displayCities(cities);
+        Menu menu = new Menu(app, new Scanner(System.in));
 
-        // Issue #15 - all capital cities in the world.
-        ArrayList<CapitalCity> capitalCities = app.getCapitalCities();
-        app.displayCapitalCities(capitalCities);
+        if (args.length > 0 && args[0].equals("--all"))
+        {
+            menu.runAll();
+        }
+        else
+        {
+            menu.run();
+        }
 
         app.disconnect();
+    }
+
+    /**
+     * Checks whether the app is connected to the database.
+     *
+     * @return true if connected
+     */
+    public boolean isConnected()
+    {
+        return con != null;
     }
 
     /**
