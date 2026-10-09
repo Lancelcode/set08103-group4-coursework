@@ -51,9 +51,6 @@ public class App
             menu.run();
         }
 
-        // Issue #18 - language statistics.
-        app.displayLanguageStatistics(app.getLanguageStatistics());
-
         app.disconnect();
     }
 
