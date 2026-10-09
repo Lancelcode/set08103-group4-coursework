@@ -19,12 +19,12 @@ Work was agreed in a short conversation during a class break (Djiby and Julia; H
 | US03 Capital city reports | #15 | Hasni243 | 3 | Done (PR #42) |
 | US04 Population breakdown | #16 | zainali-uni | 5 | In review (PR #54) |
 | US05 Population totals | #17 | Ky1eM05 | 3 | Done (PR #38); single-place lookups moved to #53 |
-| US06 Language statistics | #18 | Lancelcode | 3 | In review (PR #59) |
-| Report menu for all reports | #60 | Lancelcode | 5 | In review (PR #61) |
+| US06 Language statistics | #18 | Lancelcode | 3 | Done (PR #59) |
+| Report menu for all reports (covers #43, #44) | #60, #43, #44 | Lancelcode | 5 | Done (PR #61) |
 | JAR in CI and Docker | #25, #27-#29 | Lancelcode | 3 | Done (PRs #35-#37, #52) |
 | Contributing guide, DoD, templates | #9, #10 | Lancelcode | 4 | Done (PRs #30, #31) |
 | Use cases UC01-UC06 | #12 | Lancelcode | 3 | Done (PR #51) |
-| Use case and activity diagrams | - | zainali-uni | 2 | First version done; needs updating |
+| Use case and activity diagrams | #63 | zainali-uni | 2 | First version done; update in progress (#63) |
 | Code of Conduct and diagrams on develop | - | Lancelcode | 1 | Done (PR #46) |
 | DB connection retry | #55 | Lancelcode | 2 | Done (PR #56) |
 | App and MySQL in Compose and CI | #57 | Lancelcode | 3 | Done (PR #58) |
@@ -43,12 +43,12 @@ Between meetings, progress was shared through the Teams chat, issue assignments 
 - All six user stories are GitHub issues with acceptance criteria, estimates and owners, on the Group_4 board.
 - Full use cases UC01-UC06 in `docs/use-cases/`.
 - First version of the use case and activity diagrams (by Zaid) in `docs/diagrams/`.
-- Country, city, capital city and population total reports are on `develop`.
+- Country, city, capital city, population total and language reports are on `develop`, and all 28 can be run from a menu in the app.
 - The JAR builds in CI, runs in Docker, and CI now runs the app against the real World database with Docker Compose.
 - Every change went into `develop` through a pull request, and most PRs were reviewed by someone other than the author.
 
 **Not done**
-- US04 (#16), US06 (#18) and the report menu (#60) are still in review.
+- US04 (#16) is still in review (PR #54).
 - The diagrams need more work to match the use cases (e.g. all six use cases shown, consistent names).
 - No first GitHub release yet; `main` and `release` have not been updated from `develop`.
 
@@ -70,4 +70,4 @@ Between meetings, progress was shared through the Teams chat, issue assignments 
 3. **Pick up work from the board.** When your issue is done, take the next item from Ready rather than waiting to be assigned.
 4. **Everyone reviews.** Each member reviews at least two PRs per sprint.
 5. **Keep PRs focused.** No whole-file reformatting; always target `develop`.
-6. **Update the diagrams** so they match UC01-UC06 (Zaid).
+6. **Update the diagrams** so they match UC01-UC06 (Zaid, #63).
