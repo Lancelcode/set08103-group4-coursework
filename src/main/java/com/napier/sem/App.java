@@ -1311,4 +1311,132 @@ public class App
                     "Error closing database connection");
         }
     }
+    /**
+     * Gets city and non-city population totals for each continent.
+     *
+     * @return population breakdowns, largest total population first
+     */
+    public ArrayList<PopulationBreakdown> getContinentBreakdowns()
+    {
+        String query =
+                "SELECT co.Continent AS Name, "
+                        + "SUM(co.Population) AS TotalPopulation, "
+                        + "SUM(COALESCE(cp.CityPopulation, 0)) AS CityPopulation "
+                        + "FROM country co "
+                        + "LEFT JOIN ("
+                        + "SELECT CountryCode, SUM(Population) AS CityPopulation "
+                        + "FROM city GROUP BY CountryCode"
+                        + ") cp ON cp.CountryCode = co.Code "
+                        + "GROUP BY co.Continent "
+                        + "ORDER BY TotalPopulation DESC, Name";
+
+        return getPopulationBreakdowns(query);
+    }
+
+    /**
+     * Gets city and non-city population totals for each region.
+     *
+     * @return population breakdowns, largest total population first
+     */
+    public ArrayList<PopulationBreakdown> getRegionBreakdowns()
+    {
+        String query =
+                "SELECT co.Region AS Name, "
+                        + "SUM(co.Population) AS TotalPopulation, "
+                        + "SUM(COALESCE(cp.CityPopulation, 0)) AS CityPopulation "
+                        + "FROM country co "
+                        + "LEFT JOIN ("
+                        + "SELECT CountryCode, SUM(Population) AS CityPopulation "
+                        + "FROM city GROUP BY CountryCode"
+                        + ") cp ON cp.CountryCode = co.Code "
+                        + "GROUP BY co.Region "
+                        + "ORDER BY TotalPopulation DESC, Name";
+
+        return getPopulationBreakdowns(query);
+    }
+
+    /**
+     * Gets city and non-city population totals for each country.
+     *
+     * @return population breakdowns, largest total population first
+     */
+    public ArrayList<PopulationBreakdown> getCountryBreakdowns()
+    {
+        String query =
+                "SELECT co.Name AS Name, "
+                        + "co.Population AS TotalPopulation, "
+                        + "COALESCE(cp.CityPopulation, 0) AS CityPopulation "
+                        + "FROM country co "
+                        + "LEFT JOIN ("
+                        + "SELECT CountryCode, SUM(Population) AS CityPopulation "
+                        + "FROM city GROUP BY CountryCode"
+                        + ") cp ON cp.CountryCode = co.Code "
+                        + "ORDER BY TotalPopulation DESC, Name";
+
+        return getPopulationBreakdowns(query);
+    }
+
+    /**
+     * Reads breakdown rows. City totals are grouped before the join
+     * so each country's population is counted once.
+     *
+     * @param query SQL query returning name, total and city populations
+     * @return population breakdown rows
+     */
+    private ArrayList<PopulationBreakdown> getPopulationBreakdowns(
+            String query)
+    {
+        ArrayList<PopulationBreakdown> breakdowns = new ArrayList<>();
+
+        if (con == null)
+        {
+            throw new IllegalStateException("No database connection");
+        }
+
+        try (PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rset = stmt.executeQuery())
+        {
+            while (rset.next())
+            {
+                PopulationBreakdown breakdown = new PopulationBreakdown();
+                breakdown.name = rset.getString("Name");
+                breakdown.totalPopulation = rset.getLong("TotalPopulation");
+                breakdown.cityPopulation = rset.getLong("CityPopulation");
+                breakdowns.add(breakdown);
+            }
+        }
+        catch (java.sql.SQLException e)
+        {
+            throw new IllegalStateException(
+                    "Failed to get population breakdown", e);
+        }
+
+        return breakdowns;
+    }
+
+    /**
+     * Prints population totals and city and non-city percentages.
+     *
+     * @param breakdowns population breakdown rows to print
+     */
+    public void displayPopulationBreakdowns(
+            ArrayList<PopulationBreakdown> breakdowns)
+    {
+        System.out.println(
+                "Name | Total Population | City Population | City % "
+                        + "| Non-city Population | Non-city %");
+
+        for (PopulationBreakdown breakdown : breakdowns)
+        {
+            System.out.printf(
+                    java.util.Locale.UK,
+                    "%s | %d | %d | %.2f%% | %d | %.2f%%%n",
+                    breakdown.name,
+                    breakdown.totalPopulation,
+                    breakdown.cityPopulation,
+                    breakdown.getCityPercentage(),
+                    breakdown.getNonCityPopulation(),
+                    breakdown.getNonCityPercentage());
+        }
+    }
 }
