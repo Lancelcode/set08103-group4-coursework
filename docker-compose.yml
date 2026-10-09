@@ -20,6 +20,7 @@ services:
   app:
     build: .
     container_name: population_app
+    command: ["--all"]
     environment:
       DB_HOST: mysql
     depends_on:

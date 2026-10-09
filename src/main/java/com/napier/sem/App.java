@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Population reporting application.
@@ -21,7 +21,11 @@ public class App
     private Connection con = null;
 
     /**
-     * Entry point.
+     * Entry point. Connects to the database, then shows the report menu.
+     * Run with --all to print every report once with sample input
+     * (used in Docker and CI, where nobody can type a choice).
+     *
+     * @param args optional "--all"
      */
     public static void main(String[] args)
     {
@@ -29,19 +33,35 @@ public class App
 
         app.connect();
 
-        // Existing country report.
-        ArrayList<Country> countries = app.getCountries();
-        app.displayCountries(countries);
+        // Exit with an error code so CI fails if the database is not reachable
+        if (!app.isConnected())
+        {
+            System.out.println("Exiting: no database connection");
+            System.exit(1);
+        }
 
-        // Issue #14 - all cities in the world.
-        ArrayList<City> cities = app.getCities();
-        app.displayCities(cities);
+        Menu menu = new Menu(app, new Scanner(System.in));
 
-        // Issue #15 - all capital cities in the world.
-        ArrayList<CapitalCity> capitalCities = app.getCapitalCities();
-        app.displayCapitalCities(capitalCities);
+        if (args.length > 0 && args[0].equals("--all"))
+        {
+            menu.runAll();
+        }
+        else
+        {
+            menu.run();
+        }
 
         app.disconnect();
+    }
+
+    /**
+     * Checks whether the app is connected to the database.
+     *
+     * @return true if connected
+     */
+    public boolean isConnected()
+    {
+        return con != null;
     }
 
     /**
@@ -950,6 +970,76 @@ public class App
         return totals;
     }
 
+    /**
+     * Gets the estimated number of speakers of Chinese, English, Hindi,
+     * Spanish and Arabic, from most to fewest speakers.
+     * Speakers in each country = country population x language percentage.
+     *
+     * @return one statistic per language, largest first
+     */
+    public ArrayList<LanguageStatistic> getLanguageStatistics()
+    {
+        ArrayList<LanguageStatistic> stats = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return stats;
+        }
+
+        // Percentage is stored as e.g. 25.5, so divide by 100.
+        // The world total is worked out once in the sub-query.
+        String query =
+                "SELECT cl.Language, "
+                        + "ROUND(SUM(c.Population * cl.Percentage / 100)) AS Speakers, "
+                        + "SUM(c.Population * cl.Percentage / 100) "
+                        + "/ (SELECT SUM(Population) FROM country) * 100 AS WorldPercentage "
+                        + "FROM countrylanguage cl "
+                        + "JOIN country c ON cl.CountryCode = c.Code "
+                        + "WHERE cl.Language IN ('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') "
+                        + "GROUP BY cl.Language "
+                        + "ORDER BY Speakers DESC";
+
+        try (PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rset = stmt.executeQuery())
+        {
+            while (rset.next())
+            {
+                LanguageStatistic stat = new LanguageStatistic();
+
+                stat.language = rset.getString("Language");
+                stat.speakers = rset.getLong("Speakers");
+                stat.worldPercentage = rset.getDouble("WorldPercentage");
+
+                stats.add(stat);
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed to get language statistics");
+            System.out.println(e.getMessage());
+        }
+
+        return stats;
+    }
+
+    /**
+     * Prints the language report.
+     *
+     * @param stats language statistics to print
+     */
+    public void displayLanguageStatistics(ArrayList<LanguageStatistic> stats)
+    {
+        System.out.println("Language | Speakers | % of world population");
+
+        for (LanguageStatistic stat : stats)
+        {
+            System.out.println(
+                    stat.language + " | "
+                            + stat.speakers + " | "
+                            + String.format("%.2f", stat.worldPercentage) + "%");
+        }
+    }
 
     /**
      * Prints a city report.
