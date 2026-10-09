@@ -370,6 +370,9 @@ public class App
 
     /**
      * Gets all cities in a continent.
+     *
+     * @param continent continent name
+     * @return matching cities
      */
     public ArrayList<City> getCitiesByContinent(String continent)
     {
@@ -386,6 +389,9 @@ public class App
 
     /**
      * Gets all cities in a region.
+     *
+     * @param region region name
+     * @return matching cities
      */
     public ArrayList<City> getCitiesByRegion(String region)
     {
@@ -402,6 +408,9 @@ public class App
 
     /**
      * Gets all cities in a country.
+     *
+     * @param country country name
+     * @return matching cities
      */
     public ArrayList<City> getCitiesByCountry(String country)
     {
@@ -418,6 +427,9 @@ public class App
 
     /**
      * Gets all cities in a district.
+     *
+     * @param district district name
+     * @return matching cities
      */
     public ArrayList<City> getCitiesByDistrict(String district)
     {
@@ -434,6 +446,9 @@ public class App
 
     /**
      * Gets the Top N populated cities in the world.
+     *
+     * @param n number of cities to return
+     * @return Top N cities
      */
     public ArrayList<City> getTopNCities(int n)
     {
@@ -520,6 +535,9 @@ public class App
         return getTopNCitiesFromQuery(query, district, n);
     }
 
+    /**
+     * Executes a city query with no filter.
+     */
     private ArrayList<City> getCitiesFromQuery(String query)
     {
         ArrayList<City> cities = new ArrayList<>();
@@ -544,6 +562,9 @@ public class App
         return cities;
     }
 
+    /**
+     * Executes a city query with one text filter.
+     */
     private ArrayList<City> getCitiesFromQuery(
             String query, String value)
     {
@@ -573,6 +594,9 @@ public class App
         return cities;
     }
 
+    /**
+     * Executes a Top N city query with no text filter.
+     */
     private ArrayList<City> getTopNCitiesFromQuery(
             String query, int n)
     {
@@ -602,6 +626,9 @@ public class App
         return cities;
     }
 
+    /**
+     * Executes a Top N city query with one text filter.
+     */
     private ArrayList<City> getTopNCitiesFromQuery(
             String query, String value, int n)
     {
@@ -632,6 +659,9 @@ public class App
         return cities;
     }
 
+    /**
+     * Converts database rows into City objects.
+     */
     private void addCitiesFromResultSet(
             ResultSet rset, ArrayList<City> cities) throws Exception
     {
@@ -668,8 +698,11 @@ public class App
         }
     }
 
+
     /**
      * Gets the total population of the world.
+     *
+     * @return the total world population
      */
     public long getWorldPopulation()
     {
@@ -679,8 +712,7 @@ public class App
             return 0;
         }
 
-        String query =
-                "SELECT SUM(Population) AS TotalPopulation FROM country";
+        String query = "SELECT SUM(Population) AS TotalPopulation FROM country";
 
         try (Statement stmt = con.createStatement();
              ResultSet rset = stmt.executeQuery(query))
@@ -699,8 +731,11 @@ public class App
         return 0;
     }
 
+
     /**
      * Gets the total population for each continent.
+     *
+     * @return a list containing one population total for each continent
      */
     public ArrayList<PopulationTotal> getContinentPopulations()
     {
@@ -740,6 +775,8 @@ public class App
 
     /**
      * Gets the total population for each region.
+     *
+     * @return a list containing one population total for each region
      */
     public ArrayList<PopulationTotal> getRegionPopulations()
     {
@@ -779,6 +816,8 @@ public class App
 
     /**
      * Gets the total population for each district within each country.
+     *
+     * @return a list containing district population totals
      */
     public ArrayList<PopulationTotal> getDistrictPopulations()
     {
@@ -825,6 +864,8 @@ public class App
 
     /**
      * Gets the population of each city.
+     *
+     * @return a list containing the population of each city
      */
     public ArrayList<PopulationTotal> getCityPopulations()
     {
@@ -867,6 +908,7 @@ public class App
         return totals;
     }
 
+
     /**
      * Prints a city report.
      */
@@ -887,6 +929,8 @@ public class App
 
     /**
      * Gets all capital cities in the world, largest population first.
+     *
+     * @return list of capital cities
      */
     public ArrayList<CapitalCity> getCapitalCities()
     {
@@ -901,9 +945,11 @@ public class App
 
     /**
      * Gets all capital cities in a continent.
+     *
+     * @param continent continent name
+     * @return matching capital cities
      */
-    public ArrayList<CapitalCity> getCapitalCitiesByContinent(
-            String continent)
+    public ArrayList<CapitalCity> getCapitalCitiesByContinent(String continent)
     {
         String query =
                 "SELECT ci.Name, c.Name AS Country, ci.Population "
@@ -917,9 +963,11 @@ public class App
 
     /**
      * Gets all capital cities in a region.
+     *
+     * @param region region name
+     * @return matching capital cities
      */
-    public ArrayList<CapitalCity> getCapitalCitiesByRegion(
-            String region)
+    public ArrayList<CapitalCity> getCapitalCitiesByRegion(String region)
     {
         String query =
                 "SELECT ci.Name, c.Name AS Country, ci.Population "
@@ -933,6 +981,9 @@ public class App
 
     /**
      * Gets the Top N populated capital cities in the world.
+     *
+     * @param n number of capital cities to return
+     * @return Top N capital cities
      */
     public ArrayList<CapitalCity> getTopNCapitalCities(int n)
     {
@@ -948,6 +999,10 @@ public class App
 
     /**
      * Gets the Top N populated capital cities in a continent.
+     *
+     * @param continent continent name
+     * @param n number of capital cities to return
+     * @return Top N matching capital cities
      */
     public ArrayList<CapitalCity> getTopNCapitalCitiesByContinent(
             String continent, int n)
@@ -965,6 +1020,10 @@ public class App
 
     /**
      * Gets the Top N populated capital cities in a region.
+     *
+     * @param region region name
+     * @param n number of capital cities to return
+     * @return Top N matching capital cities
      */
     public ArrayList<CapitalCity> getTopNCapitalCitiesByRegion(
             String region, int n)
@@ -982,9 +1041,11 @@ public class App
 
     /**
      * Executes a capital city query with no filter.
+     *
+     * @param query SQL query to execute
+     * @return capital cities returned by the query
      */
-    private ArrayList<CapitalCity> getCapitalCitiesFromQuery(
-            String query)
+    private ArrayList<CapitalCity> getCapitalCitiesFromQuery(String query)
     {
         ArrayList<CapitalCity> capitalCities = new ArrayList<>();
 
@@ -1010,6 +1071,10 @@ public class App
 
     /**
      * Executes a capital city query with one text filter.
+     *
+     * @param query SQL query to execute
+     * @param value filter value
+     * @return capital cities returned by the query
      */
     private ArrayList<CapitalCity> getCapitalCitiesFromQuery(
             String query, String value)
@@ -1042,6 +1107,10 @@ public class App
 
     /**
      * Executes a Top N capital city query.
+     *
+     * @param query SQL query to execute
+     * @param n number of results to return
+     * @return Top N capital cities
      */
     private ArrayList<CapitalCity> getTopNCapitalCitiesFromQuery(
             String query, int n)
@@ -1051,6 +1120,12 @@ public class App
         if (con == null)
         {
             System.out.println("No database connection");
+            return capitalCities;
+        }
+
+        if (n <= 0)
+        {
+            System.out.println("N must be greater than 0");
             return capitalCities;
         }
 
@@ -1074,6 +1149,11 @@ public class App
 
     /**
      * Executes a filtered Top N capital city query.
+     *
+     * @param query SQL query to execute
+     * @param value filter value
+     * @param n number of results to return
+     * @return Top N matching capital cities
      */
     private ArrayList<CapitalCity> getTopNCapitalCitiesFromQuery(
             String query, String value, int n)
@@ -1083,6 +1163,12 @@ public class App
         if (con == null)
         {
             System.out.println("No database connection");
+            return capitalCities;
+        }
+
+        if (n <= 0)
+        {
+            System.out.println("N must be greater than 0");
             return capitalCities;
         }
 
@@ -1107,10 +1193,13 @@ public class App
 
     /**
      * Converts database rows into CapitalCity objects.
+     *
+     * @param rset query results
+     * @param capitalCities list to populate
+     * @throws Exception if database data cannot be read
      */
     private void addCapitalCitiesFromResultSet(
-            ResultSet rset,
-            ArrayList<CapitalCity> capitalCities) throws Exception
+            ResultSet rset, ArrayList<CapitalCity> capitalCities) throws Exception
     {
         while (rset.next())
         {
@@ -1126,9 +1215,10 @@ public class App
 
     /**
      * Prints a capital city report.
+     *
+     * @param capitalCities capital cities to print
      */
-    public void displayCapitalCities(
-            ArrayList<CapitalCity> capitalCities)
+    public void displayCapitalCities(ArrayList<CapitalCity> capitalCities)
     {
         System.out.println("Name | Country | Population");
 
