@@ -7,8 +7,8 @@
 Meet the CR2 checklist (issues, user stories, Kanban board, sprints, use cases and use case diagram), finish the CR1 gaps carried over from Sprint 1, and get the first population reports working.
 
 ## Planning
-Work was agreed in a short conversation during a class break (Djiby and Julia; Hassan and Zaid joined later), then recapped in a Teams stand-up (see below):
-- Zaid (zainali-uni) agreed to produce the use case and activity diagrams.
+Work was agreed in a short conversation during a class break (Djiby and Julia; Hassan and Zain joined later), then recapped in a Teams stand-up (see below):
+- Zain (zainali-uni) agreed to produce the use case and activity diagrams.
 - Djiby (Lancelcode) created the backlog, split the six user stories into issues (#13-#18) and assigned an owner to each.
 - Each owner picked up their story from the Group_4 board.
 
@@ -31,9 +31,9 @@ Work was agreed in a short conversation during a class break (Djiby and Julia; H
 
 ## Stand-ups / check-ins
 **Teams stand-up, 7 Oct 2026**
-Attendees: Djiby (Lancelcode), Julia (jkasiuk); Hassan (Hasni243) and Zaid (zainali-uni) joined later. Kyle (Ky1eM05) did not attend.
+Attendees: Djiby (Lancelcode), Julia (jkasiuk); Hassan (Hasni243) and Zain (zainali-uni) joined later. Kyle (Ky1eM05) did not attend.
 - Short recap of what had been agreed during the class break.
-- Confirmed owners for US01-US06 and that Zaid would do the use case and activity diagrams.
+- Confirmed owners for US01-US06 and that Zain would do the use case and activity diagrams.
 - No blockers raised.
 
 Between meetings, progress was shared through the Teams chat, issue assignments on the board, and pull request reviews.
@@ -42,7 +42,7 @@ Between meetings, progress was shared through the Teams chat, issue assignments 
 **Done**
 - All six user stories are GitHub issues with acceptance criteria, estimates and owners, on the Group_4 board.
 - Full use cases UC01-UC06 in `docs/use-cases/`.
-- First version of the use case and activity diagrams (by Zaid) in `docs/diagrams/`.
+- First version of the use case and activity diagrams (by Zain) in `docs/diagrams/`.
 - Country, city, capital city, population total and language reports are on `develop`, and all 28 can be run from a menu in the app.
 - The JAR builds in CI, runs in Docker, and CI now runs the app against the real World database with Docker Compose.
 - Every change went into `develop` through a pull request, and most PRs were reviewed by someone other than the author.
@@ -70,4 +70,4 @@ Between meetings, progress was shared through the Teams chat, issue assignments 
 3. **Pick up work from the board.** When your issue is done, take the next item from Ready rather than waiting to be assigned.
 4. **Everyone reviews.** Each member reviews at least two PRs per sprint.
 5. **Keep PRs focused.** No whole-file reformatting; always target `develop`.
-6. **Update the diagrams** so they match UC01-UC06 (Zaid, #63).
+6. **Update the diagrams** so they match UC01-UC06 (Zain, #63).
