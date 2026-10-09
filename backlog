@@ -1,0 +1,22 @@
+PRODUCT BACKLOG - SET08103 Group 4 (population reporting system)
+Priorities, sizes and sprints are tracked on the GitHub Project board "Group_4".
+
+REQUIREMENTS (user stories, one GitHub issue each)
+US01 (#13) Country reports: all and Top N, for world / continent / region (reports 1-6)
+US02 (#14) City reports: all and Top N, for world / continent / region / country / district (reports 7-16)
+US03 (#15) Capital city reports: all and Top N, for world / continent / region (reports 17-22)
+US04 (#16) City and non-city population breakdown, per continent / region / country (reports 23-25)
+US05 (#17) Population totals: world, continent, region, country, district, city (6 lookups)
+US06 (#18) Language statistics: Chinese, English, Hindi, Spanish, Arabic (speakers and % of world)
+
+REPORT COLUMNS
+Country: Code, Name, Continent, Region, Population, Capital
+City: Name, Country, District, Population
+Capital city: Name, Country, Population
+Population breakdown: Name, total, in cities (with %), not in cities (with %)
+
+PROCESS AND DELIVERY
+- Self-contained JAR in Docker and CI (#25: #27, #28, #29)
+- Use cases and use case diagram (CR2)
+- Unit and integration tests (CR3)
+- Deployment and bug reporting (CR4)
