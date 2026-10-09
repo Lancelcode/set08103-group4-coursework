@@ -30,7 +30,13 @@ public class Menu
             "Population of each continent",
             "Population of each region",
             "Population of each district",
-            "Population of each city"
+            "Population of each city",
+            "All capital cities in the world",
+            "All capital cities in a continent",
+            "All capital cities in a region",
+            "Top N capital cities in the world",
+            "Top N capital cities in a continent",
+            "Top N capital cities in a region"
     };
 
     /** The app that runs the database queries. */
@@ -150,6 +156,12 @@ public class Menu
             case 19 -> printTotals(app.getRegionPopulations());
             case 20 -> printTotals(app.getDistrictPopulations());
             case 21 -> printTotals(app.getCityPopulations());
+            case 22 -> printCapitals(app.getCapitalCities());
+            case 23 -> printCapitals(app.getCapitalCitiesByContinent(name));
+            case 24 -> printCapitals(app.getCapitalCitiesByRegion(name));
+            case 25 -> printCapitals(app.getTopNCapitalCities(n));
+            case 26 -> printCapitals(app.getTopNCapitalCitiesByContinent(name, n));
+            case 27 -> printCapitals(app.getTopNCapitalCitiesByRegion(name, n));
             default -> System.out.println("Unknown report " + choice);
         }
     }
@@ -242,7 +254,9 @@ public class Menu
         return (choice >= 2 && choice <= 3)
                 || (choice >= 5 && choice <= 6)
                 || (choice >= 8 && choice <= 11)
-                || (choice >= 13 && choice <= 16);
+                || (choice >= 13 && choice <= 16)
+                || (choice >= 23 && choice <= 24)
+                || (choice >= 26 && choice <= 27);
     }
 
     /**
@@ -253,7 +267,9 @@ public class Menu
      */
     static boolean needsN(int choice)
     {
-        return (choice >= 4 && choice <= 6) || (choice >= 12 && choice <= 16);
+        return (choice >= 4 && choice <= 6)
+                || (choice >= 12 && choice <= 16)
+                || (choice >= 25 && choice <= 27);
     }
 
     /**
@@ -266,8 +282,8 @@ public class Menu
     {
         return switch (choice)
         {
-            case 2, 5, 8, 13 -> "continent";
-            case 3, 6, 9, 14 -> "region";
+            case 2, 5, 8, 13, 23, 26 -> "continent";
+            case 3, 6, 9, 14, 24, 27 -> "region";
             case 10, 15 -> "country";
             default -> "district";
         };
@@ -320,6 +336,22 @@ public class Menu
         }
 
         app.displayCities(cities);
+    }
+
+    /**
+     * Prints a capital city report, or a message if nothing matched.
+     *
+     * @param capitals capital cities to print
+     */
+    private void printCapitals(ArrayList<CapitalCity> capitals)
+    {
+        if (capitals.isEmpty())
+        {
+            System.out.println("No capital cities found. Check the name is spelled correctly.");
+            return;
+        }
+
+        app.displayCapitalCities(capitals);
     }
 
     /**

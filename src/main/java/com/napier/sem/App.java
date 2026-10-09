@@ -52,10 +52,6 @@ public class App
             menu.run();
         }
 
-        // Issue #15 - all capital cities in the world.
-        ArrayList<CapitalCity> capitalCities = app.getCapitalCities();
-        app.displayCapitalCities(capitalCities);
-
         app.disconnect();
     }
 
