@@ -48,7 +48,6 @@ Between meetings, progress was shared through the Teams chat, issue assignments 
 - Every change went into `develop` through a pull request, and most PRs were reviewed by someone other than the author.
 
 **Not done**
-- US04 (#16) is still in review (PR #54).
 - The diagrams need more work to match the use cases (e.g. all six use cases shown, consistent names).
 - First release v0.1 published on 9 Oct; `develop` was merged through `release` into `main`.
 
