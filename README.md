@@ -1,7 +1,7 @@
 # SET08103 Group 4 - Population Reporting System
 ![workflow](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=develop)
 
-A Java console app that produces population reports from the MySQL `world` database: countries, cities, capital cities, population totals and language statistics (28 reports, chosen from a menu).
+A Java console app that produces population reports from the MySQL `world` database: countries, cities, capital cities, population totals and language statistics (31 reports, chosen from a menu).
 
 ## Run it with Docker (easiest)
 ~~~

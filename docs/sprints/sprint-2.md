@@ -17,7 +17,7 @@ Work was agreed in a short conversation during a class break (Djiby and Julia; H
 | US01 Country reports | #13 | jkasiuk | 5 | Done (PR #41) |
 | US02 City reports | #14 | Hasni243 | 5 | Done (PR #39) |
 | US03 Capital city reports | #15 | Hasni243 | 3 | Done (PR #42) |
-| US04 Population breakdown | #16 | zainali-uni | 5 | In review (PR #54) |
+| US04 Population breakdown | #16 | zainali-uni | 5 | Done (PR #71, replacing #54) |
 | US05 Population totals | #17 | Ky1eM05 | 3 | Done (PR #38); single-place lookups moved to #53 |
 | US06 Language statistics | #18 | Lancelcode | 3 | Done (PR #59) |
 | Report menu for all reports (covers #43, #44) | #60, #43, #44 | Lancelcode | 5 | Done (PR #61) |
@@ -43,7 +43,7 @@ Between meetings, progress was shared through the Teams chat, issue assignments 
 - All six user stories are GitHub issues with acceptance criteria, estimates and owners, on the Group_4 board.
 - Full use cases UC01-UC06 in `docs/use-cases/`.
 - First version of the use case and activity diagrams (by Zain) in `docs/diagrams/`.
-- Country, city, capital city, population total and language reports are on `develop`, and all 28 can be run from a menu in the app.
+- Country, city, capital city, population total, population breakdown and language reports are on `develop`, and all 31 can be run from a menu in the app.
 - The JAR builds in CI, runs in Docker, and CI now runs the app against the real World database with Docker Compose.
 - Every change went into `develop` through a pull request, and most PRs were reviewed by someone other than the author.
 
