@@ -1,0 +1,326 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1">
+    <mxGraphModel page="1" pageWidth="2520" pageHeight="1700">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="Start" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;ellipse;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1150" y="75" width="220" height="55" />
+        </mxCell>
+        <mxCell id="3" value="System shows report menu&#10;Employee chooses report or Exit" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1040" y="160" width="440" height="85" />
+        </mxCell>
+        <mxCell id="4" source="2" target="3" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5" value="Exit?" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;rhombus;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1150" y="290" width="220" height="100" />
+        </mxCell>
+        <mxCell id="6" source="3" target="5" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7" value="End" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;ellipse;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1570" y="310" width="170" height="60" />
+        </mxCell>
+        <mxCell id="8" source="5" target="7" value="Yes" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9" value="Select use case (one branch)" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;rhombus;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1040" y="450" width="440" height="65" />
+        </mxCell>
+        <mxCell id="10" source="5" target="9" value="No" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="11" value="UC01&#10;View country population reports" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="610" width="375" height="110" />
+        </mxCell>
+        <mxCell id="12" source="9" target="11" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1260" y="555" />
+              <mxPoint x="222.5" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="13" value="Choose world, continent or region.&#10;Enter area name when needed.&#10;For Top N, enter positive integer N." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="775" width="375" height="120" />
+        </mxCell>
+        <mxCell id="14" source="11" target="13" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="15" value="Retrieve matching countries.&#10;Sort population largest first.&#10;Top N: show up to N rows." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="930" width="375" height="120" />
+        </mxCell>
+        <mxCell id="16" source="13" target="15" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="17" value="Display Code, Name, Continent,&#10;Region, Population and Capital.&#10;Missing capital: display N/A." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="35" y="1085" width="375" height="120" />
+        </mxCell>
+        <mxCell id="18" source="15" target="17" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="19" value="UC02&#10;View city population reports" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="610" width="375" height="110" />
+        </mxCell>
+        <mxCell id="20" source="9" target="19" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1260" y="555" />
+              <mxPoint x="637.5" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="21" value="Choose world, continent, region,&#10;country or district; enter area name.&#10;For Top N, enter positive integer N." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="775" width="375" height="120" />
+        </mxCell>
+        <mxCell id="22" source="19" target="21" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="23" value="Retrieve matching cities.&#10;Sort population largest first.&#10;Top N: show up to N rows." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="930" width="375" height="120" />
+        </mxCell>
+        <mxCell id="24" source="21" target="23" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="25" value="Display Name, Country,&#10;District and Population." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="450" y="1085" width="375" height="120" />
+        </mxCell>
+        <mxCell id="26" source="23" target="25" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="27" value="UC03&#10;View capital city population&#10;reports" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="865" y="610" width="375" height="110" />
+        </mxCell>
+        <mxCell id="28" source="9" target="27" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1260" y="555" />
+              <mxPoint x="1052.5" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29" value="Choose world, continent or region.&#10;Enter area name when needed.&#10;For Top N, enter positive integer N." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="865" y="775" width="375" height="120" />
+        </mxCell>
+        <mxCell id="30" source="27" target="29" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="31" value="Find capitals using country.Capital.&#10;Omit countries with no capital.&#10;Sort capital population largest first." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="865" y="930" width="375" height="120" />
+        </mxCell>
+        <mxCell id="32" source="29" target="31" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="33" value="Display Name, Country&#10;and Population.&#10;Top N: show up to N rows." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="865" y="1085" width="375" height="120" />
+        </mxCell>
+        <mxCell id="34" source="31" target="33" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="35" value="UC04&#10;View city and non-city&#10;population breakdown" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1280" y="610" width="375" height="110" />
+        </mxCell>
+        <mxCell id="36" source="9" target="35" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1260" y="555" />
+              <mxPoint x="1467.5" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="37" value="Choose continent, region or country&#10;breakdown level." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1280" y="775" width="375" height="120" />
+        </mxCell>
+        <mxCell id="38" source="35" target="37" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="39" value="Sum country totals once per country.&#10;Sum recorded city populations.&#10;Non-city = total minus city." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1280" y="930" width="375" height="120" />
+        </mxCell>
+        <mxCell id="40" source="37" target="39" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="41" value="Calculate both percentages.&#10;If total is zero, both are 0%.&#10;Display name, totals and percentages." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1280" y="1085" width="375" height="120" />
+        </mxCell>
+        <mxCell id="42" source="39" target="41" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="43" value="UC05&#10;Look up the population of a&#10;place" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1695" y="610" width="375" height="110" />
+        </mxCell>
+        <mxCell id="44" source="9" target="43" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1260" y="555" />
+              <mxPoint x="1882.5" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="45" value="Choose world, continent, region,&#10;country, district or city. Enter name;&#10;for district/city also enter country." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1695" y="775" width="375" height="120" />
+        </mxCell>
+        <mxCell id="46" source="43" target="45" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="47" value="If still ambiguous, list matches&#10;and ask employee to choose.&#10;Calculate selected place population." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1695" y="930" width="375" height="120" />
+        </mxCell>
+        <mxCell id="48" source="45" target="47" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="49" value="Display place and population.&#10;District total = sum of its&#10;recorded cities." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1695" y="1085" width="375" height="120" />
+        </mxCell>
+        <mxCell id="50" source="47" target="49" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="51" value="UC06&#10;View language speaker statistics" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="2110" y="610" width="375" height="110" />
+        </mxCell>
+        <mxCell id="52" source="9" target="51" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1260" y="555" />
+              <mxPoint x="2297.5" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="53" value="Request language statistics for&#10;Chinese, English, Hindi,&#10;Spanish and Arabic." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="2110" y="775" width="375" height="120" />
+        </mxCell>
+        <mxCell id="54" source="51" target="53" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="55" value="Sum country population × recorded&#10;language percentage / 100.&#10;Missing language record adds zero." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="2110" y="930" width="375" height="120" />
+        </mxCell>
+        <mxCell id="56" source="53" target="55" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="57" value="Calculate % of world population.&#10;Sort estimated speakers largest first.&#10;Display language, speakers and %." style="whiteSpace=wrap;html=0;fontSize=17;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="2110" y="1085" width="375" height="120" />
+        </mxCell>
+        <mxCell id="58" source="55" target="57" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="59" value="Report completes OR clear error / no-match message is displayed" style="whiteSpace=wrap;html=0;fontSize=20;fillColor=#e8f3e7;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="745" y="1300" width="1030" height="75" />
+        </mxCell>
+        <mxCell id="60" source="17" target="59" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="222.5" y="1250" />
+              <mxPoint x="1260" y="1250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="61" source="25" target="59" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="637.5" y="1250" />
+              <mxPoint x="1260" y="1250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="62" source="33" target="59" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1052.5" y="1250" />
+              <mxPoint x="1260" y="1250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="63" source="41" target="59" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1467.5" y="1250" />
+              <mxPoint x="1260" y="1250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="64" source="49" target="59" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1882.5" y="1250" />
+              <mxPoint x="1260" y="1250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="65" source="57" target="59" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="2297.5" y="1250" />
+              <mxPoint x="1260" y="1250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="66" value="Return to report menu" style="whiteSpace=wrap;html=0;fontSize=18;fillColor=#edf4fc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1040" y="1420" width="440" height="65" />
+        </mxCell>
+        <mxCell id="67" source="59" target="66" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="68" source="66" target="3" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="15" y="1452" />
+              <mxPoint x="15" y="202" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="69" value="VALIDATION &amp; FAILURE PATHS (requirements)&#10;Invalid N → show message and ask for N again (UC01–UC03).&#10;No matching place / rows → clear message; do not display a report.&#10;Database unavailable → clear error message; no report.&#10;UC05 ambiguity → employee selects a match before calculation." style="whiteSpace=wrap;html=0;fontSize=19;fillColor=#fff4dc;strokeColor=#45627e;rounded=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="650" y="1520" width="1220" height="145" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
