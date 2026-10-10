@@ -37,7 +37,10 @@ public class Menu
             "Top N capital cities in the world",
             "Top N capital cities in a continent",
             "Top N capital cities in a region",
-            "Speakers of Chinese, English, Hindi, Spanish and Arabic"
+            "Speakers of Chinese, English, Hindi, Spanish and Arabic",
+            "City and non-city population by continent",
+            "City and non-city population by region",
+            "City and non-city population by country"
     };
 
     /** The app that runs the database queries. */
@@ -164,6 +167,9 @@ public class Menu
             case 26 -> printCapitals(app.getTopNCapitalCitiesByContinent(name, n));
             case 27 -> printCapitals(app.getTopNCapitalCitiesByRegion(name, n));
             case 28 -> app.displayLanguageStatistics(app.getLanguageStatistics());
+            case 29 -> app.displayPopulationBreakdowns(app.getContinentBreakdowns());
+            case 30 -> app.displayPopulationBreakdowns(app.getRegionBreakdowns());
+            case 31 -> app.displayPopulationBreakdowns(app.getCountryBreakdowns());
             default -> System.out.println("Unknown report " + choice);
         }
     }
