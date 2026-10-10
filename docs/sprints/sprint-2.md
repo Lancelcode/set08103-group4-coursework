@@ -50,7 +50,7 @@ Between meetings, progress was shared through the Teams chat, issue assignments 
 **Not done**
 - US04 (#16) is still in review (PR #54).
 - The diagrams need more work to match the use cases (e.g. all six use cases shown, consistent names).
-- No first GitHub release yet; `main` and `release` have not been updated from `develop`.
+- First release v0.1 published on 9 Oct; `develop` was merged through `release` into `main`.
 
 ## Retrospective
 **What went well**
