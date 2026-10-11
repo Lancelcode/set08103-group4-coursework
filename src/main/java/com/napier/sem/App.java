@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -671,6 +670,12 @@ public class App
             return cities;
         }
 
+        if (n <= 0)
+        {
+            System.out.println("N must be greater than 0");
+            return cities;
+        }
+
         try (PreparedStatement stmt = con.prepareStatement(query))
         {
             stmt.setInt(1, n);
@@ -700,6 +705,12 @@ public class App
         if (con == null)
         {
             System.out.println("No database connection");
+            return cities;
+        }
+
+        if (n <= 0)
+        {
+            System.out.println("N must be greater than 0");
             return cities;
         }
 
@@ -777,8 +788,8 @@ public class App
 
         String query = "SELECT SUM(Population) AS TotalPopulation FROM country";
 
-        try (Statement stmt = con.createStatement();
-             ResultSet rset = stmt.executeQuery(query))
+        try (PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rset = stmt.executeQuery())
         {
             if (rset.next())
             {
@@ -816,8 +827,8 @@ public class App
                         + "GROUP BY Continent "
                         + "ORDER BY TotalPopulation DESC";
 
-        try (Statement stmt = con.createStatement();
-             ResultSet rset = stmt.executeQuery(query))
+        try (PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rset = stmt.executeQuery())
         {
             while (rset.next())
             {
@@ -857,8 +868,8 @@ public class App
                         + "GROUP BY Region "
                         + "ORDER BY TotalPopulation DESC";
 
-        try (Statement stmt = con.createStatement();
-             ResultSet rset = stmt.executeQuery(query))
+        try (PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rset = stmt.executeQuery())
         {
             while (rset.next())
             {
@@ -900,8 +911,8 @@ public class App
                         + "GROUP BY c.Name, ci.District "
                         + "ORDER BY TotalPopulation DESC";
 
-        try (Statement stmt = con.createStatement();
-             ResultSet rset = stmt.executeQuery(query))
+        try (PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rset = stmt.executeQuery())
         {
             while (rset.next())
             {
@@ -946,8 +957,8 @@ public class App
                         + "JOIN country c ON ci.CountryCode = c.Code "
                         + "ORDER BY ci.Population DESC";
 
-        try (Statement stmt = con.createStatement();
-             ResultSet rset = stmt.executeQuery(query))
+        try (PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rset = stmt.executeQuery())
         {
             while (rset.next())
             {
