@@ -26,3 +26,7 @@ Pick a report number, enter a continent/region/country/district or N when asked,
 
 ## Releases
 See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases) for the latest JAR.
+
+## Badges
+[![Build (main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml)
+[![Build (develop)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml)
