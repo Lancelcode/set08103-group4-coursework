@@ -804,6 +804,246 @@ public class App
 
         return 0;
     }
+    /**
+     * Gets the total population of a specific continent.
+     *
+     * @param continent name of the continent
+     * @return matching population totals
+     */
+    public ArrayList<PopulationTotal> getPopulationByContinent(String continent)
+    {
+        ArrayList<PopulationTotal> totals = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return totals;
+        }
+
+        String query =
+                "SELECT Continent AS Name, SUM(Population) AS TotalPopulation "
+                        + "FROM country "
+                        + "WHERE Continent = ? "
+                        + "GROUP BY Continent";
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setString(1, continent);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                while (rset.next())
+                {
+                    PopulationTotal total = new PopulationTotal();
+                    total.name = rset.getString("Name");
+                    total.population = rset.getLong("TotalPopulation");
+                    totals.add(total);
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Failed to get continent population");
+            System.out.println(e.getMessage());
+        }
+
+        return totals;
+    }
+
+    /**
+     * Gets the total population of a specific region.
+     *
+     * @param region name of the region
+     * @return matching population totals
+     */
+    public ArrayList<PopulationTotal> getPopulationByRegion(String region)
+    {
+        ArrayList<PopulationTotal> totals = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return totals;
+        }
+
+        String query =
+                "SELECT Region AS Name, SUM(Population) AS TotalPopulation "
+                        + "FROM country "
+                        + "WHERE Region = ? "
+                        + "GROUP BY Region";
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setString(1, region);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                while (rset.next())
+                {
+                    PopulationTotal total = new PopulationTotal();
+                    total.name = rset.getString("Name");
+                    total.population = rset.getLong("TotalPopulation");
+                    totals.add(total);
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Failed to get region population");
+            System.out.println(e.getMessage());
+        }
+
+        return totals;
+    }
+
+    /**
+     * Gets the population of a specific country.
+     *
+     * @param country name of the country
+     * @return matching population totals
+     */
+    public ArrayList<PopulationTotal> getPopulationByCountry(String country)
+    {
+        ArrayList<PopulationTotal> totals = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return totals;
+        }
+
+        String query =
+                "SELECT Name, Population AS TotalPopulation "
+                        + "FROM country "
+                        + "WHERE Name = ?";
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setString(1, country);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                while (rset.next())
+                {
+                    PopulationTotal total = new PopulationTotal();
+                    total.name = rset.getString("Name");
+                    total.population = rset.getLong("TotalPopulation");
+                    totals.add(total);
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Failed to get country population");
+            System.out.println(e.getMessage());
+        }
+
+        return totals;
+    }
+
+    /**
+     * Gets the population of a district within a specific country.
+     *
+     * @param district name of the district
+     * @param country name of the country
+     * @return matching district population totals
+     */
+    public ArrayList<PopulationTotal> getPopulationByDistrict(
+            String district, String country)
+    {
+        ArrayList<PopulationTotal> totals = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return totals;
+        }
+
+        String query =
+                "SELECT ci.District AS Name, "
+                        + "SUM(ci.Population) AS TotalPopulation "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "WHERE ci.District = ? AND co.Name = ? "
+                        + "GROUP BY ci.District";
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setString(1, district);
+            stmt.setString(2, country);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                while (rset.next())
+                {
+                    PopulationTotal total = new PopulationTotal();
+                    total.name = country + " - " + rset.getString("Name");
+                    total.population = rset.getLong("TotalPopulation");
+                    totals.add(total);
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Failed to get district population");
+            System.out.println(e.getMessage());
+        }
+
+        return totals;
+    }
+
+    /**
+     * Gets the population of a city within a specific country.
+     *
+     * @param city name of the city
+     * @param country name of the country
+     * @return matching city population totals
+     */
+    public ArrayList<PopulationTotal> getPopulationByCity(
+            String city, String country)
+    {
+        ArrayList<PopulationTotal> totals = new ArrayList<>();
+
+        if (con == null)
+        {
+            System.out.println("No database connection");
+            return totals;
+        }
+
+        String query =
+                "SELECT ci.Name, ci.District, "
+                        + "ci.Population AS TotalPopulation "
+                        + "FROM city ci "
+                        + "JOIN country co ON ci.CountryCode = co.Code "
+                        + "WHERE ci.Name = ? AND co.Name = ? "
+                        + "ORDER BY ci.District";
+
+        try (PreparedStatement stmt = con.prepareStatement(query))
+        {
+            stmt.setString(1, city);
+            stmt.setString(2, country);
+
+            try (ResultSet rset = stmt.executeQuery())
+            {
+                while (rset.next())
+                {
+                    PopulationTotal total = new PopulationTotal();
+                    total.name = country + " - "
+                            + rset.getString("Name") + " ("
+                            + rset.getString("District") + ")";
+                    total.population = rset.getLong("TotalPopulation");
+                    totals.add(total);
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Failed to get city population");
+            System.out.println(e.getMessage());
+        }
+
+        return totals;
+    }
 
 
     /**
