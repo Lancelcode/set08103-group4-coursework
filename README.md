@@ -26,3 +26,6 @@ Pick a report number, enter a continent/region/country/district or N when asked,
 
 ## Releases
 See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases) for the latest JAR.
+
+## Badges
+[![Licence](https://img.shields.io/github/license/Lancelcode/set08103-group4-coursework)](LICENSE)
