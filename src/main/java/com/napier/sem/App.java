@@ -754,6 +754,8 @@ public class App
 
     /**
      * Prints a country report.
+     *
+     * @param countries the countries to print
      */
     public void displayCountries(ArrayList<Country> countries)
     {
@@ -1295,6 +1297,8 @@ public class App
 
     /**
      * Prints a city report.
+     *
+     * @param cities the cities to print
      */
     public void displayCities(ArrayList<City> cities)
     {
