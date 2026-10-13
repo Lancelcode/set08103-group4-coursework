@@ -37,7 +37,16 @@ public class Menu
             "Top N capital cities in the world",
             "Top N capital cities in a continent",
             "Top N capital cities in a region",
-            "Speakers of Chinese, English, Hindi, Spanish and Arabic"
+            "Speakers of Chinese, English, Hindi, Spanish and Arabic",
+            "City and non-city population by continent",
+            "City and non-city population by region",
+            "City and non-city population by country",
+            "Population of a continent",
+            "Population of a region",
+            "Population of a country",
+            "Population of a district in a country",
+            "Population of a city in a country"
+
     };
 
     /** The app that runs the database queries. */
@@ -89,7 +98,15 @@ public class Menu
                     return;
                 }
             }
-
+            String country = null;
+            if (choice == 35 || choice == 36)
+            {
+                country = ask("Enter the country: ");
+                if (country == null)
+                {
+                    return;
+                }
+            }
             int n = 0;
             if (needsN(choice))
             {
@@ -100,7 +117,7 @@ public class Menu
                 }
             }
 
-            runReport(choice, name, n);
+            runReport(choice, name, country, n);
         }
     }
 
@@ -114,6 +131,8 @@ public class Menu
         {
             String name = needsName(choice) ? sampleName(choice) : null;
             int n = needsN(choice) ? 5 : 0;
+            String country = (choice == 35 || choice == 36)
+                    ? "United Kingdom" : null;
 
             System.out.println();
             System.out.println("=== " + choice + ". " + OPTIONS[choice - 1]
@@ -121,7 +140,14 @@ public class Menu
                     + (n > 0 ? " (N = " + n + ")" : "")
                     + " ===");
 
-            runReport(choice, name, n);
+            if (choice == 36)
+            {
+                printTotals(app.getPopulationByCity(name, country));
+            }
+            else
+            {
+                runReport(choice, name, country, n);
+            }
         }
     }
 
@@ -132,7 +158,7 @@ public class Menu
      * @param name continent, region, country or district name (or null)
      * @param n how many rows for Top N reports (or 0)
      */
-    void runReport(int choice, String name, int n)
+    void runReport(int choice, String name, String country, int n)
     {
         switch (choice)
         {
@@ -164,6 +190,16 @@ public class Menu
             case 26 -> printCapitals(app.getTopNCapitalCitiesByContinent(name, n));
             case 27 -> printCapitals(app.getTopNCapitalCitiesByRegion(name, n));
             case 28 -> app.displayLanguageStatistics(app.getLanguageStatistics());
+            case 29 -> app.displayPopulationBreakdowns(app.getContinentBreakdowns());
+            case 30 -> app.displayPopulationBreakdowns(app.getRegionBreakdowns());
+            case 31 -> app.displayPopulationBreakdowns(app.getCountryBreakdowns());
+
+            case 32 -> printTotals(app.getPopulationByContinent(name));
+            case 33 -> printTotals(app.getPopulationByRegion(name));
+            case 34 -> printTotals(app.getPopulationByCountry(name));
+            case 35 -> printTotals(app.getPopulationByDistrict(name, country));
+            case 36 -> printMatchingCities(app.getPopulationByCity(name, country));
+
             default -> System.out.println("Unknown report " + choice);
         }
     }
@@ -258,7 +294,8 @@ public class Menu
                 || (choice >= 8 && choice <= 11)
                 || (choice >= 13 && choice <= 16)
                 || (choice >= 23 && choice <= 24)
-                || (choice >= 26 && choice <= 27);
+                || (choice >= 26 && choice <= 27)
+                || (choice >= 32 && choice <= 36);
     }
 
     /**
@@ -284,9 +321,10 @@ public class Menu
     {
         return switch (choice)
         {
-            case 2, 5, 8, 13, 23, 26 -> "continent";
-            case 3, 6, 9, 14, 24, 27 -> "region";
-            case 10, 15 -> "country";
+            case 2, 5, 8, 13, 23, 26, 32 -> "continent";
+            case 3, 6, 9, 14, 24, 27, 33 -> "region";
+            case 10, 15, 34 -> "country";
+            case 36 -> "city";
             default -> "district";
         };
     }
@@ -304,6 +342,7 @@ public class Menu
             case "continent" -> "Europe";
             case "region" -> "Caribbean";
             case "country" -> "United Kingdom";
+            case "city" -> "Edinburgh";
             default -> "Scotland";
         };
     }
@@ -363,6 +402,12 @@ public class Menu
      */
     private void printTotals(ArrayList<PopulationTotal> totals)
     {
+        if (totals.isEmpty())
+        {
+            System.out.println("No matching places found. Check the name and country.");
+            return;
+        }
+
         System.out.println("Name | Population");
 
         for (PopulationTotal total : totals)
@@ -370,4 +415,50 @@ public class Menu
             System.out.println(total.name + " | " + total.population);
         }
     }
+
+    /**
+     * Lets the user choose a city if multiple places match.
+     */
+    private void printMatchingCities(ArrayList<PopulationTotal> totals)
+    {
+        if (totals.size() <= 1)
+        {
+            printTotals(totals);
+            return;
+        }
+
+        System.out.println("Multiple cities found:");
+
+        for (int i = 0; i < totals.size(); i++)
+        {
+            System.out.println((i + 1) + ". " + totals.get(i).name);
+        }
+
+        int choice;
+
+        while (true)
+        {
+            String answer = ask("Choose a city (1 to " + totals.size() + "): ");
+
+            if (answer == null)
+            {
+                return;
+            }
+
+            choice = parseChoice(answer);
+
+            if (choice >= 1 && choice <= totals.size())
+            {
+                break;
+            }
+
+            System.out.println("Please enter a valid number.");
+        }
+
+        ArrayList<PopulationTotal> selected = new ArrayList<>();
+        selected.add(totals.get(choice - 1));
+
+        printTotals(selected);
+    }
+
 }
