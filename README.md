@@ -30,3 +30,4 @@ See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases
 ## Badges
 [![Build (main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml)
 [![Build (develop)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml)
+[![Release](https://img.shields.io/github/v/release/Lancelcode/set08103-group4-coursework?display_name=tag&label=release)](https://github.com/Lancelcode/set08103-group4-coursework/releases)
