@@ -28,6 +28,7 @@ Pick a report number, enter a continent/region/country/district or N when asked,
 See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases) for the latest JAR.
 
 ## Badges
+[![Open issues](https://img.shields.io/github/issues/Lancelcode/set08103-group4-coursework)](https://github.com/Lancelcode/set08103-group4-coursework/issues)
 [![Last commit](https://img.shields.io/github/last-commit/Lancelcode/set08103-group4-coursework/develop)](https://github.com/Lancelcode/set08103-group4-coursework/commits/develop)
 [![Licence](https://img.shields.io/github/license/Lancelcode/set08103-group4-coursework)](LICENSE)
 [![Build (main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml)
