@@ -29,6 +29,7 @@ See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases
 
 ## Badges
 [![Java](https://img.shields.io/badge/Java-17-b07219)](https://adoptium.net/)
+[![Open issues](https://img.shields.io/github/issues/Lancelcode/set08103-group4-coursework)](https://github.com/Lancelcode/set08103-group4-coursework/issues)
 [![Last commit](https://img.shields.io/github/last-commit/Lancelcode/set08103-group4-coursework/develop)](https://github.com/Lancelcode/set08103-group4-coursework/commits/develop)
 [![Licence](https://img.shields.io/github/license/Lancelcode/set08103-group4-coursework)](LICENSE)
 [![Build (main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml)
