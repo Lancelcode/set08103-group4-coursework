@@ -29,3 +29,4 @@ See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases
 
 ## Badges
 [![Open issues](https://img.shields.io/github/issues/Lancelcode/set08103-group4-coursework)](https://github.com/Lancelcode/set08103-group4-coursework/issues)
+[![Release](https://img.shields.io/github/v/release/Lancelcode/set08103-group4-coursework?display_name=tag&label=release)](https://github.com/Lancelcode/set08103-group4-coursework/releases)
