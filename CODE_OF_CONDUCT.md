@@ -7,10 +7,10 @@
 
 ## Working Practices
 - Follow the GitFlow branching model:
-  - No direct commits to `master`
+  - No direct commits to `main`
   - All feature work branches off `develop`
-  - `release` branches are used to prepare and stabilise a version before merging to `master`
-- Use Pull Requests to merge into `develop` or `master`, with at least one team member reviewing before merge
+  - `release` branches are used to prepare and stabilise a version before merging to `main`
+- Use Pull Requests to merge into `develop` or `main`, with at least one team member reviewing before merge
 - Write clear, descriptive commit messages
 
 ## Meetings

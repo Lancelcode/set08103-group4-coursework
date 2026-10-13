@@ -1,5 +1,7 @@
 # CR1 repo status audit
 
+> **Historical snapshot (2 Oct 2026).** The gaps listed below were fixed during Sprint 2. See [Sprint 2 notes](sprints/sprint-2.md) for the current status.
+
 Snapshot taken 2 Oct 2026, comparing every branch against the CR1 checklist.
 
 ## Branches
