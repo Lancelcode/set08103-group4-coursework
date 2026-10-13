@@ -29,3 +29,4 @@ See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases
 
 ## Badges
 [![Java](https://img.shields.io/badge/Java-17-b07219)](https://adoptium.net/)
+[![Release](https://img.shields.io/github/v/release/Lancelcode/set08103-group4-coursework?display_name=tag&label=release)](https://github.com/Lancelcode/set08103-group4-coursework/releases)
