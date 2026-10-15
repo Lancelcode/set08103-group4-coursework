@@ -5,8 +5,8 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="boundary" value="Organisation population reporting system" style="rounded=0;whiteSpace=wrap;html=0;verticalAlign=top;spacingTop=15;fontSize=24;fillColor=none;strokeColor=#45627e;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="370" y="125" width="1325" height="1045" />
+        <mxCell id="boundary" value="" style="rounded=0;whiteSpace=wrap;html=0;verticalAlign=top;spacingTop=15;fontSize=24;fillColor=none;strokeColor=#45627e;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="370" y="175" width="730" height="995" />
         </mxCell>
         <mxCell id="2" value="Organisation employee&#10;(report user)" style="whiteSpace=wrap;html=0;fontSize=19;fillColor=#edf4fc;strokeColor=#45627e;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;" vertex="1" parent="1">
           <mxGeometry as="geometry" x="105" y="545" width="90" height="130" />
@@ -107,7 +107,22 @@
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-      <mxCell id="label0" value="POPULATION REPORTING | USE CASE DIAGRAM" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=center;fontSize=28;strokeColor=none;fillColor=none;"><mxGeometry as="geometry" x="200" y="10" width="1360" height="50" /></mxCell><mxCell id="label1" value="Requirements view • UC01–UC06" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=center;fontSize=18;strokeColor=none;fillColor=none;"><mxGeometry as="geometry" x="300" y="60" width="1160" height="40" /></mxCell><mxCell id="label2" value="Solid lines: actor associations | Dashed lines: explanatory scope notes" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=center;fontSize=17;strokeColor=none;fillColor=none;"><mxGeometry as="geometry" x="200" y="1185" width="1360" height="45" /></mxCell><mxCell id="label3" value="Top N is a documented variation of UC01–UC03; N must be a positive whole number." vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=center;fontSize=17;strokeColor=none;fillColor=none;"><mxGeometry as="geometry" x="150" y="1230" width="1460" height="40" /></mxCell></root>
+        <mxCell id="label0" value="POPULATION REPORTING | USE CASE DIAGRAM" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=center;fontSize=28;strokeColor=none;fillColor=none;">
+          <mxGeometry as="geometry" x="200" y="10" width="1360" height="50" />
+        </mxCell>
+        <mxCell id="label1" value="Requirements view • UC01–UC06 | Scope notes outside the system boundary" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=center;fontSize=18;strokeColor=none;fillColor=none;">
+          <mxGeometry as="geometry" x="300" y="60" width="1160" height="40" />
+        </mxCell>
+        <mxCell id="label2" value="Solid lines: actor associations | Dashed lines: explanatory scope notes" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=center;fontSize=17;strokeColor=none;fillColor=none;">
+          <mxGeometry as="geometry" x="200" y="1185" width="1360" height="45" />
+        </mxCell>
+        <mxCell id="label3" value="Top N is a documented variation of UC01–UC03; N must be a positive whole number." vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=center;fontSize=17;strokeColor=none;fillColor=none;">
+          <mxGeometry as="geometry" x="150" y="1230" width="1460" height="40" />
+        </mxCell>
+        <mxCell id="system-label" value="Organisation population reporting system" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontSize=22;strokeColor=none;fillColor=none;">
+          <mxGeometry as="geometry" x="365" y="120" width="740" height="45" />
+        </mxCell>
+      </root>
     </mxGraphModel>
   </diagram>
 </mxfile>
