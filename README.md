@@ -35,3 +35,5 @@ See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases
 [![Build (main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml)
 [![Build (develop)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml)
 [![Release](https://img.shields.io/github/v/release/Lancelcode/set08103-group4-coursework?display_name=tag&label=release)](https://github.com/Lancelcode/set08103-group4-coursework/releases)
+
+We acknowledge the use of some AI to check that every target was met and to look at how the work was distributed in percentages.
