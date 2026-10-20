@@ -16,12 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Verifies population breakdown reports against the MySQL World database.
+ * The connected {@code app} comes from {@link IntegrationTestBase}.
  */
-class PopulationBreakdownIT
+class PopulationBreakdownIT extends IntegrationTestBase
 {
-    /** Application being tested. */
-    private App app;
-
     /** Independent connection used to calculate expected results. */
     private Connection database;
 
@@ -32,7 +30,8 @@ class PopulationBreakdownIT
     private final Map<String, Long> cityTotals = new HashMap<>();
 
     /**
-     * Connects to MySQL and reads country and city data separately.
+     * Reads country and city data through a separate connection,
+     * so expected values do not depend on the app's own queries.
      *
      * @throws Exception if the database cannot be accessed
      */
@@ -44,11 +43,6 @@ class PopulationBreakdownIT
         {
             host = "localhost";
         }
-
-        app = new App();
-        app.connect(host, 3, 1000);
-        assertTrue(app.isConnected(),
-                "MySQL World database must be running on port 3306");
 
         database = DriverManager.getConnection(
                 "jdbc:mysql://" + host
@@ -91,26 +85,17 @@ class PopulationBreakdownIT
     }
 
     /**
-     * Closes both connections, including after a failed test.
+     * Closes the independent connection, including after a failed test.
+     * The app's connection is closed by {@link IntegrationTestBase}.
      *
      * @throws Exception if the independent connection cannot close
      */
     @AfterEach
     void tearDown() throws Exception
     {
-        try
+        if (database != null)
         {
-            if (app != null)
-            {
-                app.disconnect();
-            }
-        }
-        finally
-        {
-            if (database != null)
-            {
-                database.close();
-            }
+            database.close();
         }
     }
 
