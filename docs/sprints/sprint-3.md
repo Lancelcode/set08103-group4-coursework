@@ -100,7 +100,7 @@ Planned on 20 Oct 2026 and shared with the team in the Teams chat, with roles, o
 | Date | What |
 |---|---|
 | Wed 21 Oct | Shared integration test setup merged (#114) |
-| Sun 25 Oct | Everyone has a first PR open; display unit tests and #124 merged. Anyone who hasn't started gets a check-in, and work is rebalanced |
+| Week of 26 Oct | First stand-up and first-PR checkpoint (moved from Sun 25 Oct, see Stand-ups). Anyone who hasn't started gets support, and work is rebalanced |
 | Thu 29 Oct | All PRs merged into `develop` |
 | Fri 30 Oct | Release v0.3 (#128) |
 | Sun 1 Nov | These notes, the contribution sheet and the CR3 evidence page finished |
@@ -116,7 +116,9 @@ Planned on 20 Oct 2026 and shared with the team in the Teams chat, with roles, o
 | Update the diagrams to match UC01-UC06 | Done in #106; the database actor is added in #124 |
 
 ## Stand-ups / check-ins
-**Stand-up 1** (date to be confirmed: Wed 21 Oct after 17:00 or Thu 22 Oct before 12:00, on Teams)
+**20 Oct 2026 (Teams chat):** The team agreed to hold the first Sprint 3 stand-up in the week of 26 Oct, because another module's assessment is due this week. The first-PR checkpoint moves from Sun 25 Oct to that stand-up. Meanwhile, members work on the issues that need no database (unit tests and diagrams).
+
+**Stand-up 1** (week of 26 Oct, on Teams, date to be confirmed)
 Attendees:
 - Done so far:
 - Next:
