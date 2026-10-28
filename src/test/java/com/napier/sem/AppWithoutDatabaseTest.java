@@ -154,4 +154,23 @@ class AppWithoutDatabaseTest
 
         assertAllEmptyWithMessage(results);
     }
+
+    // ---- capital city reports ----
+
+    /**
+     * All six capital city reports (US03) return an empty list without a database.
+     */
+    @Test
+    void capitalCityReportsReturnEmptyListsWithoutDatabase()
+    {
+        List<ArrayList<CapitalCity>> results = List.of(
+                app.getCapitalCities(),
+                app.getCapitalCitiesByContinent("Europe"),
+                app.getCapitalCitiesByRegion("Caribbean"),
+                app.getTopNCapitalCities(3),
+                app.getTopNCapitalCitiesByContinent("Europe", 2),
+                app.getTopNCapitalCitiesByRegion("Caribbean", 3));
+
+        assertAllEmptyWithMessage(results);
+    }
 }
