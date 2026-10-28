@@ -206,4 +206,29 @@ class AppWithoutDatabaseTest
 
         assertAllEmptyWithMessage(results);
     }
+
+    // ---- language statistics and breakdowns ----
+
+    /**
+     * The language report (US06) returns an empty list without a database.
+     */
+    @Test
+    void languageStatisticsReturnEmptyListWithoutDatabase()
+    {
+        assertAllEmptyWithMessage(List.of(app.getLanguageStatistics()));
+    }
+
+    /**
+     * The three population breakdowns (US04) return an empty list without a database.
+     */
+    @Test
+    void populationBreakdownsReturnEmptyListsWithoutDatabase()
+    {
+        List<ArrayList<PopulationBreakdown>> results = List.of(
+                app.getContinentBreakdowns(),
+                app.getRegionBreakdowns(),
+                app.getCountryBreakdowns());
+
+        assertAllEmptyWithMessage(results);
+    }
 }
