@@ -131,4 +131,27 @@ class AppWithoutDatabaseTest
 
         assertAllEmptyWithMessage(results);
     }
+
+    // ---- city reports ----
+
+    /**
+     * All ten city reports (US02) return an empty list without a database.
+     */
+    @Test
+    void cityReportsReturnEmptyListsWithoutDatabase()
+    {
+        List<ArrayList<City>> results = List.of(
+                app.getCities(),
+                app.getCitiesByContinent("Europe"),
+                app.getCitiesByRegion("Caribbean"),
+                app.getCitiesByCountry("United Kingdom"),
+                app.getCitiesByDistrict("Scotland"),
+                app.getTopNCities(3),
+                app.getTopNCitiesByContinent("Europe", 2),
+                app.getTopNCitiesByRegion("Caribbean", 3),
+                app.getTopNCitiesByCountry("United Kingdom", 3),
+                app.getTopNCitiesByDistrict("Scotland", 2));
+
+        assertAllEmptyWithMessage(results);
+    }
 }
