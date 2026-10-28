@@ -173,4 +173,37 @@ class AppWithoutDatabaseTest
 
         assertAllEmptyWithMessage(results);
     }
+
+    // ---- population totals ----
+
+    /**
+     * The world population lookup (US05) returns zero without a database.
+     */
+    @Test
+    void worldPopulationIsZeroWithoutDatabase()
+    {
+        assertEquals(0L, app.getWorldPopulation());
+        assertEquals(1, noConnectionMessages());
+    }
+
+    /**
+     * The other population lookups and totals (US05) return an empty list
+     * without a database.
+     */
+    @Test
+    void populationLookupsReturnEmptyListsWithoutDatabase()
+    {
+        List<ArrayList<PopulationTotal>> results = List.of(
+                app.getPopulationByContinent("Europe"),
+                app.getPopulationByRegion("Caribbean"),
+                app.getPopulationByCountry("United Kingdom"),
+                app.getPopulationByDistrict("Scotland", "United Kingdom"),
+                app.getPopulationByCity("Edinburgh", "United Kingdom"),
+                app.getContinentPopulations(),
+                app.getRegionPopulations(),
+                app.getDistrictPopulations(),
+                app.getCityPopulations());
+
+        assertAllEmptyWithMessage(results);
+    }
 }
