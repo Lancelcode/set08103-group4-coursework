@@ -112,4 +112,23 @@ class AppWithoutDatabaseTest
     {
         assertDoesNotThrow(() -> app.disconnect());
     }
+
+    // ---- country reports ----
+
+    /**
+     * All six country reports (US01) return an empty list without a database.
+     */
+    @Test
+    void countryReportsReturnEmptyListsWithoutDatabase()
+    {
+        List<ArrayList<Country>> results = List.of(
+                app.getCountries(),
+                app.getCountriesByContinent("Europe"),
+                app.getCountriesByRegion("Caribbean"),
+                app.getTopNCountries(5),
+                app.getTopNCountriesByContinent("Europe", 3),
+                app.getTopNCountriesByRegion("Caribbean", 3));
+
+        assertAllEmptyWithMessage(results);
+    }
 }
