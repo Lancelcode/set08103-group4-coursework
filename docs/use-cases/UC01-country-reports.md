@@ -24,6 +24,9 @@ No report is displayed and the user is told why.
 ### Primary Actor
 Organisation employee (report user).
 
+### Secondary Actor
+MySQL world database: supplies the country, city and countrylanguage data.
+
 ### Trigger
 The user requests a country report.
 
