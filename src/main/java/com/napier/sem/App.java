@@ -976,6 +976,11 @@ public class App
      */
     public void displayCountries(ArrayList<Country> countries)
     {
+        if (countries == null)
+        {
+            System.out.println("No countries to display");
+            return;
+        }
         System.out.println(
                 "Code | Name | Continent | Region | Population | Capital");
 
