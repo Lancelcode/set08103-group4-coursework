@@ -26,5 +26,16 @@ class CountryReportTest
         assertDoesNotThrow(() -> app.displayCountries(countries));
     }
 
+
+    @Test
+    void displayCountriesTestNullEntry()
+    {
+        ArrayList<Country> countries = new ArrayList<>();
+        countries.add(null);
+
+        assertDoesNotThrow(() -> app.displayCountries(countries));
+    }
+
+
 }
 

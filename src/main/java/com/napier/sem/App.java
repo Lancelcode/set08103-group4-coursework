@@ -986,6 +986,10 @@ public class App
 
         for (Country country : countries)
         {
+            if (country == null)
+            {
+                continue;
+            }
             System.out.println(
                     country.code + " | "
                             + country.name + " | "
