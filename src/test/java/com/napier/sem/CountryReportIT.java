@@ -53,4 +53,11 @@ class CountryReportIT extends IntegrationTestBase
         assertEquals("Indonesia", countries.get(3).name);
         assertEquals("Brazil", countries.get(4).name);
     }
+    @Test
+    void top300CountriesInWorldReturns239Rows()
+    {
+        ArrayList<Country> countries = app.getTopNCountries(300);
+
+        assertEquals(239, countries.size());
+    }
 }
