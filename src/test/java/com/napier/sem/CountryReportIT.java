@@ -41,4 +41,14 @@ class CountryReportIT extends IntegrationTestBase
         assertNotNull(antarctica);
         assertEquals("N/A", antarctica.capital);
     }
+    @Test
+    void topThreeCountriesInCaribbean()
+    {
+        ArrayList<Country> countries = app.getTopNCountriesByRegion("Caribbean", 3);
+
+        assertEquals(3, countries.size());
+        assertEquals("Cuba", countries.get(0).name);
+        assertEquals("Dominican Republic", countries.get(1).name);
+        assertEquals("Haiti", countries.get(2).name);
+    }
 }
