@@ -1025,11 +1025,22 @@ public class App
      */
     public void displayCities(ArrayList<City> cities)
     {
+        if (cities == null)
+        {
+            System.out.println("No cities to display");
+            return;
+        }
+
         System.out.println(
                 "Name | Country | District | Population");
 
         for (City city : cities)
         {
+            if (city == null)
+            {
+                continue;
+            }
+
             System.out.println(
                     city.name + " | "
                             + city.country + " | "
@@ -1045,10 +1056,21 @@ public class App
      */
     public void displayCapitalCities(ArrayList<CapitalCity> capitalCities)
     {
+        if (capitalCities == null)
+        {
+            System.out.println("No capital cities to display");
+            return;
+        }
+
         System.out.println("Name | Country | Population");
 
         for (CapitalCity capitalCity : capitalCities)
         {
+            if (capitalCity == null)
+            {
+                continue;
+            }
+
             System.out.println(
                     capitalCity.name + " | "
                             + capitalCity.country + " | "
