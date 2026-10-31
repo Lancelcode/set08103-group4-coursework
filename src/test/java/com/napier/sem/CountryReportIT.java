@@ -60,4 +60,13 @@ class CountryReportIT extends IntegrationTestBase
             assertTrue(countries.get(i - 1).population >= countries.get(i).population);
         }
     }
+
+    @Test
+    void unknownContinentReturnsEmptyList()
+    {
+        ArrayList<Country> countries = app.getCountriesByContinent("Atlantis");
+
+        assertNotNull(countries);
+        assertTrue(countries.isEmpty());
+    }
 }
