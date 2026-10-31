@@ -35,5 +35,18 @@ class CapitalCityReportIT extends IntegrationTestBase
             assertTrue(capitals.get(i - 1).population >= capitals.get(i).population);
         }
     }
+    @Test
+    void capitalFoundByIdNotName()
+    {
+        ArrayList<CapitalCity> capitals = app.getCapitalCities();
+
+        for (CapitalCity capital : capitals)
+        {
+            assertFalse(
+                    capital.name.equals("London")
+                            && capital.country.equals("Canada")
+            );
+        }
+    }
 }
 
