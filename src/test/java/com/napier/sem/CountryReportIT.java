@@ -57,4 +57,13 @@ class CountryReportIT extends IntegrationTestBase
             assertEquals("Caribbean", country.region);
         }
     }
+
+    @Test
+    void unknownRegionReturnsEmptyList()
+    {
+        ArrayList<Country> countries = app.getCountriesByRegion("Atlantis");
+
+        assertNotNull(countries);
+        assertTrue(countries.isEmpty());
+    }
 }
