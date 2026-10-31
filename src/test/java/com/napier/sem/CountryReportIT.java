@@ -41,4 +41,20 @@ class CountryReportIT extends IntegrationTestBase
         assertNotNull(antarctica);
         assertEquals("N/A", antarctica.capital);
     }
+
+    @Test
+    void countriesInCaribbeanReturns24RowsLargestFirst()
+    {
+        ArrayList<Country> countries = app.getCountriesByRegion("Caribbean");
+
+        assertEquals(24, countries.size());
+        assertEquals("Cuba", countries.get(0).name);
+        assertEquals("Dominican Republic", countries.get(1).name);
+        assertEquals("Haiti", countries.get(2).name);
+
+        for (Country country : countries)
+        {
+            assertEquals("Caribbean", country.region);
+        }
+    }
 }
