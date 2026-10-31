@@ -41,4 +41,31 @@ class CountryReportIT extends IntegrationTestBase
         assertNotNull(antarctica);
         assertEquals("N/A", antarctica.capital);
     }
+    @Test
+    void topFiveCountriesInWorld()
+    {
+        ArrayList<Country> countries = app.getTopNCountries(5);
+
+        assertEquals(5, countries.size());
+        assertEquals("China", countries.get(0).name);
+        assertEquals("India", countries.get(1).name);
+        assertEquals("United States", countries.get(2).name);
+        assertEquals("Indonesia", countries.get(3).name);
+        assertEquals("Brazil", countries.get(4).name);
+    }
+    @Test
+    void top300CountriesInWorldReturns239Rows()
+    {
+        ArrayList<Country> countries = app.getTopNCountries(300);
+
+        assertEquals(239, countries.size());
+    }
+    @Test
+    void topZeroCountriesInWorldReturnsEmptyList()
+    {
+        ArrayList<Country> countries = app.getTopNCountries(0);
+
+        assertNotNull(countries);
+        assertTrue(countries.isEmpty());
+    }
 }
