@@ -60,4 +60,12 @@ class CountryReportIT extends IntegrationTestBase
 
         assertEquals(239, countries.size());
     }
+    @Test
+    void topZeroCountriesInWorldReturnsEmptyList()
+    {
+        ArrayList<Country> countries = app.getTopNCountries(0);
+
+        assertNotNull(countries);
+        assertTrue(countries.isEmpty());
+    }
 }
