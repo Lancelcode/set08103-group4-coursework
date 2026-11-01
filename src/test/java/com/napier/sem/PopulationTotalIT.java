@@ -104,5 +104,50 @@ class PopulationTotalIT extends IntegrationTestBase
     {
         assertTrue(app.getPopulationByDistrict("Scotland", "France").isEmpty());
     }
+
+
+
+    @Test
+    void edinburghPopulationIs450180()
+    {
+        ArrayList<PopulationTotal> totals =
+                app.getPopulationByCity("Edinburgh", "United Kingdom");
+
+        assertEquals(1, totals.size());
+        assertEquals("United Kingdom - Edinburgh (Scotland)", totals.get(0).name);
+        assertEquals(450180L, totals.get(0).population);
+    }
+
+    @Test
+    void hamiltonCanadaPopulationIs335614()
+    {
+        ArrayList<PopulationTotal> totals =
+                app.getPopulationByCity("Hamilton", "Canada");
+
+        assertEquals(1, totals.size());
+        assertEquals("Canada - Hamilton (Ontario)", totals.get(0).name);
+        assertEquals(335614L, totals.get(0).population);
+    }
+
+    @Test
+    void richmondUnitedStatesReturnsTwoCities()
+    {
+        ArrayList<PopulationTotal> totals =
+                app.getPopulationByCity("Richmond", "United States");
+
+        assertEquals(2, totals.size());
+
+        assertTrue(totals.stream().anyMatch(city ->
+                city.population == 197790L));
+
+        assertTrue(totals.stream().anyMatch(city ->
+                city.population == 94100L));
+    }
+
+    @Test
+    void edinburghInFranceReturnsNoResult()
+    {
+        assertTrue(app.getPopulationByCity("Edinburgh", "France").isEmpty());
+    }
 }
 
