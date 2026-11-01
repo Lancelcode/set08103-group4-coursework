@@ -74,5 +74,35 @@ class PopulationTotalIT extends IntegrationTestBase
     {
         assertTrue(app.getPopulationByCountry("Narnia").isEmpty());
     }
+
+
+
+    @Test
+    void scotlandPopulationIs1429620()
+    {
+        ArrayList<PopulationTotal> totals =
+                app.getPopulationByDistrict("Scotland", "United Kingdom");
+
+        assertEquals(1, totals.size());
+        assertEquals("United Kingdom - Scotland", totals.get(0).name);
+        assertEquals(1429620L, totals.get(0).population);
+    }
+
+    @Test
+    void distritoFederalPopulationIsInMexico()
+    {
+        ArrayList<PopulationTotal> totals =
+                app.getPopulationByDistrict("Distrito Federal", "Mexico");
+
+        assertEquals(1, totals.size());
+        assertEquals("Mexico - Distrito Federal", totals.get(0).name);
+        assertTrue(totals.get(0).population > 0);
+    }
+
+    @Test
+    void scotlandInFranceReturnsNoResult()
+    {
+        assertTrue(app.getPopulationByDistrict("Scotland", "France").isEmpty());
+    }
 }
 
