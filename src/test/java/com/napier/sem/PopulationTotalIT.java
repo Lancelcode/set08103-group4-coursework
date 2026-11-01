@@ -57,5 +57,22 @@ class PopulationTotalIT extends IntegrationTestBase
     {
         assertTrue(app.getPopulationByRegion("Middle Earth").isEmpty());
     }
+
+
+    @Test
+    void unitedKingdomPopulationIs59623400()
+    {
+        ArrayList<PopulationTotal> totals = app.getPopulationByCountry("United Kingdom");
+
+        assertEquals(1, totals.size());
+        assertEquals("United Kingdom", totals.get(0).name);
+        assertEquals(59623400L, totals.get(0).population);
+    }
+
+    @Test
+    void unknownCountryReturnsNoResult()
+    {
+        assertTrue(app.getPopulationByCountry("Narnia").isEmpty());
+    }
 }
 
