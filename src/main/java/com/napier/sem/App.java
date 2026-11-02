@@ -1007,10 +1007,21 @@ public class App
      */
     public void displayLanguageStatistics(ArrayList<LanguageStatistic> stats)
     {
+        if (stats == null)
+        {
+            System.out.println("No language statistics to display");
+            return;
+        }
+
         System.out.println("Language | Speakers | % of world population");
 
         for (LanguageStatistic stat : stats)
         {
+            if (stat == null)
+            {
+                continue;
+            }
+
             System.out.println(
                     stat.language + " | "
                             + stat.speakers + " | "
