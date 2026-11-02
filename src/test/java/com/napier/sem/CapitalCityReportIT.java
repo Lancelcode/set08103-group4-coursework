@@ -60,5 +60,16 @@ class CapitalCityReportIT extends IntegrationTestBase
         assertEquals("Moscow", capitals.get(0).name);
         assertEquals("London", capitals.get(1).name);
     }
+
+    @Test
+    void topNCapitalsInUnknownContinentReturnsEmpty()
+    {
+        ArrayList<CapitalCity> capitals =
+                app.getTopNCapitalCitiesByContinent("Atlantis", 3);
+
+        assertNotNull(capitals);
+        assertTrue(capitals.isEmpty());
+    }
+
 }
 
