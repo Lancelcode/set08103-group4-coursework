@@ -3,6 +3,8 @@ package com.napier.sem;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests population breakdown calculations without a database.
@@ -62,6 +64,31 @@ class PopulationBreakdownTest
         assertEquals(0L, breakdown.getNonCityPopulation());
         assertEquals(100.0, breakdown.getCityPercentage(), TOLERANCE);
         assertEquals(0.0, breakdown.getNonCityPercentage(), TOLERANCE);
+    }
+
+    /**
+     * Checks an area whose recorded cities hold more people than the area,
+     * as in Singapore (#118): non-city population 0, city 100%, non-city 0%.
+     */
+    @Test
+    void capsCityPopulationAboveTotal()
+    {
+        PopulationBreakdown breakdown = createBreakdown(3_567_000L, 4_017_733L);
+
+        assertEquals(0L, breakdown.getNonCityPopulation());
+        assertEquals(100.0, breakdown.getCityPercentage(), TOLERANCE);
+        assertEquals(0.0, breakdown.getNonCityPercentage(), TOLERANCE);
+        assertTrue(breakdown.citiesExceedTotal());
+    }
+
+    /**
+     * Checks a normal area is not flagged as having too many city people.
+     */
+    @Test
+    void normalAreaIsNotFlagged()
+    {
+        assertFalse(createBreakdown(1000L, 250L).citiesExceedTotal());
+        assertFalse(createBreakdown(1000L, 1000L).citiesExceedTotal());
     }
 
     /**

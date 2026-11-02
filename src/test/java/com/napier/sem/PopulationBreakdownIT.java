@@ -127,6 +127,46 @@ class PopulationBreakdownIT extends IntegrationTestBase
     }
 
     /**
+     * Checks the three countries whose recorded cities hold more people
+     * than the country (#118): their city population is shown unchanged,
+     * their non-city population is 0 and their city percentage is 100%.
+     */
+    @Test
+    void citiesOutnumberingCountryShowZeroNonCity()
+    {
+        Map<String, PopulationBreakdown> report = indexReport(app.getCountryBreakdowns());
+
+        long[][] expected = {{3567000L, 4017733L}, {25000L, 27025L}, {600L, 670L}};
+        String[] names = {"Singapore", "Gibraltar", "Cocos (Keeling) Islands"};
+
+        for (int i = 0; i < names.length; i++)
+        {
+            PopulationBreakdown row = report.get(names[i]);
+
+            assertNotNull(row, "Missing country: " + names[i]);
+            assertEquals(expected[i][0], row.totalPopulation, names[i]);
+            assertEquals(expected[i][1], row.cityPopulation, names[i]);
+            assertEquals(0L, row.getNonCityPopulation(), names[i]);
+            assertEquals(100.0, row.getCityPercentage(), 0.000001, names[i]);
+            assertEquals(0.0, row.getNonCityPercentage(), 0.000001, names[i]);
+            assertTrue(row.citiesExceedTotal(), names[i]);
+        }
+    }
+
+    /**
+     * Checks that only those three countries have more city people than people.
+     */
+    @Test
+    void onlyThreeCountriesHaveCitiesOutnumberingCountry()
+    {
+        long flagged = app.getCountryBreakdowns().stream()
+                .filter(PopulationBreakdown::citiesExceedTotal)
+                .count();
+
+        assertEquals(3L, flagged);
+    }
+
+    /**
      * Checks that countries without recorded cities remain in the report.
      */
     @Test
@@ -240,7 +280,8 @@ class PopulationBreakdownIT extends IntegrationTestBase
 
             assertEquals(totals[0], row.totalPopulation, name);
             assertEquals(totals[1], row.cityPopulation, name);
-            assertEquals(totals[0] - totals[1],
+            // Never negative, even where cities outnumber the area (#118)
+            assertEquals(Math.max(0, totals[0] - totals[1]),
                     row.getNonCityPopulation(), name);
         }
     }
