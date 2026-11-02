@@ -42,6 +42,31 @@ class CountryReportIT extends IntegrationTestBase
     }
 
     @Test
+    void topThreeCountriesInEurope()
+    {
+        ArrayList<Country> countries = app.getTopNCountriesByContinent("Europe", 3);
+
+        assertEquals(3, countries.size());
+        assertEquals("Russian Federation", countries.get(0).name);
+        assertEquals("Germany", countries.get(1).name);
+        assertEquals("United Kingdom", countries.get(2).name);
+    }
+
+    @Test
+    void top100CountriesInEuropeReturns46Rows()
+    {
+        ArrayList<Country> countries = app.getTopNCountriesByContinent("Europe", 100);
+
+        assertNotNull(countries);
+        assertEquals(46, countries.size());
+
+        for (Country country : countries)
+        {
+            assertEquals("Europe", country.continent);
+        }
+    }
+
+    @Test
     void topFiveCountriesInWorld()
     {
         ArrayList<Country> countries = app.getTopNCountries(5);
