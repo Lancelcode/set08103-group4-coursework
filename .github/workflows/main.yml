@@ -61,6 +61,20 @@ jobs:
         env:
           DB_HOST: localhost
         run: mvn -B verify
+      - name: Upload coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./target/site/jacoco/jacoco.xml
+          fail_ci_if_error: false
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: target/site/jacoco
+          if-no-files-found: ignore
       - name: Upload integration test reports
         if: always()
         uses: actions/upload-artifact@v4
