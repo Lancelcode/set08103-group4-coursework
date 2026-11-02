@@ -82,7 +82,7 @@ Planned on 20 Oct 2026 and shared with the team in the Teams chat, with roles, o
 | #146 | US03.1 All capital cities in the world | Julia | 1 | Done (PR #181) |
 | #147 | US03.2 All capital cities in a continent | Julia | 1 | Done (PR #202, picked up by Djiby) |
 | #148 | US03.3 All capital cities in a region | Julia | 1 | Done (PR #203, picked up by Djiby) |
-| #149 | US03.4 Top N capital cities in the world | Julia | 1 | Done (PR #204) |
+| #149 | US03.4 Top N capital cities in the world | Julia | 1 | Done (PR #204; a duplicate from Djiby, #207, was also merged) |
 | #150 | US03.5 Top N capital cities in a continent | Julia | 1 | Done (PR #205) |
 | #151 | US03.6 Top N capital cities in a region | Julia | 1 | Done (PR #206) |
 | #152 | US04.1 City and non-city population for each continent | Zain | 1 | Done (PR #166), PO to close |
@@ -138,7 +138,7 @@ _Written on 2 Nov 2026._
 | Tests running on GitHub Actions | Three jobs: Unit tests, Integration tests (MySQL started with Docker Compose), then Build and run the app, which only runs if both pass (#115). A deliberately failing test turned the run red: [run 39463479536](https://github.com/Lancelcode/set08103-group4-coursework/actions/runs/39463479536). The three jobs are required status checks on `main`, `develop` and `release` |
 | Code coverage | JaCoCo measures coverage from both test types and uploads it to Codecov on every push (#116) |
 
-Test count on `develop`: 51 unit and 84 integration tests (135 in total), 56 unit with #121. Coverage: % of lines (Codecov, `develop`, 2 Nov 2026).
+Test count on `develop`: 51 unit and 84 integration tests (135 in total), 56 unit with #121. Coverage: shown live on the Codecov badge in the README ([Codecov report](https://app.codecov.io/gh/Lancelcode/set08103-group4-coursework)).
 
 **CR2 feedback acted on**
 - Specific user stories: 32 stories with real roles and testable criteria (#125, `docs/user-stories.md`).
