@@ -31,5 +31,31 @@ class PopulationTotalIT extends IntegrationTestBase
     {
         assertTrue(app.getPopulationByContinent("Atlantis").isEmpty());
     }
+
+    @Test
+    void caribbeanPopulationIs38140000()
+    {
+        ArrayList<PopulationTotal> totals = app.getPopulationByRegion("Caribbean");
+
+        assertEquals(1, totals.size());
+        assertEquals("Caribbean", totals.get(0).name);
+        assertEquals(38140000L, totals.get(0).population);
+    }
+
+    @Test
+    void britishIslandsPopulationIs63398500()
+    {
+        ArrayList<PopulationTotal> totals = app.getPopulationByRegion("British Islands");
+
+        assertEquals(1, totals.size());
+        assertEquals("British Islands", totals.get(0).name);
+        assertEquals(63398500L, totals.get(0).population);
+    }
+
+    @Test
+    void unknownRegionReturnsNoResult()
+    {
+        assertTrue(app.getPopulationByRegion("Middle Earth").isEmpty());
+    }
 }
 
