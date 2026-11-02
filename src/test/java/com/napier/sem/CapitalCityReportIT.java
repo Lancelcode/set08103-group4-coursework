@@ -71,5 +71,17 @@ class CapitalCityReportIT extends IntegrationTestBase
         assertTrue(capitals.isEmpty());
     }
 
+    @Test
+    void topThreeCapitalsInCaribbean()
+    {
+        ArrayList<CapitalCity> capitals =
+                app.getTopNCapitalCitiesByRegion("Caribbean", 3);
+
+        assertEquals(3, capitals.size());
+
+        assertEquals("La Habana", capitals.get(0).name);
+        assertEquals("Santo Domingo de Guzmán", capitals.get(1).name);
+        assertEquals("Port-au-Prince", capitals.get(2).name);
+    }
 }
 
