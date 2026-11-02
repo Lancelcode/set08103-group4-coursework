@@ -176,8 +176,8 @@ class PopulationBreakdownIT extends IntegrationTestBase
             }
         }
 
-        assertTrue(checked > 0,
-                "Dataset must contain zero-population countries");
+        assertEquals(7, checked,
+                "Expected exactly seven zero-population countries");
     }
 
     /**
@@ -305,5 +305,36 @@ class PopulationBreakdownIT extends IntegrationTestBase
 
         /** Country population, counted once during aggregation. */
         private long population;
+    }
+
+    @Test
+    void chinaAndUnitedKingdomRowsMatchExpectedValues()
+    {
+        ArrayList<PopulationBreakdown> rows = app.getCountryBreakdowns();
+
+        assertEquals(239, rows.size());
+
+        PopulationBreakdown china = rows.stream()
+                .filter(row -> row.name.equals("China"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals("China", rows.get(0).name);
+        assertEquals(1277558000L, china.totalPopulation);
+        assertEquals(175953614L, china.cityPopulation);
+        assertEquals(1101604386L, china.getNonCityPopulation());
+        assertEquals(13.77, china.getCityPercentage(), 0.01);
+        assertEquals(86.23, china.getNonCityPercentage(), 0.01);
+
+        PopulationBreakdown uk = rows.stream()
+                .filter(row -> row.name.equals("United Kingdom"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(59623400L, uk.totalPopulation);
+        assertEquals(22436673L, uk.cityPopulation);
+        assertEquals(37186727L, uk.getNonCityPopulation());
+        assertEquals(37.63, uk.getCityPercentage(), 0.01);
+        assertEquals(62.37, uk.getNonCityPercentage(), 0.01);
     }
 }
