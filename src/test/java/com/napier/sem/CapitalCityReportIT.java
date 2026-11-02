@@ -48,5 +48,17 @@ class CapitalCityReportIT extends IntegrationTestBase
             );
         }
     }
+
+    @Test
+    void topTwoCapitalsInEurope()
+    {
+        ArrayList<CapitalCity> capitals =
+                app.getTopNCapitalCitiesByContinent("Europe", 2);
+
+        assertEquals(2, capitals.size());
+
+        assertEquals("Moscow", capitals.get(0).name);
+        assertEquals("London", capitals.get(1).name);
+    }
 }
 
