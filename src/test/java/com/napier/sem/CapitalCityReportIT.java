@@ -35,6 +35,7 @@ class CapitalCityReportIT extends IntegrationTestBase
             assertTrue(capitals.get(i - 1).population >= capitals.get(i).population);
         }
     }
+
     @Test
     void capitalFoundByIdNotName()
     {
@@ -98,5 +99,28 @@ class CapitalCityReportIT extends IntegrationTestBase
         assertEquals("Dublin", capitals.get(1).name);
         assertEquals(481854L, capitals.get(1).population);
     }
-}
 
+    @Test
+    void topThreeCapitalsInWorld()
+    {
+        ArrayList<CapitalCity> capitals = app.getTopNCapitalCities(3);
+
+        assertEquals(3, capitals.size());
+
+        assertEquals("Seoul", capitals.get(0).name);
+        assertEquals("Jakarta", capitals.get(1).name);
+        assertEquals("Ciudad de México", capitals.get(2).name);
+    }
+
+    @Test
+    void topNLargerThanCapitalCountReturnsAll()
+    {
+        ArrayList<CapitalCity> capitals = app.getTopNCapitalCities(500);
+
+        assertEquals(232, capitals.size());
+
+        assertEquals("Seoul", capitals.get(0).name);
+        assertEquals("Jakarta", capitals.get(1).name);
+        assertEquals("Ciudad de México", capitals.get(2).name);
+    }
+}
