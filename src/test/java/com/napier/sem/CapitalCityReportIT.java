@@ -73,6 +73,34 @@ class CapitalCityReportIT extends IntegrationTestBase
     }
 
     @Test
+    void topThreeCapitalsInCaribbean()
+    {
+        ArrayList<CapitalCity> capitals =
+                app.getTopNCapitalCitiesByRegion("Caribbean", 3);
+
+        assertEquals(3, capitals.size());
+
+        assertEquals("La Habana", capitals.get(0).name);
+        assertEquals("Santo Domingo de Guzmán", capitals.get(1).name);
+        assertEquals("Port-au-Prince", capitals.get(2).name);
+    }
+
+    @Test
+    void topNLargerThanRegionReturnsAllCapitals()
+    {
+        ArrayList<CapitalCity> capitals =
+                app.getTopNCapitalCitiesByRegion("British Islands", 5);
+
+        assertEquals(2, capitals.size());
+
+        assertEquals("London", capitals.get(0).name);
+        assertEquals(7285000L, capitals.get(0).population);
+
+        assertEquals("Dublin", capitals.get(1).name);
+        assertEquals(481854L, capitals.get(1).population);
+    }
+
+    @Test
     void topThreeCapitalsInWorld()
     {
         ArrayList<CapitalCity> capitals = app.getTopNCapitalCities(3);
