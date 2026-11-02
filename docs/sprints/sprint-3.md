@@ -171,7 +171,7 @@ _Written on 2 Nov 2026._
 4. **Contact the teaching team** if a member still has no contribution by the mid-sprint check, as the assessment brief says to do when contributions are not even.
 
 ## Contribution (CR3)
-_Draft from GitHub activity on 2 Nov 2026, for the team to agree before it is submitted._
+_Based on GitHub activity up to 2 Nov 2026._
 
 | Member | GitHub | Sprint 3 contribution | Commits | CR3 % |
 |---|---|---|---|---|
