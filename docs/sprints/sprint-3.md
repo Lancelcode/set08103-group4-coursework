@@ -47,15 +47,15 @@ Planned on 20 Oct 2026 and shared with the team in the Teams chat, with roles, o
 | #115 | Run unit and integration tests in GitHub Actions | Djiby | 3 | Done (PR #164) |
 | #116 | Measure test coverage with JaCoCo and Codecov | Djiby | 2 | Done (PR #168) |
 | #117 | Unit tests for menu input: Top N and name prompts | Kyle | 3 | Done (PR #175, picked up by Djiby) |
-| #118 | Decide and test how breakdowns show countries whose cities outnumber the country | Zain | 2 | Carried to Sprint 4 |
+| #118 | Decide and test how breakdowns show countries whose cities outnumber the country | Kyle | 2 | In progress (moved from Zain) |
 | #119 | Unit tests for displayCountries | Julia | 1 | Done (PR #173) |
 | #120 | Unit tests for displayCities and displayCapitalCities | Hassan | 2 | Done (PR #172) |
 | #121 | Unit tests for displayPopulationBreakdowns | Zain | 1 | In review (picked up by Djiby) |
 | #122 | Unit tests for displayLanguageStatistics | Kyle | 1 | Done (PR #191) |
-| #123 | UML class diagram of the application | Zain | 2 | Carried to Sprint 4 |
+| #123 | UML class diagram of the application | Kyle | 2 | In progress (moved from Zain) |
 | #124 | Database as a secondary actor in the use case diagram (CR2 feedback) | Zain | 1 | Done (PR #165) |
 | #125 | Rewrite user stories with specific roles and testable criteria (CR2 feedback) | Djiby | 2 | Done (PR #167) |
-| #126 | Testing guide: how to run and add tests | Zain | 2 | Carried to Sprint 4 |
+| #126 | Testing guide: how to run and add tests | Kyle | 2 | In progress (moved from Zain) |
 | #127 | Sprint 3 notes, roles, stand-ups, review, retrospective and contribution sheet | Djiby | 1 | Done (PR #169) |
 | #128 | Release v0.3 for Code Review 3 | Kyle | 1 | In progress |
 | #129 | CR3 evidence page | Hassan | 1 | Done (PR #182) |
@@ -145,7 +145,6 @@ Test count on `develop`: 51 unit and 84 integration tests (135 in total), 56 uni
 - Database as a secondary actor in the use case diagram (#124).
 
 **Not done, carried to Sprint 4**
-- How breakdowns show countries whose cities outnumber the country (#118), the class diagram (#123) and the testing guide (#126).
 - Release v0.3 (#128) was not published by the planned date of 30 Oct.
 
 ## Retrospective
@@ -162,7 +161,7 @@ _Written on 2 Nov 2026._
 - Most of the testing work was opened between 31 Oct and 2 Nov, after the 29 Oct PR deadline, so reviews were rushed and there was no time to act on review comments.
 - The first stand-up was moved because of another module's assessment and was then not held, so the drop in activity was only seen two days before the deadline.
 - Djiby picked up 13 issues assigned to others (#117, #121, US02.2 - US02.10, US03.2 and US03.3) to finish the testing goal.
-- Three of Zain's issues (#118, #123, #126) were not started, and the release was late.
+- Zain's last three issues (#118, #123, #126) had no activity after 24 Oct and were moved to Kyle on 2 Nov, and the release was late.
 
 **What we will change in Sprint 4**
 1. **First commit within 48 hours** of the sprint starting. Each member opens a small first PR early, so problems show up straight away.
