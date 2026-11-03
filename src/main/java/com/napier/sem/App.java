@@ -976,11 +976,20 @@ public class App
      */
     public void displayCountries(ArrayList<Country> countries)
     {
+        if (countries == null)
+        {
+            System.out.println("No countries to display");
+            return;
+        }
         System.out.println(
                 "Code | Name | Continent | Region | Population | Capital");
 
         for (Country country : countries)
         {
+            if (country == null)
+            {
+                continue;
+            }
             System.out.println(
                     country.code + " | "
                             + country.name + " | "
@@ -998,10 +1007,21 @@ public class App
      */
     public void displayLanguageStatistics(ArrayList<LanguageStatistic> stats)
     {
+        if (stats == null)
+        {
+            System.out.println("No language statistics to display");
+            return;
+        }
+
         System.out.println("Language | Speakers | % of world population");
 
         for (LanguageStatistic stat : stats)
         {
+            if (stat == null)
+            {
+                continue;
+            }
+
             System.out.println(
                     stat.language + " | "
                             + stat.speakers + " | "
@@ -1016,11 +1036,22 @@ public class App
      */
     public void displayCities(ArrayList<City> cities)
     {
+        if (cities == null)
+        {
+            System.out.println("No cities to display");
+            return;
+        }
+
         System.out.println(
                 "Name | Country | District | Population");
 
         for (City city : cities)
         {
+            if (city == null)
+            {
+                continue;
+            }
+
             System.out.println(
                     city.name + " | "
                             + city.country + " | "
@@ -1036,10 +1067,21 @@ public class App
      */
     public void displayCapitalCities(ArrayList<CapitalCity> capitalCities)
     {
+        if (capitalCities == null)
+        {
+            System.out.println("No capital cities to display");
+            return;
+        }
+
         System.out.println("Name | Country | Population");
 
         for (CapitalCity capitalCity : capitalCities)
         {
+            if (capitalCity == null)
+            {
+                continue;
+            }
+
             System.out.println(
                     capitalCity.name + " | "
                             + capitalCity.country + " | "
@@ -1074,12 +1116,24 @@ public class App
     public void displayPopulationBreakdowns(
             ArrayList<PopulationBreakdown> breakdowns)
     {
+        if (breakdowns == null)
+        {
+            System.out.println("No population breakdowns to display");
+            return;
+        }
+
         System.out.println(
                 "Name | Total Population | City Population | City % "
                         + "| Non-city Population | Non-city %");
 
         for (PopulationBreakdown breakdown : breakdowns)
         {
+            // Skip missing rows instead of crashing the whole report
+            if (breakdown == null)
+            {
+                continue;
+            }
+
             System.out.printf(
                     Locale.UK,
                     "%s | %d | %d | %.2f%% | %d | %.2f%%%n",

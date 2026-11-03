@@ -18,11 +18,22 @@ java -jar target/set08103-group4-jar-with-dependencies.jar
 ~~~
 Pick a report number, enter a continent/region/country/district or N when asked, and `0` to exit.
 
+## Design
+
+The UML class diagram illustrates the application's classes,
+their attributes, methods, and relationships.
+
+[View UML Class Diagram](docs/diagrams/class-diagram.drawio.png)
+
+## Known data limitations
+- In the World database, the recorded cities of **Singapore**, **Gibraltar** and **Cocos (Keeling) Islands** add up to more people than the country itself, because the figures come from different years. The city and non-city breakdown (reports 29 - 31) shows their recorded city population unchanged, their non-city population as 0, and their city percentage as 100.00% (#118).
+- The population of a district (lookup 35) is the sum of the district's **recorded cities only**, so it can be lower than the real population of the district.
 ## Project docs
 - [How we work](docs/CONTRIBUTING.md) and [Definition of Done](docs/DEFINITION_OF_DONE.md)
 - [Use cases](docs/use-cases/README.md) and [diagrams](docs/diagrams/)
 - [Sprint notes](docs/sprints/)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Testing Guide](docs/testing.md)
 
 ## Releases
 See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases) for the latest JAR.
@@ -34,4 +45,7 @@ See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases
 [![Licence](https://img.shields.io/github/license/Lancelcode/set08103-group4-coursework)](LICENSE)
 [![Build (main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml)
 [![Build (develop)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml)
+[![Coverage](https://codecov.io/gh/Lancelcode/set08103-group4-coursework/branch/develop/graph/badge.svg)](https://codecov.io/gh/Lancelcode/set08103-group4-coursework)
 [![Release](https://img.shields.io/github/v/release/Lancelcode/set08103-group4-coursework?display_name=tag&label=release)](https://github.com/Lancelcode/set08103-group4-coursework/releases)
+
+We acknowledge the use of some AI to check that every target was met and to look at how the work was distributed in percentages.
