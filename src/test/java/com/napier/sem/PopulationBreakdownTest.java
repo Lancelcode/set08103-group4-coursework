@@ -23,6 +23,7 @@ class PopulationBreakdownTest
         assertEquals(750L, breakdown.getNonCityPopulation());
         assertEquals(25.0, breakdown.getCityPercentage(), TOLERANCE);
         assertEquals(75.0, breakdown.getNonCityPercentage(), TOLERANCE);
+        assertEquals(false, breakdown.citiesExceedTotal());
     }
 
     /**
@@ -95,6 +96,21 @@ class PopulationBreakdownTest
         assertEquals(3_600_000_000L, breakdown.getNonCityPopulation());
         assertEquals(40.0, breakdown.getCityPercentage(), TOLERANCE);
         assertEquals(60.0, breakdown.getNonCityPercentage(), TOLERANCE);
+    }
+
+    /**
+     * Checks that city populations exceeding the total are handled safely.
+     */
+    @Test
+    void handlesCityPopulationExceedingTotal()
+    {
+        PopulationBreakdown breakdown =
+                createBreakdown(3567000L, 4017733L);
+
+        assertEquals(0L, breakdown.getNonCityPopulation());
+        assertEquals(100.0, breakdown.getCityPercentage(), TOLERANCE);
+        assertEquals(0.0, breakdown.getNonCityPercentage(), TOLERANCE);
+        assertEquals(true, breakdown.citiesExceedTotal());
     }
 
     /**
