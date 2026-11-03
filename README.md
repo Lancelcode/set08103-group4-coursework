@@ -18,6 +18,13 @@ java -jar target/set08103-group4-jar-with-dependencies.jar
 ~~~
 Pick a report number, enter a continent/region/country/district or N when asked, and `0` to exit.
 
+## Design
+
+The UML class diagram illustrates the application's classes,
+their attributes, methods, and relationships.
+
+[View UML Class Diagram](docs/diagrams/class-diagram.drawio.png)
+
 ## Project docs
 - [How we work](docs/CONTRIBUTING.md) and [Definition of Done](docs/DEFINITION_OF_DONE.md)
 - [Use cases](docs/use-cases/README.md) and [diagrams](docs/diagrams/)
