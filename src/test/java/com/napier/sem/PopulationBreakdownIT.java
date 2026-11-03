@@ -240,7 +240,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
 
             assertEquals(totals[0], row.totalPopulation, name);
             assertEquals(totals[1], row.cityPopulation, name);
-            assertEquals(totals[0] - totals[1],
+            assertEquals(Math.max(0L, totals[0] - totals[1]),
                     row.getNonCityPopulation(), name);
         }
     }
