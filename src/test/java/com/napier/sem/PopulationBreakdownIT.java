@@ -307,6 +307,10 @@ class PopulationBreakdownIT extends IntegrationTestBase
         private long population;
     }
 
+    /**
+     * Verifies that Asia and Europe have the expected population totals,
+     * city and non-city populations, and percentages.
+     */
     @Test
     void asiaAndEuropeRowsMatchExpectedValues()
     {
@@ -335,6 +339,10 @@ class PopulationBreakdownIT extends IntegrationTestBase
         assertEquals(66.86, europe.getNonCityPercentage(), 0.01);
     }
 
+    /**
+     * Verifies that Antarctica has zero population and that both
+     * population percentages are calculated as zero.
+     */
     @Test
     void antarcticaHasZeroPopulationAndPercentages()
     {
