@@ -23,6 +23,7 @@ class PopulationBreakdownTest
         assertEquals(750L, breakdown.getNonCityPopulation());
         assertEquals(25.0, breakdown.getCityPercentage(), TOLERANCE);
         assertEquals(75.0, breakdown.getNonCityPercentage(), TOLERANCE);
+        assertEquals(false, breakdown.citiesExceedTotal());
     }
 
     /**
