@@ -89,7 +89,7 @@
         <mxCell id="BXMwG2GO1nEhp2GeiMHJ-21" parent="BXMwG2GO1nEhp2GeiMHJ-20" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ name: String" vertex="1">
           <mxGeometry height="26" width="200" y="26" as="geometry" />
         </mxCell>
-        <mxCell id="BXMwG2GO1nEhp2GeiMHJ-22" parent="BXMwG2GO1nEhp2GeiMHJ-20" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;" value="+ population: long  " vertex="1">
+        <mxCell id="BXMwG2GO1nEhp2GeiMHJ-22" parent="BXMwG2GO1nEhp2GeiMHJ-20" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;" value="+ totalPopulation: long" vertex="1">
           <mxGeometry height="26" width="200" y="52" as="geometry" />
         </mxCell>
         <mxCell id="BXMwG2GO1nEhp2GeiMHJ-29" parent="BXMwG2GO1nEhp2GeiMHJ-20" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ cityPopulation: long" vertex="1">
@@ -110,7 +110,7 @@
         <mxCell id="BXMwG2GO1nEhp2GeiMHJ-27" parent="BXMwG2GO1nEhp2GeiMHJ-20" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ citiesExceedTotal(): boolean" vertex="1">
           <mxGeometry height="26" width="200" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="BXMwG2GO1nEhp2GeiMHJ-30" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" value="LanguageStatistics" vertex="1">
+        <mxCell id="BXMwG2GO1nEhp2GeiMHJ-30" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" value="LanguageStatistic" vertex="1">
           <mxGeometry height="140" width="160" x="1640" y="800" as="geometry">
             <mxRectangle height="26" width="160" x="550" y="140" as="alternateBounds" />
           </mxGeometry>
@@ -212,7 +212,7 @@
         <mxCell id="BXMwG2GO1nEhp2GeiMHJ-52" parent="BXMwG2GO1nEhp2GeiMHJ-48" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" value="" vertex="1">
           <mxGeometry height="8" width="350" y="52" as="geometry" />
         </mxCell>
-        <mxCell id="BXMwG2GO1nEhp2GeiMHJ-53" parent="BXMwG2GO1nEhp2GeiMHJ-48" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ main(args: String[]): void " vertex="1">
+        <mxCell id="BXMwG2GO1nEhp2GeiMHJ-53" parent="BXMwG2GO1nEhp2GeiMHJ-48" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ main(args: String[]): void {static}" vertex="1">
           <mxGeometry height="26" width="350" y="60" as="geometry" />
         </mxCell>
         <mxCell id="BXMwG2GO1nEhp2GeiMHJ-54" parent="BXMwG2GO1nEhp2GeiMHJ-48" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ connect(): void" vertex="1">
