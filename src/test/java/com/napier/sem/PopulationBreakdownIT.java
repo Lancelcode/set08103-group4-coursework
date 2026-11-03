@@ -176,8 +176,8 @@ class PopulationBreakdownIT extends IntegrationTestBase
             }
         }
 
-        assertTrue(checked > 0,
-                "Dataset must contain zero-population countries");
+        assertEquals(7, checked,
+                "Expected exactly seven zero-population countries");
     }
 
     /**
@@ -404,6 +404,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
     }
     
     @Test
+
     void chinaAndUnitedKingdomRowsMatchExpectedValues()
     {
         ArrayList<PopulationBreakdown> rows = app.getCountryBreakdowns();
@@ -433,6 +434,8 @@ class PopulationBreakdownIT extends IntegrationTestBase
         assertEquals(37.63, uk.getCityPercentage(), 0.01);
         assertEquals(62.37, uk.getNonCityPercentage(), 0.01);
     }
+
+
 
     @Test
     void singaporeCityPopulationExceedsCountryPopulation()
