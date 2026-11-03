@@ -307,7 +307,6 @@ class PopulationBreakdownIT extends IntegrationTestBase
         private long population;
     }
 
-<<<<<<< feature/issue-152-us04-1-tests
     /**
      * Verifies that Asia and Europe have the expected population totals,
      * city and non-city populations, and percentages.
@@ -360,7 +359,8 @@ class PopulationBreakdownIT extends IntegrationTestBase
 
         assertEquals(0.0, antarctica.getCityPercentage(), 0.001);
         assertEquals(0.0, antarctica.getNonCityPercentage(), 0.001);
-=======
+    }
+
     @Test
     void chinaAndUnitedKingdomRowsMatchExpectedValues()
     {
@@ -410,6 +410,5 @@ class PopulationBreakdownIT extends IntegrationTestBase
         assertEquals(0L, singapore.getNonCityPopulation());
         assertEquals(100.0, singapore.getCityPercentage(), 0.001);
         assertEquals(0.0, singapore.getNonCityPercentage(), 0.001);
->>>>>>> develop
     }
 }
