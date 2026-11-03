@@ -307,10 +307,6 @@ class PopulationBreakdownIT extends IntegrationTestBase
         private long population;
     }
 
-    /**
-     * Verifies that Asia and Europe have the expected population totals,
-     * city and non-city populations, and percentages.
-     */
     @Test
     void asiaAndEuropeRowsMatchExpectedValues()
     {
@@ -339,10 +335,6 @@ class PopulationBreakdownIT extends IntegrationTestBase
         assertEquals(66.86, europe.getNonCityPercentage(), 0.01);
     }
 
-    /**
-     * Verifies that Antarctica has zero population and that both
-     * population percentages are calculated as zero.
-     */
     @Test
     void antarcticaHasZeroPopulationAndPercentages()
     {
@@ -361,6 +353,56 @@ class PopulationBreakdownIT extends IntegrationTestBase
         assertEquals(0.0, antarctica.getNonCityPercentage(), 0.001);
     }
 
+    @Test
+    void easternAsiaAndCaribbeanRowsMatchExpectedValues()
+    {
+        ArrayList<PopulationBreakdown> rows = app.getRegionBreakdowns();
+
+        assertEquals(25, rows.size());
+
+        PopulationBreakdown easternAsia = rows.stream()
+                .filter(row -> row.name.equals("Eastern Asia"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals("Eastern Asia", rows.get(0).name);
+        assertEquals(1507328000L, easternAsia.totalPopulation);
+        assertEquals(317476534L, easternAsia.cityPopulation);
+        assertEquals(1189851466L, easternAsia.getNonCityPopulation());
+        assertEquals(21.06, easternAsia.getCityPercentage(), 0.01);
+        assertEquals(78.94, easternAsia.getNonCityPercentage(), 0.01);
+
+        PopulationBreakdown caribbean = rows.stream()
+                .filter(row -> row.name.equals("Caribbean"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(38140000L, caribbean.totalPopulation);
+        assertEquals(11067550L, caribbean.cityPopulation);
+        assertEquals(27072450L, caribbean.getNonCityPopulation());
+        assertEquals(29.02, caribbean.getCityPercentage(), 0.01);
+        assertEquals(70.98, caribbean.getNonCityPercentage(), 0.01);
+    }
+
+    @Test
+    void regionPercentagesAddUpToOneHundred()
+    {
+        ArrayList<PopulationBreakdown> rows = app.getRegionBreakdowns();
+
+        for (PopulationBreakdown region : rows)
+        {
+            if (region.totalPopulation > 0)
+            {
+                double totalPercentage =
+                        region.getCityPercentage()
+                                + region.getNonCityPercentage();
+
+                assertEquals(100.0, totalPercentage, 0.01,
+                        "Percentages should total 100% for " + region.name);
+            }
+        }
+    }
+    
     @Test
     void chinaAndUnitedKingdomRowsMatchExpectedValues()
     {
