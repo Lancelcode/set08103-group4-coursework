@@ -23,6 +23,7 @@ Pick a report number, enter a continent/region/country/district or N when asked,
 - [Use cases](docs/use-cases/README.md) and [diagrams](docs/diagrams/)
 - [Sprint notes](docs/sprints/)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Testing Guide](docs/testing.md)
 
 ## Releases
 See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases) for the latest JAR.
