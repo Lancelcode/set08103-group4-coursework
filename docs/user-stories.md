@@ -282,7 +282,7 @@ As a regional development analyst, I want to see, for each country, the total po
 - [ ] China is first: total 1,277,558,000; in cities 175,953,614 (13.77%); not in cities 1,101,604,386 (86.23%).
 - [ ] United Kingdom: total 59,623,400; in cities 22,436,673 (37.63%); not in cities 37,186,727 (62.37%).
 - [ ] The 7 countries with population 0 show 0.00% and 0.00%, with no error.
-- [ ] Countries whose recorded city population is larger than the country population (Singapore, Gibraltar, Cocos (Keeling) Islands) are shown as agreed in #118.
+- [ ] Countries whose recorded city population is larger than the country population (Singapore, Gibraltar, Cocos (Keeling) Islands) show their recorded city population unchanged, non-city population 0, city 100.00% and non-city 0.00%, because a population cannot be negative (decided in #118).
 
 ### US05 - Population totals (epic #17)
 
