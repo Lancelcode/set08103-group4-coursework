@@ -98,6 +98,21 @@ class PopulationBreakdownTest
     }
 
     /**
+     * Checks that city populations exceeding the total are handled safely.
+     */
+    @Test
+    void handlesCityPopulationExceedingTotal()
+    {
+        PopulationBreakdown breakdown =
+                createBreakdown(3567000L, 4017733L);
+
+        assertEquals(0L, breakdown.getNonCityPopulation());
+        assertEquals(100.0, breakdown.getCityPercentage(), TOLERANCE);
+        assertEquals(0.0, breakdown.getNonCityPercentage(), TOLERANCE);
+        assertEquals(true, breakdown.citiesExceedTotal());
+    }
+
+    /**
      * Creates an independent population breakdown for a test.
      *
      * @param total total population
