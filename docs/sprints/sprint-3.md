@@ -102,7 +102,7 @@ Planned on 20 Oct 2026 and shared with the team in the Teams chat, with roles, o
 | Wed 21 Oct | Shared integration test setup merged (#114) | Merged 21 Oct |
 | Week of 26 Oct | First stand-up and first-PR checkpoint | Stand-up not held; status checked from GitHub on 28 Oct |
 | Thu 29 Oct | All PRs merged into `develop` | Most test PRs opened and merged 31 Oct - 2 Nov; the last story tests merged 2 Nov |
-| Fri 30 Oct | Release v0.3 (#128) | In progress |
+| Fri 30 Oct | Release v0.3 (#128) | Published 3 Nov |
 | Sun 1 Nov | These notes, the contribution sheet and the CR3 evidence page finished | Evidence page merged 2 Nov (#182); these notes 2 Nov |
 
 ## Acting on the Sprint 2 retrospective
