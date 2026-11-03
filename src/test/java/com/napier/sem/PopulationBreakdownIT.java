@@ -307,6 +307,60 @@ class PopulationBreakdownIT extends IntegrationTestBase
         private long population;
     }
 
+    /**
+     * Verifies that Asia and Europe have the expected population totals,
+     * city and non-city populations, and percentages.
+     */
+    @Test
+    void asiaAndEuropeRowsMatchExpectedValues()
+    {
+        ArrayList<PopulationBreakdown> rows = app.getContinentBreakdowns();
+
+        assertEquals(7, rows.size());
+
+        PopulationBreakdown asia = rows.get(0);
+
+        assertEquals("Asia", asia.name);
+        assertEquals(3705025700L, asia.totalPopulation);
+        assertEquals(697604103L, asia.cityPopulation);
+        assertEquals(3007421597L, asia.getNonCityPopulation());
+        assertEquals(18.83, asia.getCityPercentage(), 0.01);
+        assertEquals(81.17, asia.getNonCityPercentage(), 0.01);
+
+        PopulationBreakdown europe = rows.stream()
+                .filter(row -> row.name.equals("Europe"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(730074600L, europe.totalPopulation);
+        assertEquals(241942813L, europe.cityPopulation);
+        assertEquals(488131787L, europe.getNonCityPopulation());
+        assertEquals(33.14, europe.getCityPercentage(), 0.01);
+        assertEquals(66.86, europe.getNonCityPercentage(), 0.01);
+    }
+
+    /**
+     * Verifies that Antarctica has zero population and that both
+     * population percentages are calculated as zero.
+     */
+    @Test
+    void antarcticaHasZeroPopulationAndPercentages()
+    {
+        ArrayList<PopulationBreakdown> rows = app.getContinentBreakdowns();
+
+        PopulationBreakdown antarctica = rows.stream()
+                .filter(row -> row.name.equals("Antarctica"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(0L, antarctica.totalPopulation);
+        assertEquals(0L, antarctica.cityPopulation);
+        assertEquals(0L, antarctica.getNonCityPopulation());
+
+        assertEquals(0.0, antarctica.getCityPercentage(), 0.001);
+        assertEquals(0.0, antarctica.getNonCityPercentage(), 0.001);
+    }
+
     @Test
     void chinaAndUnitedKingdomRowsMatchExpectedValues()
     {
