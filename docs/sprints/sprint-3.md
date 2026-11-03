@@ -176,9 +176,9 @@ _Based on GitHub activity up to 2 Nov 2026._
 
 | Member | GitHub | Sprint 3 contribution | Commits | CR3 % |
 |---|---|---|---|---|
-| Djiby Sow Rebollo | Lancelcode | Planning and all 48 Sprint 3 issues, shared test setup (#114), CI test jobs (#115), coverage (#116), user stories rewrite (#125), menu tests (#117), no-database tests (#170), tests for 11 stories (US02.2 - US02.10, US03.2, US03.3) and #121, sprint notes (#127), branch protection, reviewed and merged 15 PRs | 35 | 34 |
-| Julia | jkasiuk | US01.1 - US01.6, US03.1 and US03.4 - US03.6 integration tests, displayCountries tests and null handling (#119), reviewed and merged 13 PRs | 25 | 22 |
-| Kyle | Ky1eM05 | US05.1 - US05.6 and US06.1 integration tests, language display tests and null handling (#122), reviewed and merged 16 PRs as release manager | 8 | 18 |
-| Zain | zainali-uni | JUnit, Surefire and Failsafe setup and 12 tests (#107, #109), database actor in the use case diagram and UC01 - UC06 (#124) | 9 | 14 |
-| Hassan | Hasni243 | City and capital city display tests and null handling (#120), US02.1 integration tests, CR3 evidence page (#129) | 3 | 12 |
+| Djiby Sow Rebollo | Lancelcode | Planning and all 48 Sprint 3 issues, shared test setup (#114), CI test jobs (#115), coverage (#116), user stories rewrite (#125), menu tests (#117), no-database tests (#170), tests for 11 stories (US02.2 - US02.10, US03.2, US03.3) and #121, sprint notes (#127), branch protection, reviewed and merged 15 PRs | 42 | 36 |
+| Julia | jkasiuk | US01.1 - US01.6, US03.1 and US03.4 - US03.6 integration tests, displayCountries tests and null handling (#119), reviewed and merged 13 PRs | 25 | 20 |
+| Kyle | Ky1eM05 | US05.1 - US05.6 and US06.1 integration tests, language display tests and null handling (#122), reviewed and merged 16 PRs as release manager | 24 | 24 |
+| Zain | zainali-uni | JUnit, Surefire and Failsafe setup and 12 tests (#107, #109), database actor in the use case diagram and UC01 - UC06 (#124) | 9 | 10 |
+| Hassan | Hasni243 | City and capital city display tests and null handling (#120), US02.1 integration tests, CR3 evidence page (#129) | 3 | 10 |
 | **Total** | | | | **100** |
