@@ -1116,12 +1116,24 @@ public class App
     public void displayPopulationBreakdowns(
             ArrayList<PopulationBreakdown> breakdowns)
     {
+        if (breakdowns == null)
+        {
+            System.out.println("No population breakdowns to display");
+            return;
+        }
+
         System.out.println(
                 "Name | Total Population | City Population | City % "
                         + "| Non-city Population | Non-city %");
 
         for (PopulationBreakdown breakdown : breakdowns)
         {
+            // Skip missing rows instead of crashing the whole report
+            if (breakdown == null)
+            {
+                continue;
+            }
+
             System.out.printf(
                     Locale.UK,
                     "%s | %d | %d | %.2f%% | %d | %.2f%%%n",

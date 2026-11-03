@@ -21,7 +21,7 @@ public class PopulationBreakdown
      */
     public long getNonCityPopulation()
     {
-        return totalPopulation - cityPopulation;
+        return Math.max(0L, totalPopulation - cityPopulation);
     }
 
     /**
@@ -36,7 +36,7 @@ public class PopulationBreakdown
             return 0.0;
         }
 
-        return cityPopulation * 100.0 / totalPopulation;
+        return Math.min(100.0, cityPopulation * 100.0 / totalPopulation);
     }
 
     /**
@@ -52,5 +52,15 @@ public class PopulationBreakdown
         }
 
         return getNonCityPopulation() * 100.0 / totalPopulation;
+    }
+
+    /**
+     * Checks whether recorded city populations exceed the area's total.
+     *
+     * @return true if city population exceeds total population
+     */
+    public boolean citiesExceedTotal()
+    {
+        return cityPopulation > totalPopulation;
     }
 }

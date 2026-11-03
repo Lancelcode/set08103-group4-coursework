@@ -176,8 +176,8 @@ class PopulationBreakdownIT extends IntegrationTestBase
             }
         }
 
-        assertTrue(checked > 0,
-                "Dataset must contain zero-population countries");
+        assertEquals(7, checked,
+                "Expected exactly seven zero-population countries");
     }
 
     /**
@@ -240,7 +240,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
 
             assertEquals(totals[0], row.totalPopulation, name);
             assertEquals(totals[1], row.cityPopulation, name);
-            assertEquals(totals[0] - totals[1],
+            assertEquals(Math.max(0L, totals[0] - totals[1]),
                     row.getNonCityPopulation(), name);
         }
     }
@@ -305,5 +305,155 @@ class PopulationBreakdownIT extends IntegrationTestBase
 
         /** Country population, counted once during aggregation. */
         private long population;
+    }
+
+    @Test
+    void asiaAndEuropeRowsMatchExpectedValues()
+    {
+        ArrayList<PopulationBreakdown> rows = app.getContinentBreakdowns();
+
+        assertEquals(7, rows.size());
+
+        PopulationBreakdown asia = rows.get(0);
+
+        assertEquals("Asia", asia.name);
+        assertEquals(3705025700L, asia.totalPopulation);
+        assertEquals(697604103L, asia.cityPopulation);
+        assertEquals(3007421597L, asia.getNonCityPopulation());
+        assertEquals(18.83, asia.getCityPercentage(), 0.01);
+        assertEquals(81.17, asia.getNonCityPercentage(), 0.01);
+
+        PopulationBreakdown europe = rows.stream()
+                .filter(row -> row.name.equals("Europe"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(730074600L, europe.totalPopulation);
+        assertEquals(241942813L, europe.cityPopulation);
+        assertEquals(488131787L, europe.getNonCityPopulation());
+        assertEquals(33.14, europe.getCityPercentage(), 0.01);
+        assertEquals(66.86, europe.getNonCityPercentage(), 0.01);
+    }
+
+    @Test
+    void antarcticaHasZeroPopulationAndPercentages()
+    {
+        ArrayList<PopulationBreakdown> rows = app.getContinentBreakdowns();
+
+        PopulationBreakdown antarctica = rows.stream()
+                .filter(row -> row.name.equals("Antarctica"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(0L, antarctica.totalPopulation);
+        assertEquals(0L, antarctica.cityPopulation);
+        assertEquals(0L, antarctica.getNonCityPopulation());
+
+        assertEquals(0.0, antarctica.getCityPercentage(), 0.001);
+        assertEquals(0.0, antarctica.getNonCityPercentage(), 0.001);
+    }
+
+    @Test
+    void easternAsiaAndCaribbeanRowsMatchExpectedValues()
+    {
+        ArrayList<PopulationBreakdown> rows = app.getRegionBreakdowns();
+
+        assertEquals(25, rows.size());
+
+        PopulationBreakdown easternAsia = rows.stream()
+                .filter(row -> row.name.equals("Eastern Asia"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals("Eastern Asia", rows.get(0).name);
+        assertEquals(1507328000L, easternAsia.totalPopulation);
+        assertEquals(317476534L, easternAsia.cityPopulation);
+        assertEquals(1189851466L, easternAsia.getNonCityPopulation());
+        assertEquals(21.06, easternAsia.getCityPercentage(), 0.01);
+        assertEquals(78.94, easternAsia.getNonCityPercentage(), 0.01);
+
+        PopulationBreakdown caribbean = rows.stream()
+                .filter(row -> row.name.equals("Caribbean"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(38140000L, caribbean.totalPopulation);
+        assertEquals(11067550L, caribbean.cityPopulation);
+        assertEquals(27072450L, caribbean.getNonCityPopulation());
+        assertEquals(29.02, caribbean.getCityPercentage(), 0.01);
+        assertEquals(70.98, caribbean.getNonCityPercentage(), 0.01);
+    }
+
+    @Test
+    void regionPercentagesAddUpToOneHundred()
+    {
+        ArrayList<PopulationBreakdown> rows = app.getRegionBreakdowns();
+
+        for (PopulationBreakdown region : rows)
+        {
+            if (region.totalPopulation > 0)
+            {
+                double totalPercentage =
+                        region.getCityPercentage()
+                                + region.getNonCityPercentage();
+
+                assertEquals(100.0, totalPercentage, 0.01,
+                        "Percentages should total 100% for " + region.name);
+            }
+        }
+    }
+    
+    @Test
+
+    void chinaAndUnitedKingdomRowsMatchExpectedValues()
+    {
+        ArrayList<PopulationBreakdown> rows = app.getCountryBreakdowns();
+
+        assertEquals(239, rows.size());
+
+        PopulationBreakdown china = rows.stream()
+                .filter(row -> row.name.equals("China"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals("China", rows.get(0).name);
+        assertEquals(1277558000L, china.totalPopulation);
+        assertEquals(175953614L, china.cityPopulation);
+        assertEquals(1101604386L, china.getNonCityPopulation());
+        assertEquals(13.77, china.getCityPercentage(), 0.01);
+        assertEquals(86.23, china.getNonCityPercentage(), 0.01);
+
+        PopulationBreakdown uk = rows.stream()
+                .filter(row -> row.name.equals("United Kingdom"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(59623400L, uk.totalPopulation);
+        assertEquals(22436673L, uk.cityPopulation);
+        assertEquals(37186727L, uk.getNonCityPopulation());
+        assertEquals(37.63, uk.getCityPercentage(), 0.01);
+        assertEquals(62.37, uk.getNonCityPercentage(), 0.01);
+    }
+
+
+
+    @Test
+    void singaporeCityPopulationExceedsCountryPopulation()
+    {
+        ArrayList<PopulationBreakdown> rows = app.getCountryBreakdowns();
+
+        PopulationBreakdown singapore = rows.stream()
+                .filter(row -> row.name.equals("Singapore"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(3567000L, singapore.totalPopulation);
+        assertEquals(4017733L, singapore.cityPopulation);
+
+        assertTrue(singapore.citiesExceedTotal());
+
+        assertEquals(0L, singapore.getNonCityPopulation());
+        assertEquals(100.0, singapore.getCityPercentage(), 0.001);
+        assertEquals(0.0, singapore.getNonCityPercentage(), 0.001);
     }
 }
