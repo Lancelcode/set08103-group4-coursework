@@ -47,17 +47,17 @@ Planned on 20 Oct 2026 and shared with the team in the Teams chat, with roles, o
 | #115 | Run unit and integration tests in GitHub Actions | Djiby | 3 | Done (PR #164) |
 | #116 | Measure test coverage with JaCoCo and Codecov | Djiby | 2 | Done (PR #168) |
 | #117 | Unit tests for menu input: Top N and name prompts | Kyle | 3 | Done (PR #175, picked up by Djiby) |
-| #118 | Decide and test how breakdowns show countries whose cities outnumber the country | Kyle | 2 | In progress (moved from Zain) |
+| #118 | Decide and test how breakdowns show countries whose cities outnumber the country | Kyle | 2 | Done (PR #216, moved from Zain) |
 | #119 | Unit tests for displayCountries | Julia | 1 | Done (PR #173) |
 | #120 | Unit tests for displayCities and displayCapitalCities | Hassan | 2 | Done (PR #172) |
 | #121 | Unit tests for displayPopulationBreakdowns | Zain | 1 | In review (picked up by Djiby) |
 | #122 | Unit tests for displayLanguageStatistics | Kyle | 1 | Done (PR #191) |
-| #123 | UML class diagram of the application | Kyle | 2 | In progress (moved from Zain) |
+| #123 | UML class diagram of the application | Kyle | 2 | Done (PRs #217 and #220, moved from Zain) |
 | #124 | Database as a secondary actor in the use case diagram (CR2 feedback) | Zain | 1 | Done (PR #165) |
 | #125 | Rewrite user stories with specific roles and testable criteria (CR2 feedback) | Djiby | 2 | Done (PR #167) |
-| #126 | Testing guide: how to run and add tests | Kyle | 2 | In progress (moved from Zain) |
+| #126 | Testing guide: how to run and add tests | Kyle | 2 | Done (PR #218, moved from Zain) |
 | #127 | Sprint 3 notes, roles, stand-ups, review, retrospective and contribution sheet | Djiby | 1 | Done (PR #169) |
-| #128 | Release v0.3 for Code Review 3 | Kyle | 1 | In progress |
+| #128 | Release v0.3 for Code Review 3 | Kyle | 1 | Done (v0.3, 3 Nov) |
 | #129 | CR3 evidence page | Hassan | 1 | Done (PR #182) |
 
 ### User stories
@@ -85,9 +85,9 @@ Planned on 20 Oct 2026 and shared with the team in the Teams chat, with roles, o
 | #149 | US03.4 Top N capital cities in the world | Julia | 1 | Done (PR #204; a duplicate from Djiby, #207, was also merged) |
 | #150 | US03.5 Top N capital cities in a continent | Julia | 1 | Done (PR #205) |
 | #151 | US03.6 Top N capital cities in a region | Julia | 1 | Done (PR #206) |
-| #152 | US04.1 City and non-city population for each continent | Zain | 1 | Done (PR #166), PO to close |
-| #153 | US04.2 City and non-city population for each region | Zain | 1 | Done (PR #166), PO to close |
-| #154 | US04.3 City and non-city population for each country | Zain | 1 | Done (PR #166), PO to close |
+| #152 | US04.1 City and non-city population for each continent | Zain | 1 | Done (PRs #166 and #212) |
+| #153 | US04.2 City and non-city population for each region | Zain | 1 | Done (PRs #166 and #213) |
+| #154 | US04.3 City and non-city population for each country | Zain | 1 | Done (PRs #166 and #214) |
 | #155 | US05.1 Population of the world | Kyle | 1 | Done (PR #184) |
 | #156 | US05.2 Population of a continent | Kyle | 1 | Done (PR #185) |
 | #157 | US05.3 Population of a region | Kyle | 1 | Done (PR #186) |
@@ -128,6 +128,8 @@ Planned on 20 Oct 2026 and shared with the team in the Teams chat, with roles, o
 
 **Status check, 2 Nov 2026 (from GitHub).** Over the weekend Julia added US01.2 - US01.6 and US03.1, Hassan added US02.1 and the CR3 evidence page, and Kyle added US05.1 - US06.1 and #122 and merged 13 PRs. Djiby opened PRs for 11 stories still without tests (US02.2 - US02.10, US03.2, US03.3) and #121; Julia reviewed and merged them. Julia added US03.4 - US03.6 herself, and Kyle reviewed and merged them. Every user story now has integration tests on `develop`.
 
+**Status check, 3 Nov 2026 (from GitHub).** Kyle finished the three issues moved to him: the rule for countries whose cities outnumber the country (#118, PR #216), the class diagram (#123, PRs #217 and #220) and the testing guide (#126, PR #218). He also added tests with the expected values for US04.1 - US04.3 (PRs #212 - #214). Zain reviewed and merged #216 and #214. Djiby fixed three names in the class diagram and stated the #118 rule in the US04.3 criteria.
+
 ## Sprint review
 _Written on 2 Nov 2026._
 
@@ -138,14 +140,14 @@ _Written on 2 Nov 2026._
 | Tests running on GitHub Actions | Three jobs: Unit tests, Integration tests (MySQL started with Docker Compose), then Build and run the app, which only runs if both pass (#115). A deliberately failing test turned the run red: [run 39463479536](https://github.com/Lancelcode/set08103-group4-coursework/actions/runs/39463479536). The three jobs are required status checks on `main`, `develop` and `release` |
 | Code coverage | JaCoCo measures coverage from both test types and uploads it to Codecov on every push (#116) |
 
-Test count on `develop`: 51 unit and 84 integration tests (135 in total), 56 unit with #121. Coverage: shown live on the Codecov badge in the README ([Codecov report](https://app.codecov.io/gh/Lancelcode/set08103-group4-coursework)).
+Test count on `develop`: 57 unit and 93 integration tests (150 in total). Coverage: shown live on the Codecov badge in the README ([Codecov report](https://app.codecov.io/gh/Lancelcode/set08103-group4-coursework)).
 
 **CR2 feedback acted on**
 - Specific user stories: 32 stories with real roles and testable criteria (#125, `docs/user-stories.md`).
 - Database as a secondary actor in the use case diagram (#124).
 
 **Not done, carried to Sprint 4**
-- Release v0.3 (#128) was not published by the planned date of 30 Oct.
+- Release v0.3 (#128) was published on 3 Nov instead of the planned 30 Oct.
 
 ## Retrospective
 _Written on 2 Nov 2026._
