@@ -85,11 +85,12 @@ jobs:
       - name: Stop containers
         if: always()
         run: docker compose down -v
-
-  build:
+   build:
     name: Build and run the app
     needs: [unit-tests, integration-tests]
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -109,3 +110,16 @@ jobs:
       - name: Stop containers
         if: always()
         run: docker compose down -v
+      - name: Deploy JAR to GitHub Releases
+        if: github.ref == 'refs/heads/release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view latest > /dev/null 2>&1; then
+            gh release upload latest target/set08103-group4-jar-with-dependencies.jar --clobber
+          else
+            gh release create latest target/set08103-group4-jar-with-dependencies.jar \
+              --target "$GITHUB_SHA" \
+              --title "Latest automated release" \
+              --notes "Automated deployment from the release branch"
+          fi
