@@ -22,6 +22,16 @@ public class App
     private Connection con = null;
 
     /**
+     * Database user, from DB_USER (defaults to root).
+     */
+    private final String dbUser = valueOrDefault(System.getenv("DB_USER"), "root");
+
+    /**
+     * Database password, from DB_PASSWORD (defaults to root).
+     */
+    private final String dbPassword = valueOrDefault(System.getenv("DB_PASSWORD"), "root");
+
+    /**
      * Entry point. Connects to the database, then shows the report menu.
      * Run with --all to print every report once with sample input
      * (used in Docker and CI, where nobody can type a choice).
@@ -66,18 +76,31 @@ public class App
     }
 
     /**
+     * Returns the value, or the fallback when the value is missing or blank.
+     * Used to read settings from environment variables.
+     *
+     * @param value the value to check, for example System.getenv("DB_USER")
+     * @param fallback the value to use when it is missing
+     * @return value, or fallback if value is null or blank
+     */
+    static String valueOrDefault(String value, String fallback)
+    {
+        if (value == null || value.isBlank())
+        {
+            return fallback;
+        }
+        return value;
+    }
+
+    /**
      * Connects to the World database, retrying until MySQL is ready.
      * DB_HOST is used when running through Docker/CI,
      * localhost is used when running locally.
+     * DB_USER and DB_PASSWORD default to root.
      */
     public void connect()
     {
-        String host = System.getenv("DB_HOST");
-
-        if (host == null || host.isEmpty())
-        {
-            host = "localhost";
-        }
+        String host = valueOrDefault(System.getenv("DB_HOST"), "localhost");
 
         connect(host, 10, 5000);
     }
@@ -111,8 +134,8 @@ public class App
                 con = DriverManager.getConnection(
                         "jdbc:mysql://" + host
                                 + ":3306/world?allowPublicKeyRetrieval=true&useSSL=false",
-                        "root",
-                        "root");
+                        dbUser,
+                        dbPassword);
 
                 System.out.println("Successfully connected to database");
                 return;
