@@ -111,15 +111,12 @@ build:
         if: always()
         run: docker compose down -v
       - name: Deploy JAR to GitHub Releases
-        if: github.ref == 'refs/heads/release'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/release'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view latest > /dev/null 2>&1; then
-            gh release upload latest target/set08103-group4-jar-with-dependencies.jar --clobber
-          else
-            gh release create latest target/set08103-group4-jar-with-dependencies.jar \
-              --target "$GITHUB_SHA" \
-              --title "Latest automated release" \
-              --notes "Automated deployment from the release branch"
-          fi
+          gh release delete latest --cleanup-tag --yes || true
+          gh release create latest target/set08103-group4-jar-with-dependencies.jar \
+            --target "$GITHUB_SHA" \
+            --title "Latest automated release" \
+            --notes "Automated deployment from the release branch"
