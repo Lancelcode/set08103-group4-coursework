@@ -85,7 +85,7 @@ jobs:
       - name: Stop containers
         if: always()
         run: docker compose down -v
-   build:
+build:
     name: Build and run the app
     needs: [unit-tests, integration-tests]
     runs-on: ubuntu-22.04
