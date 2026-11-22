@@ -128,6 +128,73 @@ class MenuTest
         assertNull(app.lastCall);
     }
 
+    /**
+     * Checks that an unknown report number shows an error message.
+     */
+    @Test
+    void unknownReportShowsMessage()
+    {
+        Menu menu = new Menu(app, new Scanner(""));
+
+        menu.runReport(99, null, null, 0);
+
+        assertTrue(printed("Unknown report 99"));
+    }
+    /**
+     * Checks that the menu displays a country when results are available.
+     */
+    @Test
+    void countryReportDisplaysResults()
+    {
+        Country country = new Country();
+        country.code = "GBR";
+        country.name = "United Kingdom";
+
+        app.countries.add(country);
+
+        runMenu("1\n0\n");
+
+        assertTrue(printed("GBR | United Kingdom"));
+    }
+
+    /**
+     * Checks that the menu displays a city when results are available.
+     */
+    @Test
+    void cityReportDisplaysResults()
+    {
+        City city = new City();
+        city.name = "Edinburgh";
+        city.country = "United Kingdom";
+        city.district = "Scotland";
+        city.population = 450000;
+
+        app.cities.add(city);
+
+        runMenu("7\n0\n");
+
+        assertEquals("getCities", app.lastCall);
+        assertTrue(printed("Edinburgh | United Kingdom | Scotland | 450000"));
+    }
+    /**
+     * Checks that the menu displays a capital city when results are available.
+     */
+    @Test
+    void capitalReportDisplaysResults()
+    {
+        CapitalCity capital = new CapitalCity();
+        capital.name = "London";
+        capital.country = "United Kingdom";
+        capital.population = 7000000;
+
+        app.capitals.add(capital);
+
+        runMenu("22\n0\n");
+
+        assertEquals("getCapitalCities", app.lastCall);
+        assertTrue(printed("London | United Kingdom | 7000000"));
+    }
+
     // ---------- Top N prompt ----------
 
     @Test
@@ -208,6 +275,47 @@ class MenuTest
         assertFalse(printed("United States - Richmond (Virginia) | 197790"));
     }
 
+    // ---------- Missing input ----------
+
+    /**
+     * Checks that the menu exits safely when the country input is missing.
+     */
+    @Test
+    void cityPopulationStopsIfCountryInputRunsOut()
+    {
+        runMenu("36\nEdinburgh\n");
+
+        assertNull(app.lastCall);
+        assertTrue(printed("Enter the country: "));
+    }
+    /**
+     * Checks that the menu exits safely when the continent input is missing.
+     */
+    @Test
+    void nameReportStopsIfInputRunsOut()
+    {
+        runMenu("2\n");
+
+        assertNull(app.lastCall);
+        assertTrue(printed("Enter the continent: "));
+    }
+
+    /**
+     * Checks that the menu exits safely when no city is selected
+     * from multiple matching cities.
+     */
+    @Test
+    void duplicateCitiesStopIfSelectionInputRunsOut()
+    {
+        app.cityTotals.add(total("United States - Richmond (Virginia)", 197790));
+        app.cityTotals.add(total("United States - Richmond (California)", 94100));
+
+        runMenu("36\nRichmond\nUnited States\n");
+
+        assertTrue(printed("Multiple cities found:"));
+        assertTrue(printed("Choose a city (1 to 2): "));
+        assertFalse(printed("Name | Population"));
+    }
     // ---------- Helpers ----------
 
     /**
@@ -269,6 +377,12 @@ class MenuTest
         /** Rows returned for a city population lookup. */
         final ArrayList<PopulationTotal> cityTotals = new ArrayList<>();
 
+        final ArrayList<Country> countries = new ArrayList<>();
+
+        final ArrayList<City> cities = new ArrayList<>();
+
+        final ArrayList<CapitalCity> capitals = new ArrayList<>();
+
         @Override
         public ArrayList<Country> getTopNCountries(int n)
         {
@@ -296,5 +410,42 @@ class MenuTest
             lastCall = "populationByCity " + city + " " + country;
             return cityTotals;
         }
+        @Override
+        public ArrayList<Country> getCountries()
+        {
+            lastCall = "getCountries";
+            return countries;
+        }
+        @Override
+        public ArrayList<City> getCities()
+        {
+            lastCall = "getCities";
+            return cities;
+        }
+        @Override
+        public ArrayList<CapitalCity> getCapitalCities()
+        {
+            lastCall = "getCapitalCities";
+            return capitals;
+        }
+    }
+// ---------- Running all reports ----------
+
+    /**
+     * Checks that runAll executes all 36 reports with sample inputs.
+     */
+    @Test
+    void runAllExecutesEveryReport()
+    {
+        Menu menu = new Menu(app, new Scanner(""));
+
+        assertDoesNotThrow(menu::runAll);
+
+        assertTrue(printed("=== 1. All countries in the world ==="));
+        assertTrue(printed("=== 4. Top N countries in the world (N = 5) ==="));
+        assertTrue(printed("=== 23. All capital cities in a continent (Europe) ==="));
+        assertTrue(printed("=== 36. Population of a city in a country (Edinburgh) ==="));
+
+        assertEquals("populationByCity Edinburgh United Kingdom", app.lastCall);
     }
 }
