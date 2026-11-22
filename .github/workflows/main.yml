@@ -13,14 +13,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+
       - name: Set up JDK 17
         uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+
       - name: Run unit tests
         run: mvn -B test
+
       - name: Upload unit test reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -35,17 +38,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+
       - name: Set up JDK 17
         uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+
       - name: Start the MySQL World database
         run: docker compose up -d --wait mysql
+
       - name: Wait until the World data is loaded
-        # On first start MySQL loads world.sql before it accepts network connections,
-        # so wait for a real TCP query against the city table, not just "container healthy".
         run: |
           for i in $(seq 1 60); do
             if docker compose exec -T mysql mysql -h 127.0.0.1 -uroot -proot -e "SELECT COUNT(*) FROM world.city" > /dev/null 2>&1; then
@@ -57,10 +61,12 @@ jobs:
           echo "World database did not become ready in time"
           docker compose logs mysql
           exit 1
+
       - name: Run unit and integration tests
         env:
           DB_HOST: localhost
         run: mvn -B verify
+
       - name: Upload coverage to Codecov
         if: always()
         uses: codecov/codecov-action@v5
@@ -68,6 +74,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./target/site/jacoco/jacoco.xml
           fail_ci_if_error: false
+
       - name: Upload coverage report
         if: always()
         uses: actions/upload-artifact@v4
@@ -75,6 +82,7 @@ jobs:
           name: coverage-report
           path: target/site/jacoco
           if-no-files-found: ignore
+
       - name: Upload integration test reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -82,6 +90,7 @@ jobs:
           name: integration-test-reports
           path: target/failsafe-reports
           if-no-files-found: ignore
+
       - name: Stop containers
         if: always()
         run: docker compose down -v
@@ -90,22 +99,40 @@ jobs:
     name: Build and run the app
     needs: [unit-tests, integration-tests]
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+
       - name: Set up JDK 17
         uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+
       - name: Package JAR with Maven
-        # The tests already passed in the two jobs above.
         run: mvn -B package -DskipTests
+
       - name: Check the JAR exists
         run: test -f target/set08103-group4-jar-with-dependencies.jar
+
       - name: Run the app with the database
         run: docker compose up --build --abort-on-container-exit --exit-code-from app
+
       - name: Stop containers
         if: always()
         run: docker compose down -v
+
+      - name: Deploy JAR to GitHub Releases
+        if: github.event_name == 'push' && github.ref == 'refs/heads/release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --cleanup-tag --yes || true
+          gh release create latest target/set08103-group4-jar-with-dependencies.jar \
+            --target "$GITHUB_SHA" \
+            --title "Latest automated release" \
+            --notes "Automated deployment from the release branch"
