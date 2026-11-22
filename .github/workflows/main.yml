@@ -65,6 +65,8 @@ jobs:
       - name: Run unit and integration tests
         env:
           DB_HOST: localhost
+          DB_USER: root
+          DB_PASSWORD: root
         run: mvn -B verify
 
       - name: Upload coverage to Codecov
