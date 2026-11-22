@@ -77,7 +77,7 @@ public class Menu
             printOptions();
 
             String line = ask("Choose a report (0 to exit): ");
-            if (line == null || line.equals("0"))
+            if (line == null || "0".equals(line))
             {
                 return;
             }
