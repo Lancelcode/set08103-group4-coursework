@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Project documentation
+    url: https://github.com/Lancelcode/set08103-group4-coursework/blob/develop/README.md
+    about: Read the README for setup and usage guidance.
