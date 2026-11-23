@@ -15,3 +15,13 @@ Everything the CR4 marker needs, with a link to the proof for each item. All fig
 | Kanban in use | [Group_4 board, Sprint 4 milestone](https://github.com/users/Lancelcode/projects/1/views/1?filterQuery=milestone%3A%22Sprint%204%20-%20CR4%20(deployment)%22). Every issue has an owner, labels and a status |
 | Unit test quality and coverage | **70 unit tests** in 10 classes and **93 integration tests** in 18 classes. Sprint 4 added tests for the connection retry and disconnect paths (#236) and the uncovered Menu branches (#241). [Codecov report](https://app.codecov.io/gh/Lancelcode/set08103-group4-coursework) |
 | Requirements met | All 25 reports, 6 lookups and the language report, each tested against the World database (see the [CR3 evidence](cr3-evidence.md#user-stories-and-their-tests)) |
+ 
+## Deployment
+ 
+| Step | What happens |
+|---|---|
+| Push to `release` | The workflow runs the tests, builds the JAR, runs the app against MySQL in Docker, then deletes and recreates the `latest` release on the new commit (#229, #232) |
+| Push a `v*` tag on `main` | After the same checks, the `versioned-release` job publishes a new GitHub Release named after the tag, with the JAR and generated release notes (#244) |
+| Run a release | Download the JAR, start MySQL with `docker compose up -d mysql` from the repository folder and run `java -jar set08103-group4-jar-with-dependencies.jar` ([README](../README.md#releases), #233) |
+ 
+The [UML deployment diagram](diagrams/deployment-diagram.png) (#249) shows the CI jobs, GitHub Releases and the app and MySQL containers.
