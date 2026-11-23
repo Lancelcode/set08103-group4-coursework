@@ -20,7 +20,7 @@ class TopNCitiesContinentIT extends IntegrationTestBase
     @Test
     void topTwoInEurope()
     {
-        ArrayList<City> cities = app.getTopNCitiesByContinent("Europe", 2);
+        List<City> cities = app.getTopNCitiesByContinent("Europe", 2);
 
         assertEquals(List.of("Moscow", "London"), names(cities));
         assertLargestFirst(cities);
@@ -50,7 +50,7 @@ class TopNCitiesContinentIT extends IntegrationTestBase
      * @param cities cities from a report
      * @return their names
      */
-    private static List<String> names(ArrayList<City> cities)
+    private static List<String> names(List<City> cities)
     {
         return cities.stream().map(city -> city.name).toList();
     }
@@ -60,7 +60,7 @@ class TopNCitiesContinentIT extends IntegrationTestBase
      *
      * @param cities cities from a report
      */
-    private static void assertLargestFirst(ArrayList<City> cities)
+    private static void assertLargestFirst(List<City> cities)
     {
         for (int i = 1; i < cities.size(); i++)
         {

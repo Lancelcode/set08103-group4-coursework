@@ -3,6 +3,7 @@ package com.napier.sem;
 
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +15,7 @@ class CapitalCityReportIT extends IntegrationTestBase
     @Test
     void allCapitalsReturns232RowsLargestFirst()
     {
-        ArrayList<CapitalCity> capitals = app.getCapitalCities();
+        List<CapitalCity> capitals = app.getCapitalCities();
 
         assertEquals(232, capitals.size());
 
@@ -39,7 +40,7 @@ class CapitalCityReportIT extends IntegrationTestBase
     @Test
     void capitalFoundByIdNotName()
     {
-        ArrayList<CapitalCity> capitals = app.getCapitalCities();
+        List<CapitalCity> capitals = app.getCapitalCities();
 
         for (CapitalCity capital : capitals)
         {
@@ -53,7 +54,7 @@ class CapitalCityReportIT extends IntegrationTestBase
     @Test
     void topTwoCapitalsInEurope()
     {
-        ArrayList<CapitalCity> capitals =
+        List<CapitalCity> capitals =
                 app.getTopNCapitalCitiesByContinent("Europe", 2);
 
         assertEquals(2, capitals.size());
@@ -65,7 +66,7 @@ class CapitalCityReportIT extends IntegrationTestBase
     @Test
     void topNCapitalsInUnknownContinentReturnsEmpty()
     {
-        ArrayList<CapitalCity> capitals =
+        List<CapitalCity> capitals =
                 app.getTopNCapitalCitiesByContinent("Atlantis", 3);
 
         assertNotNull(capitals);
@@ -75,7 +76,7 @@ class CapitalCityReportIT extends IntegrationTestBase
     @Test
     void topThreeCapitalsInCaribbean()
     {
-        ArrayList<CapitalCity> capitals =
+        List<CapitalCity> capitals =
                 app.getTopNCapitalCitiesByRegion("Caribbean", 3);
 
         assertEquals(3, capitals.size());
@@ -88,7 +89,7 @@ class CapitalCityReportIT extends IntegrationTestBase
     @Test
     void topNLargerThanRegionReturnsAllCapitals()
     {
-        ArrayList<CapitalCity> capitals =
+        List<CapitalCity> capitals =
                 app.getTopNCapitalCitiesByRegion("British Islands", 5);
 
         assertEquals(2, capitals.size());
@@ -103,7 +104,7 @@ class CapitalCityReportIT extends IntegrationTestBase
     @Test
     void topThreeCapitalsInWorld()
     {
-        ArrayList<CapitalCity> capitals = app.getTopNCapitalCities(3);
+        List<CapitalCity> capitals = app.getTopNCapitalCities(3);
 
         assertEquals(3, capitals.size());
 
@@ -115,7 +116,7 @@ class CapitalCityReportIT extends IntegrationTestBase
     @Test
     void topNLargerThanCapitalCountReturnsAll()
     {
-        ArrayList<CapitalCity> capitals = app.getTopNCapitalCities(500);
+        List<CapitalCity> capitals = app.getTopNCapitalCities(500);
 
         assertEquals(232, capitals.size());
 

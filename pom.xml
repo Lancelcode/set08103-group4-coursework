@@ -80,6 +80,23 @@
                 </executions>
             </plugin>
 
+            <!-- Static analysis with PMD (quickstart rules). Run with: mvn compile pmd:check
+                 Report in target/pmd.xml and target/reports/pmd.html. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.26.0</version>
+                <configuration>
+                    <targetJdk>17</targetJdk>
+                    <rulesets>
+                        <ruleset>/rulesets/java/quickstart.xml</ruleset>
+                    </rulesets>
+                    <printFailingErrors>true</printFailingErrors>
+                    <linkXRef>false</linkXRef>
+                    <failOnViolation>true</failOnViolation>
+                </configuration>
+            </plugin>
+
             <!-- Packages the application with its dependencies. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

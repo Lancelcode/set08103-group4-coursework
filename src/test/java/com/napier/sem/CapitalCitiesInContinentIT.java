@@ -29,7 +29,7 @@ class CapitalCitiesInContinentIT extends IntegrationTestBase
     @Test
     void europeIsLargestFirst()
     {
-        ArrayList<CapitalCity> capitals = app.getCapitalCitiesByContinent("Europe");
+        List<CapitalCity> capitals = app.getCapitalCitiesByContinent("Europe");
 
         assertEquals(List.of("Moscow", "London", "Berlin"), names(capitals).subList(0, 3));
         assertEquals(8389200L, capitals.get(0).population);
@@ -53,7 +53,7 @@ class CapitalCitiesInContinentIT extends IntegrationTestBase
      * @param capitals capital cities from a report
      * @return their names
      */
-    private static List<String> names(ArrayList<CapitalCity> capitals)
+    private static List<String> names(List<CapitalCity> capitals)
     {
         return capitals.stream().map(capital -> capital.name).toList();
     }
@@ -63,7 +63,7 @@ class CapitalCitiesInContinentIT extends IntegrationTestBase
      *
      * @param capitals capital cities from a report
      */
-    private static void assertLargestFirst(ArrayList<CapitalCity> capitals)
+    private static void assertLargestFirst(List<CapitalCity> capitals)
     {
         for (int i = 1; i < capitals.size(); i++)
         {

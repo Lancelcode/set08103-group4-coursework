@@ -20,7 +20,7 @@ class TopNCitiesCountryIT extends IntegrationTestBase
     @Test
     void topThreeInUnitedKingdom()
     {
-        ArrayList<City> cities = app.getTopNCitiesByCountry("United Kingdom", 3);
+        List<City> cities = app.getTopNCitiesByCountry("United Kingdom", 3);
 
         assertEquals(List.of("London", "Birmingham", "Glasgow"), names(cities));
     }
@@ -31,7 +31,7 @@ class TopNCitiesCountryIT extends IntegrationTestBase
     @Test
     void nLargerThanCountryGivesAll()
     {
-        ArrayList<City> cities = app.getTopNCitiesByCountry("United Kingdom", 100);
+        List<City> cities = app.getTopNCitiesByCountry("United Kingdom", 100);
 
         assertEquals(81, cities.size());
         assertLargestFirst(cities);
@@ -52,7 +52,7 @@ class TopNCitiesCountryIT extends IntegrationTestBase
      * @param cities cities from a report
      * @return their names
      */
-    private static List<String> names(ArrayList<City> cities)
+    private static List<String> names(List<City> cities)
     {
         return cities.stream().map(city -> city.name).toList();
     }
@@ -62,7 +62,7 @@ class TopNCitiesCountryIT extends IntegrationTestBase
      *
      * @param cities cities from a report
      */
-    private static void assertLargestFirst(ArrayList<City> cities)
+    private static void assertLargestFirst(List<City> cities)
     {
         for (int i = 1; i < cities.size(); i++)
         {

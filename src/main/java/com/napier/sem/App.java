@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.List;
 
 /**
  * Population reporting application.
@@ -20,6 +21,16 @@ public class App
      * Database connection.
      */
     private Connection con = null;
+
+    /**
+     * Database user, from DB_USER (defaults to root).
+     */
+    private final String dbUser = valueOrDefault(System.getenv("DB_USER"), "root");
+
+    /**
+     * Database password, from DB_PASSWORD (defaults to root).
+     */
+    private final String dbPassword = valueOrDefault(System.getenv("DB_PASSWORD"), "root");
 
     /**
      * Entry point. Connects to the database, then shows the report menu.
@@ -43,7 +54,7 @@ public class App
 
         Menu menu = new Menu(app, new Scanner(System.in));
 
-        if (args.length > 0 && args[0].equals("--all"))
+        if (args.length > 0 && "--all".equals(args[0]))
         {
             menu.runAll();
         }
@@ -66,18 +77,31 @@ public class App
     }
 
     /**
+     * Returns the value, or the fallback when the value is missing or blank.
+     * Used to read settings from environment variables.
+     *
+     * @param value the value to check, for example System.getenv("DB_USER")
+     * @param fallback the value to use when it is missing
+     * @return value, or fallback if value is null or blank
+     */
+    static String valueOrDefault(String value, String fallback)
+    {
+        if (value == null || value.isBlank())
+        {
+            return fallback;
+        }
+        return value;
+    }
+
+    /**
      * Connects to the World database, retrying until MySQL is ready.
      * DB_HOST is used when running through Docker/CI,
      * localhost is used when running locally.
+     * DB_USER and DB_PASSWORD default to root.
      */
     public void connect()
     {
-        String host = System.getenv("DB_HOST");
-
-        if (host == null || host.isEmpty())
-        {
-            host = "localhost";
-        }
+        String host = valueOrDefault(System.getenv("DB_HOST"), "localhost");
 
         connect(host, 10, 5000);
     }
@@ -111,8 +135,8 @@ public class App
                 con = DriverManager.getConnection(
                         "jdbc:mysql://" + host
                                 + ":3306/world?allowPublicKeyRetrieval=true&useSSL=false",
-                        "root",
-                        "root");
+                        dbUser,
+                        dbPassword);
 
                 System.out.println("Successfully connected to database");
                 return;
@@ -176,11 +200,11 @@ public class App
      * @param <T> type of object in the returned list
      * @return the mapped rows, or an empty list if the query failed
      */
-    private <T> ArrayList<T> runQuery(
+    private <T> List<T> runQuery(
             String query, String description,
             RowMapper<T> mapper, Object... params)
     {
-        ArrayList<T> results = new ArrayList<>();
+        List<T> results = new ArrayList<>();
 
         if (con == null)
         {
@@ -224,7 +248,7 @@ public class App
      * @param <T> type of object in the returned list
      * @return up to N mapped rows, or an empty list if N is invalid
      */
-    private <T> ArrayList<T> runTopNQuery(
+    private <T> List<T> runTopNQuery(
             String query, String description,
             RowMapper<T> mapper, int n, Object... filters)
     {
@@ -287,7 +311,7 @@ public class App
      *
      * @return list of countries
      */
-    public ArrayList<Country> getCountries()
+    public List<Country> getCountries()
     {
         return runQuery(COUNTRY_SELECT + COUNTRY_ORDER,
                 "countries", App::mapCountry);
@@ -299,7 +323,7 @@ public class App
      * @param continent continent name
      * @return matching countries
      */
-    public ArrayList<Country> getCountriesByContinent(String continent)
+    public List<Country> getCountriesByContinent(String continent)
     {
         return runQuery(COUNTRY_SELECT + "WHERE c.Continent = ? " + COUNTRY_ORDER,
                 "countries", App::mapCountry, continent);
@@ -311,7 +335,7 @@ public class App
      * @param region region name
      * @return matching countries
      */
-    public ArrayList<Country> getCountriesByRegion(String region)
+    public List<Country> getCountriesByRegion(String region)
     {
         return runQuery(COUNTRY_SELECT + "WHERE c.Region = ? " + COUNTRY_ORDER,
                 "countries", App::mapCountry, region);
@@ -323,7 +347,7 @@ public class App
      * @param n number of countries to return
      * @return top N countries
      */
-    public ArrayList<Country> getTopNCountries(int n)
+    public List<Country> getTopNCountries(int n)
     {
         return runTopNQuery(COUNTRY_SELECT + COUNTRY_ORDER + LIMIT,
                 "countries", App::mapCountry, n);
@@ -336,7 +360,7 @@ public class App
      * @param n number of countries to return
      * @return top N countries in the continent
      */
-    public ArrayList<Country> getTopNCountriesByContinent(String continent, int n)
+    public List<Country> getTopNCountriesByContinent(String continent, int n)
     {
         return runTopNQuery(
                 COUNTRY_SELECT + "WHERE c.Continent = ? " + COUNTRY_ORDER + LIMIT,
@@ -350,7 +374,7 @@ public class App
      * @param n number of countries to return
      * @return top N countries in the region
      */
-    public ArrayList<Country> getTopNCountriesByRegion(String region, int n)
+    public List<Country> getTopNCountriesByRegion(String region, int n)
     {
         return runTopNQuery(
                 COUNTRY_SELECT + "WHERE c.Region = ? " + COUNTRY_ORDER + LIMIT,
@@ -396,7 +420,7 @@ public class App
      *
      * @return list of cities
      */
-    public ArrayList<City> getCities()
+    public List<City> getCities()
     {
         return runQuery(CITY_SELECT + CITY_ORDER, "cities", App::mapCity);
     }
@@ -407,7 +431,7 @@ public class App
      * @param continent continent name
      * @return matching cities
      */
-    public ArrayList<City> getCitiesByContinent(String continent)
+    public List<City> getCitiesByContinent(String continent)
     {
         return runQuery(CITY_SELECT + "WHERE co.Continent = ? " + CITY_ORDER,
                 "cities", App::mapCity, continent);
@@ -419,7 +443,7 @@ public class App
      * @param region region name
      * @return matching cities
      */
-    public ArrayList<City> getCitiesByRegion(String region)
+    public List<City> getCitiesByRegion(String region)
     {
         return runQuery(CITY_SELECT + "WHERE co.Region = ? " + CITY_ORDER,
                 "cities", App::mapCity, region);
@@ -431,7 +455,7 @@ public class App
      * @param country country name
      * @return matching cities
      */
-    public ArrayList<City> getCitiesByCountry(String country)
+    public List<City> getCitiesByCountry(String country)
     {
         return runQuery(CITY_SELECT + "WHERE co.Name = ? " + CITY_ORDER,
                 "cities", App::mapCity, country);
@@ -443,7 +467,7 @@ public class App
      * @param district district name
      * @return matching cities
      */
-    public ArrayList<City> getCitiesByDistrict(String district)
+    public List<City> getCitiesByDistrict(String district)
     {
         return runQuery(CITY_SELECT + "WHERE ci.District = ? " + CITY_ORDER,
                 "cities", App::mapCity, district);
@@ -455,7 +479,7 @@ public class App
      * @param n number of cities to return
      * @return Top N cities
      */
-    public ArrayList<City> getTopNCities(int n)
+    public List<City> getTopNCities(int n)
     {
         return runTopNQuery(CITY_SELECT + CITY_ORDER + LIMIT,
                 "cities", App::mapCity, n);
@@ -468,7 +492,7 @@ public class App
      * @param n number of cities to return
      * @return Top N matching cities
      */
-    public ArrayList<City> getTopNCitiesByContinent(
+    public List<City> getTopNCitiesByContinent(
             String continent, int n)
     {
         return runTopNQuery(
@@ -483,7 +507,7 @@ public class App
      * @param n number of cities to return
      * @return Top N matching cities
      */
-    public ArrayList<City> getTopNCitiesByRegion(
+    public List<City> getTopNCitiesByRegion(
             String region, int n)
     {
         return runTopNQuery(
@@ -498,7 +522,7 @@ public class App
      * @param n number of cities to return
      * @return Top N matching cities
      */
-    public ArrayList<City> getTopNCitiesByCountry(
+    public List<City> getTopNCitiesByCountry(
             String country, int n)
     {
         return runTopNQuery(
@@ -513,7 +537,7 @@ public class App
      * @param n number of cities to return
      * @return Top N matching cities
      */
-    public ArrayList<City> getTopNCitiesByDistrict(
+    public List<City> getTopNCitiesByDistrict(
             String district, int n)
     {
         return runTopNQuery(
@@ -558,7 +582,7 @@ public class App
      *
      * @return list of capital cities
      */
-    public ArrayList<CapitalCity> getCapitalCities()
+    public List<CapitalCity> getCapitalCities()
     {
         return runQuery(CAPITAL_SELECT + CAPITAL_ORDER,
                 "capital cities", App::mapCapitalCity);
@@ -570,7 +594,7 @@ public class App
      * @param continent continent name
      * @return matching capital cities
      */
-    public ArrayList<CapitalCity> getCapitalCitiesByContinent(String continent)
+    public List<CapitalCity> getCapitalCitiesByContinent(String continent)
     {
         return runQuery(CAPITAL_SELECT + "WHERE c.Continent = ? " + CAPITAL_ORDER,
                 "capital cities", App::mapCapitalCity, continent);
@@ -582,7 +606,7 @@ public class App
      * @param region region name
      * @return matching capital cities
      */
-    public ArrayList<CapitalCity> getCapitalCitiesByRegion(String region)
+    public List<CapitalCity> getCapitalCitiesByRegion(String region)
     {
         return runQuery(CAPITAL_SELECT + "WHERE c.Region = ? " + CAPITAL_ORDER,
                 "capital cities", App::mapCapitalCity, region);
@@ -594,7 +618,7 @@ public class App
      * @param n number of capital cities to return
      * @return Top N capital cities
      */
-    public ArrayList<CapitalCity> getTopNCapitalCities(int n)
+    public List<CapitalCity> getTopNCapitalCities(int n)
     {
         return runTopNQuery(CAPITAL_SELECT + CAPITAL_ORDER + LIMIT,
                 "capital cities", App::mapCapitalCity, n);
@@ -607,7 +631,7 @@ public class App
      * @param n number of capital cities to return
      * @return Top N matching capital cities
      */
-    public ArrayList<CapitalCity> getTopNCapitalCitiesByContinent(
+    public List<CapitalCity> getTopNCapitalCitiesByContinent(
             String continent, int n)
     {
         return runTopNQuery(
@@ -622,7 +646,7 @@ public class App
      * @param n number of capital cities to return
      * @return Top N matching capital cities
      */
-    public ArrayList<CapitalCity> getTopNCapitalCitiesByRegion(
+    public List<CapitalCity> getTopNCapitalCitiesByRegion(
             String region, int n)
     {
         return runTopNQuery(
@@ -666,7 +690,7 @@ public class App
      */
     public long getWorldPopulation()
     {
-        ArrayList<Long> rows = runQuery(
+        List<Long> rows = runQuery(
                 "SELECT SUM(Population) AS TotalPopulation FROM country",
                 "world population",
                 rset -> rset.getLong("TotalPopulation"));
@@ -680,7 +704,7 @@ public class App
      * @param continent name of the continent
      * @return matching population totals
      */
-    public ArrayList<PopulationTotal> getPopulationByContinent(String continent)
+    public List<PopulationTotal> getPopulationByContinent(String continent)
     {
         return runQuery(
                 "SELECT Continent AS Name, SUM(Population) AS TotalPopulation "
@@ -696,7 +720,7 @@ public class App
      * @param region name of the region
      * @return matching population totals
      */
-    public ArrayList<PopulationTotal> getPopulationByRegion(String region)
+    public List<PopulationTotal> getPopulationByRegion(String region)
     {
         return runQuery(
                 "SELECT Region AS Name, SUM(Population) AS TotalPopulation "
@@ -712,7 +736,7 @@ public class App
      * @param country name of the country
      * @return matching population totals
      */
-    public ArrayList<PopulationTotal> getPopulationByCountry(String country)
+    public List<PopulationTotal> getPopulationByCountry(String country)
     {
         return runQuery(
                 "SELECT Name, Population AS TotalPopulation "
@@ -729,7 +753,7 @@ public class App
      * @param country name of the country
      * @return matching district population totals
      */
-    public ArrayList<PopulationTotal> getPopulationByDistrict(
+    public List<PopulationTotal> getPopulationByDistrict(
             String district, String country)
     {
         return runQuery(
@@ -755,7 +779,7 @@ public class App
      * @param country name of the country
      * @return matching city population totals
      */
-    public ArrayList<PopulationTotal> getPopulationByCity(
+    public List<PopulationTotal> getPopulationByCity(
             String city, String country)
     {
         return runQuery(
@@ -778,7 +802,7 @@ public class App
      *
      * @return a list containing one population total for each continent
      */
-    public ArrayList<PopulationTotal> getContinentPopulations()
+    public List<PopulationTotal> getContinentPopulations()
     {
         return runQuery(
                 "SELECT Continent AS Name, SUM(Population) AS TotalPopulation "
@@ -793,7 +817,7 @@ public class App
      *
      * @return a list containing one population total for each region
      */
-    public ArrayList<PopulationTotal> getRegionPopulations()
+    public List<PopulationTotal> getRegionPopulations()
     {
         return runQuery(
                 "SELECT Region AS Name, SUM(Population) AS TotalPopulation "
@@ -808,7 +832,7 @@ public class App
      *
      * @return a list containing district population totals
      */
-    public ArrayList<PopulationTotal> getDistrictPopulations()
+    public List<PopulationTotal> getDistrictPopulations()
     {
         return runQuery(
                 "SELECT c.Name AS Country, ci.District, "
@@ -829,7 +853,7 @@ public class App
      *
      * @return a list containing the population of each city
      */
-    public ArrayList<PopulationTotal> getCityPopulations()
+    public List<PopulationTotal> getCityPopulations()
     {
         return runQuery(
                 "SELECT c.Name AS Country, ci.Name AS City, ci.Population "
@@ -854,7 +878,7 @@ public class App
      *
      * @return one statistic per language, largest first
      */
-    public ArrayList<LanguageStatistic> getLanguageStatistics()
+    public List<LanguageStatistic> getLanguageStatistics()
     {
         // Percentage is stored as e.g. 25.5, so divide by 100.
         // The world total is worked out once in the sub-query.
@@ -918,7 +942,7 @@ public class App
      *
      * @return population breakdowns, largest total population first
      */
-    public ArrayList<PopulationBreakdown> getContinentBreakdowns()
+    public List<PopulationBreakdown> getContinentBreakdowns()
     {
         return getGroupedBreakdowns("co.Continent");
     }
@@ -928,7 +952,7 @@ public class App
      *
      * @return population breakdowns, largest total population first
      */
-    public ArrayList<PopulationBreakdown> getRegionBreakdowns()
+    public List<PopulationBreakdown> getRegionBreakdowns()
     {
         return getGroupedBreakdowns("co.Region");
     }
@@ -938,7 +962,7 @@ public class App
      *
      * @return population breakdowns, largest total population first
      */
-    public ArrayList<PopulationBreakdown> getCountryBreakdowns()
+    public List<PopulationBreakdown> getCountryBreakdowns()
     {
         return runQuery(
                 "SELECT co.Name AS Name, "
@@ -957,7 +981,7 @@ public class App
      * @param column country column to group by
      * @return population breakdowns, largest total population first
      */
-    private ArrayList<PopulationBreakdown> getGroupedBreakdowns(String column)
+    private List<PopulationBreakdown> getGroupedBreakdowns(String column)
     {
         return runQuery(
                 "SELECT " + column + " AS Name, "
@@ -974,7 +998,7 @@ public class App
      *
      * @param countries the countries to print
      */
-    public void displayCountries(ArrayList<Country> countries)
+    public void displayCountries(List<Country> countries)
     {
         if (countries == null)
         {
@@ -1005,7 +1029,7 @@ public class App
      *
      * @param stats language statistics to print
      */
-    public void displayLanguageStatistics(ArrayList<LanguageStatistic> stats)
+    public void displayLanguageStatistics(List<LanguageStatistic> stats)
     {
         if (stats == null)
         {
@@ -1034,7 +1058,7 @@ public class App
      *
      * @param cities the cities to print
      */
-    public void displayCities(ArrayList<City> cities)
+    public void displayCities(List<City> cities)
     {
         if (cities == null)
         {
@@ -1065,7 +1089,7 @@ public class App
      *
      * @param capitalCities capital cities to print
      */
-    public void displayCapitalCities(ArrayList<CapitalCity> capitalCities)
+    public void displayCapitalCities(List<CapitalCity> capitalCities)
     {
         if (capitalCities == null)
         {
@@ -1114,7 +1138,7 @@ public class App
      * @param breakdowns population breakdown rows to print
      */
     public void displayPopulationBreakdowns(
-            ArrayList<PopulationBreakdown> breakdowns)
+            List<PopulationBreakdown> breakdowns)
     {
         if (breakdowns == null)
         {

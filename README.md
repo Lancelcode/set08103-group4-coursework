@@ -1,7 +1,7 @@
 # SET08103 Group 4 - Population Reporting System
 ![workflow](https://github.com/Lancelcode/set08103-group4-coursework/actions/workflows/main.yml/badge.svg?branch=develop)
 
-A Java console app that produces population reports from the MySQL `world` database: countries, cities, capital cities, population totals and language statistics (31 reports, chosen from a menu).
+A Java console app that produces population reports from the MySQL `world` database: countries, cities, capital cities, population totals and language statistics (36 options, chosen from a menu).
 
 ## Run it with Docker (easiest)
 ~~~
@@ -25,6 +25,10 @@ their attributes, methods, and relationships.
 
 [View UML Class Diagram](docs/diagrams/class-diagram.drawio.png)
 
+The deployment diagram shows GitHub Actions testing and building the app, JAR publication to GitHub Releases, and the app and MySQL containers at runtime.
+
+[View UML Deployment Diagram](docs/diagrams/deployment-diagram.png) | [Editable draw.io source](docs/diagrams/deployment-diagram.drawio)
+
 ## Known data limitations
 - In the World database, the recorded cities of **Singapore**, **Gibraltar** and **Cocos (Keeling) Islands** add up to more people than the country itself, because the figures come from different years. The city and non-city breakdown (reports 29 - 31) shows their recorded city population unchanged, their non-city population as 0, and their city percentage as 100.00% (#118).
 - The population of a district (lookup 35) is the sum of the district's **recorded cities only**, so it can be lower than the real population of the district.
@@ -36,7 +40,17 @@ their attributes, methods, and relationships.
 - [Testing Guide](docs/testing.md)
 
 ## Releases
-See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases) for the latest JAR.
+
+Every push to the `release` branch runs the tests, builds the JAR and publishes it to the `latest` GitHub Release.
+
+Every version tag pushed on `main` (for example `v1.0`) publishes its own GitHub Release with the JAR and release notes, so each version stays available.
+
+Download a JAR from [GitHub Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases). To run it you need Java 17 and Docker. From the repository folder, start the World database and run the JAR:
+
+~~~bash
+docker compose up -d mysql
+java -jar set08103-group4-jar-with-dependencies.jar
+~~~
 
 ## Badges
 [![Java](https://img.shields.io/badge/Java-17-b07219)](https://adoptium.net/)
@@ -49,3 +63,9 @@ See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases
 [![Release](https://img.shields.io/github/v/release/Lancelcode/set08103-group4-coursework?display_name=tag&label=release)](https://github.com/Lancelcode/set08103-group4-coursework/releases)
 
 We acknowledge the use of some AI to check that every target was met and to look at how the work was distributed in percentages.
+
+## Reporting a bug
+
+Found a problem? Use the [Bug report template](https://github.com/Lancelcode/set08103-group4-coursework/issues/new?template=bug_report.md) and include the steps to reproduce it, expected and actual results, and relevant error messages.
+
+See our [bug reporting and fixing process](docs/CONTRIBUTING.md#bugs) for priority, severity and the bugfix workflow.

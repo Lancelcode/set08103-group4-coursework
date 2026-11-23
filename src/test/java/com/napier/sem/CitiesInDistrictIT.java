@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,7 +22,7 @@ class CitiesInDistrictIT extends IntegrationTestBase
     @Test
     void scotlandHasFourCities()
     {
-        ArrayList<City> cities = app.getCitiesByDistrict("Scotland");
+        List<City> cities = app.getCitiesByDistrict("Scotland");
 
         assertEquals(4, cities.size());
         assertCity(cities.get(0), "Glasgow", "United Kingdom", "Scotland", 619680L);
@@ -37,7 +38,7 @@ class CitiesInDistrictIT extends IntegrationTestBase
     @Test
     void sharedDistrictNameListsEveryCountry()
     {
-        ArrayList<City> cities = app.getCitiesByDistrict("Distrito Federal");
+        List<City> cities = app.getCitiesByDistrict("Distrito Federal");
 
         assertEquals(5, cities.size());
         assertCity(cities.get(0), "Ciudad de México", "Mexico", "Distrito Federal", 8591309L);
@@ -60,7 +61,7 @@ class CitiesInDistrictIT extends IntegrationTestBase
      *
      * @param cities cities from a report
      */
-    private static void assertLargestFirst(ArrayList<City> cities)
+    private static void assertLargestFirst(List<City> cities)
     {
         for (int i = 1; i < cities.size(); i++)
         {

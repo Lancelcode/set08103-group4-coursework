@@ -30,7 +30,7 @@ class TopNCapitalCitiesWorldIT extends IntegrationTestBase
     @Test
     void nLargerThanCapitalsGivesAll()
     {
-        ArrayList<CapitalCity> capitals = app.getTopNCapitalCities(500);
+        List<CapitalCity> capitals = app.getTopNCapitalCities(500);
 
         assertEquals(232, capitals.size());
         assertLargestFirst(capitals);
@@ -52,7 +52,7 @@ class TopNCapitalCitiesWorldIT extends IntegrationTestBase
      * @param capitals capital cities from a report
      * @return their names
      */
-    private static List<String> names(ArrayList<CapitalCity> capitals)
+    private static List<String> names(List<CapitalCity> capitals)
     {
         return capitals.stream().map(capital -> capital.name).toList();
     }
@@ -62,7 +62,7 @@ class TopNCapitalCitiesWorldIT extends IntegrationTestBase
      *
      * @param capitals capital cities from a report
      */
-    private static void assertLargestFirst(ArrayList<CapitalCity> capitals)
+    private static void assertLargestFirst(List<CapitalCity> capitals)
     {
         for (int i = 1; i < capitals.size(); i++)
         {

@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -28,7 +30,7 @@ class CitiesInRegionIT extends IntegrationTestBase
     @Test
     void caribbeanIsLargestFirst()
     {
-        ArrayList<City> cities = app.getCitiesByRegion("Caribbean");
+        List<City> cities = app.getCitiesByRegion("Caribbean");
 
         assertCity(cities.get(0), "La Habana", "Cuba", "La Habana", 2256000L);
         assertCity(cities.get(1), "Santo Domingo de Guzmán", "Dominican Republic",
@@ -51,7 +53,7 @@ class CitiesInRegionIT extends IntegrationTestBase
      *
      * @param cities cities from a report
      */
-    private static void assertLargestFirst(ArrayList<City> cities)
+    private static void assertLargestFirst(List<City> cities)
     {
         for (int i = 1; i < cities.size(); i++)
         {

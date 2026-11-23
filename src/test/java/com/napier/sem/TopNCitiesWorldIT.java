@@ -30,7 +30,7 @@ class TopNCitiesWorldIT extends IntegrationTestBase
     @Test
     void nLargerThanCitiesGivesAll()
     {
-        ArrayList<City> cities = app.getTopNCities(5000);
+        List<City> cities = app.getTopNCities(5000);
 
         assertEquals(4079, cities.size());
         assertLargestFirst(cities);
@@ -52,7 +52,7 @@ class TopNCitiesWorldIT extends IntegrationTestBase
      * @param cities cities from a report
      * @return their names
      */
-    private static List<String> names(ArrayList<City> cities)
+    private static List<String> names(List<City> cities)
     {
         return cities.stream().map(city -> city.name).toList();
     }
@@ -62,7 +62,7 @@ class TopNCitiesWorldIT extends IntegrationTestBase
      *
      * @param cities cities from a report
      */
-    private static void assertLargestFirst(ArrayList<City> cities)
+    private static void assertLargestFirst(List<City> cities)
     {
         for (int i = 1; i < cities.size(); i++)
         {
