@@ -4,8 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Integration tests for the language report (US06.1).
+ */
 class LanguageReportIT extends IntegrationTestBase
 {
+    /**
+     * The report has exactly the five required languages.
+     */
     @Test
     void returnsFiveLanguages()
     {
@@ -15,6 +21,9 @@ class LanguageReportIT extends IntegrationTestBase
         assertEquals(5, statistics.size());
     }
 
+    /**
+     * Chinese speakers and percentage of the world population.
+     */
     @Test
     void chineseLanguageStatisticsAreCorrect()
     {
@@ -27,6 +36,9 @@ class LanguageReportIT extends IntegrationTestBase
         assertEquals(19.61, chinese.worldPercentage, 0.01);
     }
 
+    /**
+     * Hindi speakers and percentage of the world population.
+     */
     @Test
     void hindiLanguageStatisticsAreCorrect()
     {
@@ -39,6 +51,9 @@ class LanguageReportIT extends IntegrationTestBase
         assertEquals(6.67, hindi.worldPercentage, 0.01);
     }
 
+    /**
+     * Spanish speakers and percentage of the world population.
+     */
     @Test
     void spanishLanguageStatisticsAreCorrect()
     {
@@ -51,6 +66,9 @@ class LanguageReportIT extends IntegrationTestBase
         assertEquals(5.84, spanish.worldPercentage, 0.01);
     }
 
+    /**
+     * English speakers and percentage of the world population.
+     */
     @Test
     void englishLanguageStatisticsAreCorrect()
     {
@@ -63,6 +81,9 @@ class LanguageReportIT extends IntegrationTestBase
         assertEquals(5.71, english.worldPercentage, 0.01);
     }
 
+    /**
+     * Arabic speakers and percentage of the world population.
+     */
     @Test
     void arabicLanguageStatisticsAreCorrect()
     {

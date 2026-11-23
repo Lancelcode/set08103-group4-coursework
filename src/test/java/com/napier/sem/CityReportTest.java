@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Unit tests for the city report display.
+ */
 public class CityReportTest
 {
     /**
@@ -56,7 +59,7 @@ public class CityReportTest
             System.setOut(original);
         }
 
-        assertTrue(out.toString().contains("Name | Country | District | Population"));
+        assertTrue(squash(out.toString()).contains("| Name | Country | District | Population |"));
     }
 
     /**
@@ -91,8 +94,8 @@ public class CityReportTest
             System.setOut(original);
         }
 
-        assertTrue(out.toString().contains(
-                "Edinburgh | United Kingdom | Scotland | 450180"));
+        assertTrue(squash(out.toString()).contains(
+                "| Edinburgh | United Kingdom | Scotland | 450,180 |"));
     }
 
     /**
@@ -125,7 +128,18 @@ public class CityReportTest
             System.setOut(original);
         }
 
-        assertTrue(out.toString().contains(
-                "Edinburgh | United Kingdom | Scotland | 450180"));
+        assertTrue(squash(out.toString()).contains(
+                "| Edinburgh | United Kingdom | Scotland | 450,180 |"));
+    }
+
+    /**
+     * Collapses runs of spaces, so table padding does not affect the checks.
+     *
+     * @param text printed output
+     * @return the output with single spaces
+     */
+    private static String squash(String text)
+    {
+        return text.replaceAll(" +", " ");
     }
 }

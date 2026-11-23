@@ -5,8 +5,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Integration tests for the country reports (US01.1 - US01.6).
+ */
 class CountryReportIT extends IntegrationTestBase
 {
+    /**
+     * All countries in the world: 239 rows, largest first, China at the top.
+     */
     @Test
     void testAllCountries()
     {
@@ -28,6 +34,9 @@ class CountryReportIT extends IntegrationTestBase
         }
     }
 
+    /**
+     * A country with no capital shows N/A.
+     */
     @Test
     void testAntarcticaCapital()
     {
@@ -42,6 +51,9 @@ class CountryReportIT extends IntegrationTestBase
         assertEquals("N/A", antarctica.capital);
     }
 
+    /**
+     * Top 3 countries in the Caribbean.
+     */
     @Test
     void topThreeCountriesInCaribbean()
     {
@@ -53,6 +65,9 @@ class CountryReportIT extends IntegrationTestBase
         assertEquals("Haiti", countries.get(2).name);
     }
 
+    /**
+     * Top 10 countries in the British Islands returns the 2 that exist.
+     */
     @Test
     void topTenCountriesInBritishIslands()
     {
@@ -63,6 +78,9 @@ class CountryReportIT extends IntegrationTestBase
         assertEquals("Ireland", countries.get(1).name);
     }
 
+    /**
+     * Top 3 countries in Europe.
+     */
     @Test
     void topThreeCountriesInEurope()
     {
@@ -74,6 +92,9 @@ class CountryReportIT extends IntegrationTestBase
         assertEquals("United Kingdom", countries.get(2).name);
     }
 
+    /**
+     * N larger than the number of countries in Europe returns all 46.
+     */
     @Test
     void top100CountriesInEuropeReturns46Rows()
     {
@@ -88,6 +109,9 @@ class CountryReportIT extends IntegrationTestBase
         }
     }
 
+    /**
+     * Top 5 countries in the world.
+     */
     @Test
     void topFiveCountriesInWorld()
     {
@@ -101,6 +125,9 @@ class CountryReportIT extends IntegrationTestBase
         assertEquals("Brazil", countries.get(4).name);
     }
 
+    /**
+     * N larger than the number of countries returns all 239.
+     */
     @Test
     void top300CountriesInWorldReturns239Rows()
     {
@@ -109,6 +136,9 @@ class CountryReportIT extends IntegrationTestBase
         assertEquals(239, countries.size());
     }
 
+    /**
+     * N = 0 returns an empty list.
+     */
     @Test
     void topZeroCountriesInWorldReturnsEmptyList()
     {
@@ -118,6 +148,9 @@ class CountryReportIT extends IntegrationTestBase
         assertTrue(countries.isEmpty());
     }
 
+    /**
+     * All countries in the Caribbean: 24 rows, largest first.
+     */
     @Test
     void countriesInCaribbeanReturns24RowsLargestFirst()
     {
@@ -134,6 +167,9 @@ class CountryReportIT extends IntegrationTestBase
         }
     }
 
+    /**
+     * All countries in Europe: 46 rows, largest first.
+     */
     @Test
     void countriesInEuropeReturns46RowsLargestFirst()
     {
@@ -155,6 +191,9 @@ class CountryReportIT extends IntegrationTestBase
         }
     }
 
+    /**
+     * An unknown region returns an empty list.
+     */
     @Test
     void unknownRegionReturnsEmptyList()
     {
@@ -164,6 +203,9 @@ class CountryReportIT extends IntegrationTestBase
         assertTrue(countries.isEmpty());
     }
 
+    /**
+     * An unknown continent returns an empty list.
+     */
     @Test
     void unknownContinentReturnsEmptyList()
     {

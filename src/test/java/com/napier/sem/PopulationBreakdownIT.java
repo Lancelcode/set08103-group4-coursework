@@ -308,6 +308,9 @@ class PopulationBreakdownIT extends IntegrationTestBase
         private long population;
     }
 
+    /**
+     * Asia and Europe rows match the expected totals and percentages.
+     */
     @Test
     void asiaAndEuropeRowsMatchExpectedValues()
     {
@@ -336,6 +339,9 @@ class PopulationBreakdownIT extends IntegrationTestBase
         assertEquals(66.86, europe.getNonCityPercentage(), 0.01);
     }
 
+    /**
+     * Antarctica shows 0 population and 0.00% everywhere.
+     */
     @Test
     void antarcticaHasZeroPopulationAndPercentages()
     {
@@ -354,6 +360,9 @@ class PopulationBreakdownIT extends IntegrationTestBase
         assertEquals(0.0, antarctica.getNonCityPercentage(), 0.001);
     }
 
+    /**
+     * Eastern Asia and Caribbean rows match the expected totals and percentages.
+     */
     @Test
     void easternAsiaAndCaribbeanRowsMatchExpectedValues()
     {
@@ -385,6 +394,9 @@ class PopulationBreakdownIT extends IntegrationTestBase
         assertEquals(70.98, caribbean.getNonCityPercentage(), 0.01);
     }
 
+    /**
+     * City and non-city percentages add up to 100% for every region.
+     */
     @Test
     void regionPercentagesAddUpToOneHundred()
     {
@@ -406,6 +418,9 @@ class PopulationBreakdownIT extends IntegrationTestBase
     
     @Test
 
+    /**
+     * China and United Kingdom rows match the expected totals and percentages.
+     */
     void chinaAndUnitedKingdomRowsMatchExpectedValues()
     {
         List<PopulationBreakdown> rows = app.getCountryBreakdowns();
@@ -438,6 +453,9 @@ class PopulationBreakdownIT extends IntegrationTestBase
 
 
 
+    /**
+     * Singapore's cities add up to more than the country (see #118).
+     */
     @Test
     void singaporeCityPopulationExceedsCountryPopulation()
     {
