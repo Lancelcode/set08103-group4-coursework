@@ -93,8 +93,7 @@
                     </rulesets>
                     <printFailingErrors>true</printFailingErrors>
                     <linkXRef>false</linkXRef>
-                    <!-- Report only for now. Set to true once #240 and #243 fix the current findings. -->
-                    <failOnViolation>false</failOnViolation>
+                    <failOnViolation>true</failOnViolation>
                 </configuration>
             </plugin>
 
