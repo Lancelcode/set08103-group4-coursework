@@ -49,3 +49,9 @@ See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases
 [![Release](https://img.shields.io/github/v/release/Lancelcode/set08103-group4-coursework?display_name=tag&label=release)](https://github.com/Lancelcode/set08103-group4-coursework/releases)
 
 We acknowledge the use of some AI to check that every target was met and to look at how the work was distributed in percentages.
+
+## Reporting a bug
+
+Found a problem? Use the [Bug report template](https://github.com/Lancelcode/set08103-group4-coursework/issues/new?template=bug_report.md) and include the steps to reproduce it, expected and actual results, and relevant error messages.
+
+See our [bug reporting and fixing process](docs/CONTRIBUTING.md#bugs) for priority, severity and the bugfix workflow.
