@@ -2,6 +2,7 @@ package com.napier.sem;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 /**
  * Text menu that lets the user pick a report and enter its inputs.
@@ -77,7 +78,7 @@ public class Menu
             printOptions();
 
             String line = ask("Choose a report (0 to exit): ");
-            if (line == null || line.equals("0"))
+            if (line == null || "0".equals(line))
             {
                 return;
             }
@@ -352,7 +353,7 @@ public class Menu
      *
      * @param countries countries to print
      */
-    private void printCountries(ArrayList<Country> countries)
+    private void printCountries(List<Country> countries)
     {
         if (countries.isEmpty())
         {
@@ -368,7 +369,7 @@ public class Menu
      *
      * @param cities cities to print
      */
-    private void printCities(ArrayList<City> cities)
+    private void printCities(List<City> cities)
     {
         if (cities.isEmpty())
         {
@@ -384,7 +385,7 @@ public class Menu
      *
      * @param capitals capital cities to print
      */
-    private void printCapitals(ArrayList<CapitalCity> capitals)
+    private void printCapitals(List<CapitalCity> capitals)
     {
         if (capitals.isEmpty())
         {
@@ -400,7 +401,7 @@ public class Menu
      *
      * @param totals totals to print
      */
-    private void printTotals(ArrayList<PopulationTotal> totals)
+    private void printTotals(List<PopulationTotal> totals)
     {
         if (totals.isEmpty())
         {
@@ -419,7 +420,7 @@ public class Menu
     /**
      * Lets the user choose a city if multiple places match.
      */
-    private void printMatchingCities(ArrayList<PopulationTotal> totals)
+    private void printMatchingCities(List<PopulationTotal> totals)
     {
         if (totals.size() <= 1)
         {
@@ -455,7 +456,7 @@ public class Menu
             System.out.println("Please enter a valid number.");
         }
 
-        ArrayList<PopulationTotal> selected = new ArrayList<>();
+        List<PopulationTotal> selected = new ArrayList<>();
         selected.add(totals.get(choice - 1));
 
         printTotals(selected);

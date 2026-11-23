@@ -105,6 +105,41 @@ class AppWithoutDatabaseTest
     }
 
     /**
+     * With more than one attempt, the app retries and reports every attempt
+     * before giving up.
+     */
+    @Test
+    void connectRetriesTheGivenNumberOfTimes()
+    {
+        app.connect("no-such-host.invalid", 2, 0);
+
+        String printed = output.toString(StandardCharsets.UTF_8);
+        assertFalse(app.isConnected());
+        assertTrue(printed.contains("attempt 1 of 2"));
+        assertTrue(printed.contains("attempt 2 of 2"));
+        assertTrue(printed.contains("Could not connect to database after 2 attempts"));
+    }
+
+    /**
+     * If the thread is interrupted while waiting between attempts,
+     * the app stops retrying straight away and keeps the interrupt flag set.
+     */
+    @Test
+    void connectStopsRetryingWhenInterrupted()
+    {
+        Thread.currentThread().interrupt();
+
+        app.connect("no-such-host.invalid", 3, 1000);
+
+        // Thread.interrupted() also clears the flag, so later tests are not affected
+        assertTrue(Thread.interrupted(), "The interrupt flag should be kept");
+        String printed = output.toString(StandardCharsets.UTF_8);
+        assertFalse(app.isConnected());
+        assertFalse(printed.contains("attempt 2 of 3"), "It should not retry after an interrupt");
+        assertFalse(printed.contains("Could not connect to database after"));
+    }
+
+    /**
      * Disconnecting an app that was never connected does not throw.
      */
     @Test
@@ -121,7 +156,7 @@ class AppWithoutDatabaseTest
     @Test
     void countryReportsReturnEmptyListsWithoutDatabase()
     {
-        List<ArrayList<Country>> results = List.of(
+        List<List<Country>> results = List.of(
                 app.getCountries(),
                 app.getCountriesByContinent("Europe"),
                 app.getCountriesByRegion("Caribbean"),
@@ -140,7 +175,7 @@ class AppWithoutDatabaseTest
     @Test
     void cityReportsReturnEmptyListsWithoutDatabase()
     {
-        List<ArrayList<City>> results = List.of(
+        List<List<City>> results = List.of(
                 app.getCities(),
                 app.getCitiesByContinent("Europe"),
                 app.getCitiesByRegion("Caribbean"),
@@ -163,7 +198,7 @@ class AppWithoutDatabaseTest
     @Test
     void capitalCityReportsReturnEmptyListsWithoutDatabase()
     {
-        List<ArrayList<CapitalCity>> results = List.of(
+        List<List<CapitalCity>> results = List.of(
                 app.getCapitalCities(),
                 app.getCapitalCitiesByContinent("Europe"),
                 app.getCapitalCitiesByRegion("Caribbean"),
@@ -193,7 +228,7 @@ class AppWithoutDatabaseTest
     @Test
     void populationLookupsReturnEmptyListsWithoutDatabase()
     {
-        List<ArrayList<PopulationTotal>> results = List.of(
+        List<List<PopulationTotal>> results = List.of(
                 app.getPopulationByContinent("Europe"),
                 app.getPopulationByRegion("Caribbean"),
                 app.getPopulationByCountry("United Kingdom"),
@@ -224,7 +259,7 @@ class AppWithoutDatabaseTest
     @Test
     void populationBreakdownsReturnEmptyListsWithoutDatabase()
     {
-        List<ArrayList<PopulationBreakdown>> results = List.of(
+        List<List<PopulationBreakdown>> results = List.of(
                 app.getContinentBreakdowns(),
                 app.getRegionBreakdowns(),
                 app.getCountryBreakdowns());

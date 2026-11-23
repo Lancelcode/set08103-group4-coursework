@@ -1,99 +1,90 @@
 # Code Review 3 Evidence
 
-This page collects the main evidence for Code Review 3 so the reviewer can quickly find our testing, CI and Sprint 3 work.
+Everything the CR3 marker needs, with a link to the proof for each item. All figures are from `develop` on 3 Nov 2026, released as [v0.3](https://github.com/Lancelcode/set08103-group4-coursework/releases/tag/v0.3).
 
-## Unit Tests
+## CR3 checklist
 
-Current unit test classes include:
+| CR3 item | Evidence |
+|---|---|
+| Suitable unit tests | **57 unit tests** in 9 `*Test` classes, no database needed (see [Unit tests](#unit-tests)) |
+| Suitable integration tests | **93 integration tests** in 18 `*IT` classes against the MySQL World database. Every user story, US01.1 - US06.1, has integration tests (see [Integration tests](#integration-tests)) |
+| Tests running on GitHub Actions | Three jobs on every push: Unit tests, Integration tests, then Build and run the app, which only runs if both pass. [Latest green run on `develop`](https://github.com/Lancelcode/set08103-group4-coursework/actions/runs/41602689645). Workflow: [`.github/workflows/main.yml`](../.github/workflows/main.yml) |
+| Code coverage | **74.4% of lines** (JaCoCo, unit and integration tests). [Codecov report](https://app.codecov.io/gh/Lancelcode/set08103-group4-coursework) |
+| Kanban board in use | [Group_4 board, Sprint 3 milestone](https://github.com/users/Lancelcode/projects/1/views/1?filterQuery=milestone%3A%22Sprint%203%20-%20CR3%20(testing)%22). Every issue has an owner, priority, size, sprint and status |
+| Branch usage | `feature/*` → `develop` → `release` → `main`, every change through a reviewed pull request with passing checks. [Merged PRs in Sprint 3](https://github.com/Lancelcode/set08103-group4-coursework/pulls?q=is%3Apr+is%3Amerged+merged%3A%3E%3D2026-10-13) and the [v0.3 release](https://github.com/Lancelcode/set08103-group4-coursework/releases/tag/v0.3) |
+| Sprint evidence | [Sprint 3 notes](sprints/sprint-3.md): goal, roles, planning, status checks, review, retrospective and contribution |
+| Project requirements met | All 25 reports, 6 lookups and the language report, each proved by the tests in the [user story table](#user-stories-and-their-tests) |
 
-- [CityReportTest.java](../src/test/java/com/napier/sem/CityReportTest.java)
-- [CapitalCityReportTest.java](../src/test/java/com/napier/sem/CapitalCityReportTest.java)
-- [CountryReportTest.java](../src/test/java/com/napier/sem/CountryReportTest.java)
-- [PopulationBreakdownTest.java](../src/test/java/com/napier/sem/PopulationBreakdownTest.java)
+## Unit tests
 
-These tests check report behaviour including normal input, empty input and error cases.
+57 tests in 9 classes. Run with `mvn test` (no database).
 
-## Integration Tests
+| Class | Tests | What it covers |
+|---|---|---|
+| [`MenuTest`](../src/test/java/com/napier/sem/MenuTest.java) | 15 | Menu choices, exit, Top N prompt and validation, name prompts, duplicate city names |
+| [`AppWithoutDatabaseTest`](../src/test/java/com/napier/sem/AppWithoutDatabaseTest.java) | 10 | Every report returns an empty list and prints a message when there is no connection |
+| [`PopulationBreakdownTest`](../src/test/java/com/napier/sem/PopulationBreakdownTest.java) | 7 | City and non-city calculations, zero population, cities outnumbering the country |
+| [`LanguageReportTest`](../src/test/java/com/napier/sem/LanguageReportTest.java) | 6 | Language report display: null, empty, missing rows, format |
+| [`CountryReportTest`](../src/test/java/com/napier/sem/CountryReportTest.java) | 5 | Country report display: null, empty, null rows, `N/A` capital |
+| [`PopulationBreakdownDisplayTest`](../src/test/java/com/napier/sem/PopulationBreakdownDisplayTest.java) | 5 | Breakdown display: null, empty, null rows, percentages, zero population |
+| [`CityReportTest`](../src/test/java/com/napier/sem/CityReportTest.java) | 4 | City report display: null, empty, null rows, format |
+| [`CapitalCityReportTest`](../src/test/java/com/napier/sem/CapitalCityReportTest.java) | 4 | Capital city report display: null, empty, null rows, format |
+| [`PopulationTotalTest`](../src/test/java/com/napier/sem/PopulationTotalTest.java) | 1 | World population is held in a `long` |
 
-Current integration test classes include:
+## Integration tests
 
-- [CountryReportIT.java](../src/test/java/com/napier/sem/CountryReportIT.java)
-- [PopulationBreakdownIT.java](../src/test/java/com/napier/sem/PopulationBreakdownIT.java)
-- [IntegrationTestBase.java](../src/test/java/com/napier/sem/IntegrationTestBase.java)
+93 tests in 18 classes. Run with `docker compose up -d --wait mysql`, then `mvn verify`. Every class extends the shared [`IntegrationTestBase`](../src/test/java/com/napier/sem/IntegrationTestBase.java), which connects once per class.
 
-The integration tests use the MySQL World database.
+| Class | Tests | User stories |
+|---|---|---|
+| [`PopulationTotalIT`](../src/test/java/com/napier/sem/PopulationTotalIT.java) | 15 | US05.1 - US05.6 |
+| [`CountryReportIT`](../src/test/java/com/napier/sem/CountryReportIT.java) | 13 | US01.1 - US01.6 |
+| [`PopulationBreakdownIT`](../src/test/java/com/napier/sem/PopulationBreakdownIT.java) | 12 | US04.1 - US04.3 |
+| [`CapitalCityReportIT`](../src/test/java/com/napier/sem/CapitalCityReportIT.java) | 8 | US03.1, US03.4 - US03.6 |
+| [`LanguageReportIT`](../src/test/java/com/napier/sem/LanguageReportIT.java) | 6 | US06.1 |
+| [`CityReportIT`](../src/test/java/com/napier/sem/CityReportIT.java) | 3 | US02.1 |
+| [`CitiesInContinentIT`](../src/test/java/com/napier/sem/CitiesInContinentIT.java) | 3 | US02.2 |
+| [`CitiesInRegionIT`](../src/test/java/com/napier/sem/CitiesInRegionIT.java) | 3 | US02.3 |
+| [`CitiesInCountryIT`](../src/test/java/com/napier/sem/CitiesInCountryIT.java) | 3 | US02.4 |
+| [`CitiesInDistrictIT`](../src/test/java/com/napier/sem/CitiesInDistrictIT.java) | 3 | US02.5 |
+| [`TopNCitiesWorldIT`](../src/test/java/com/napier/sem/TopNCitiesWorldIT.java) | 3 | US02.6 |
+| [`TopNCitiesContinentIT`](../src/test/java/com/napier/sem/TopNCitiesContinentIT.java) | 3 | US02.7 |
+| [`TopNCitiesRegionIT`](../src/test/java/com/napier/sem/TopNCitiesRegionIT.java) | 3 | US02.8 |
+| [`TopNCitiesCountryIT`](../src/test/java/com/napier/sem/TopNCitiesCountryIT.java) | 3 | US02.9 |
+| [`TopNCitiesDistrictIT`](../src/test/java/com/napier/sem/TopNCitiesDistrictIT.java) | 3 | US02.10 |
+| [`CapitalCitiesInContinentIT`](../src/test/java/com/napier/sem/CapitalCitiesInContinentIT.java) | 3 | US03.2 |
+| [`CapitalCitiesInRegionIT`](../src/test/java/com/napier/sem/CapitalCitiesInRegionIT.java) | 3 | US03.3 |
+| [`TopNCapitalCitiesWorldIT`](../src/test/java/com/napier/sem/TopNCapitalCitiesWorldIT.java) | 3 | US03.4 |
 
-## Tests on GitHub Actions
+## User stories and their tests
 
-GitHub Actions runs the project tests automatically.
+Each story's acceptance criteria give the exact expected values from the World database, and the tests check those values. Full stories: [`user-stories.md`](user-stories.md).
 
-The workflow includes:
+| Area | Stories | Tested by |
+|---|---|---|
+| Country reports | US01.1 - US01.6 | `CountryReportIT` |
+| City reports | US02.1 - US02.10 | `CityReportIT`, `CitiesIn*IT`, `TopNCities*IT` |
+| Capital city reports | US03.1 - US03.6 | `CapitalCityReportIT`, `CapitalCitiesIn*IT`, `TopNCapitalCitiesWorldIT` |
+| City and non-city breakdown | US04.1 - US04.3 | `PopulationBreakdownIT`, `PopulationBreakdownTest` |
+| Population lookups | US05.1 - US05.6 | `PopulationTotalIT`, `PopulationTotalTest` |
+| Language statistics | US06.1 | `LanguageReportIT`, `LanguageReportTest` |
 
-- Unit tests
-- Integration tests
-- Build and run the application
+## Other Sprint 3 evidence
 
-[View GitHub Actions](https://github.com/Lancelcode/set08103-group4-coursework/actions)
+- [Testing guide](testing.md): how to run the tests and add new ones
+- [UML class diagram](diagrams/class-diagram.drawio.png)
+- [Use case diagram](diagrams/use-case-diagram.png) with the World database as a secondary actor (CR2 feedback)
+- [Known data limitations](../README.md#known-data-limitations) in the README
 
-## Test Coverage
+## Running order (15 minutes)
 
-Test coverage is measured as part of Sprint 3.
-
-Coverage evidence can be checked through the repository coverage work and Codecov once the latest coverage changes are merged.
-
-## Kanban / Project Board
-
-Sprint 3 work is managed using the Group 4 GitHub Project board.
-
-[View Group 4 Project Board](https://github.com/users/Lancelcode/projects/1)
-
-The team uses the following workflow:
-
-Backlog → Ready → In progress → In review → Done
-
-## Branch and Pull Request Workflow
-
-The team uses:
-
-`feature/* → develop → release → main`
-
-Work is completed on feature branches and then added to `develop` through Pull Requests and teammate reviews.
-
-[View Pull Requests](https://github.com/Lancelcode/set08103-group4-coursework/pulls)
-
-## Releases
-
-The repository uses releases to show stable versions of the project.
-
-[View Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases)
-
-## Sprint 3 Evidence
-
-Sprint 3 mainly focuses on:
-
-- Unit testing
-- Integration testing
-- GitHub Actions
-- Test coverage
-- Code quality
-- Team reviews
-
-Sprint notes can be found here:
-
-[sprint-3.md](sprints/sprint-3.md)
-
-## Suggested CR3 Review Order
-
-During the Code Review, we can show the evidence in this order:
-
-1. Sprint 3 GitHub Project board
-2. Unit tests
-3. Integration tests
-4. Successful GitHub Actions checks
-5. Test coverage
-6. Feature branches and Pull Requests
-7. Sprint 3 notes
-8. Completed project requirements
+| Time | Who | Shows |
+|---|---|---|
+| 0 - 3 min | Djiby | The Sprint 3 board, the sprint notes, a green GitHub Actions run with its three jobs, and coverage on Codecov |
+| 3 - 6 min | Julia | Unit vs integration tests using `CountryReportIT` and `CountryReportTest`, and how a story's acceptance criteria become test values |
+| 6 - 9 min | Kyle | `PopulationTotalIT` and `LanguageReportIT`, the Singapore rule (#118), the class diagram and the v0.3 release |
+| 9 - 12 min | Hassan | The display tests that found and fixed a `NullPointerException` (#120), and this evidence page |
+| 12 - 15 min | Everyone | Questions |
 
 ## My CR3 Contribution
 

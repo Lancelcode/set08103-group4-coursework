@@ -3,7 +3,7 @@ package com.napier.sem;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -17,7 +17,7 @@ class CityReportIT extends IntegrationTestBase
     @Test
     void allCitiesInWorldReturns4079RowsLargestFirst()
     {
-        ArrayList<City> cities = app.getCities();
+        List<City> cities = app.getCities();
 
         assertNotNull(cities);
         assertEquals(4079, cities.size());
@@ -57,7 +57,7 @@ class CityReportIT extends IntegrationTestBase
     @Test
     void cityRowShowsCountryNameNotCode()
     {
-        ArrayList<City> cities = app.getCities();
+        List<City> cities = app.getCities();
 
         assertNotNull(cities);
         assertFalse(cities.isEmpty());
@@ -75,7 +75,7 @@ class CityReportIT extends IntegrationTestBase
     @Test
     void accentedCityNameDisplaysCorrectly()
     {
-        ArrayList<City> cities = app.getCities();
+        List<City> cities = app.getCities();
 
         assertEquals("São Paulo", cities.get(2).name);
         assertEquals("São Paulo", cities.get(2).district);

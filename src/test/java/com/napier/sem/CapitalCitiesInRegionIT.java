@@ -29,7 +29,7 @@ class CapitalCitiesInRegionIT extends IntegrationTestBase
     @Test
     void caribbeanIsLargestFirst()
     {
-        ArrayList<CapitalCity> capitals = app.getCapitalCitiesByRegion("Caribbean");
+        List<CapitalCity> capitals = app.getCapitalCitiesByRegion("Caribbean");
 
         assertEquals(List.of("La Habana", "Santo Domingo de Guzmán", "Port-au-Prince"),
                 names(capitals).subList(0, 3));
@@ -54,7 +54,7 @@ class CapitalCitiesInRegionIT extends IntegrationTestBase
      * @param capitals capital cities from a report
      * @return their names
      */
-    private static List<String> names(ArrayList<CapitalCity> capitals)
+    private static List<String> names(List<CapitalCity> capitals)
     {
         return capitals.stream().map(capital -> capital.name).toList();
     }
@@ -64,7 +64,7 @@ class CapitalCitiesInRegionIT extends IntegrationTestBase
      *
      * @param capitals capital cities from a report
      */
-    private static void assertLargestFirst(ArrayList<CapitalCity> capitals)
+    private static void assertLargestFirst(List<CapitalCity> capitals)
     {
         for (int i = 1; i < capitals.size(); i++)
         {

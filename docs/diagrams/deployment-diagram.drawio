@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Deployment">
+    <mxGraphModel page="1" pageWidth="1600" pageHeight="1200">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="heading" value="BUILD AND PUBLICATION - GitHub Actions on push" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#dce8f4;strokeColor=#36516b;fontSize=23;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="45" y="80" width="1510" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="dev" value="&lt;&lt;device&gt;&gt;&#10;Developer workstation&#10;git push" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#eef4fa;strokeColor=#36516b;fontSize=20;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="45" y="255" width="240" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="unit" value="&lt;&lt;executionEnvironment&gt;&gt;&#10;Unit tests&#10;mvn -B test" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#eef4fa;strokeColor=#36516b;fontSize=20;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="365" y="155" width="340" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="it" value="&lt;&lt;executionEnvironment&gt;&gt;&#10;Integration tests&#10;mvn -B verify + MySQL World" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#eef4fa;strokeColor=#36516b;fontSize=20;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="365" y="285" width="340" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="pmd" value="&lt;&lt;executionEnvironment&gt;&gt;&#10;Code quality (PMD)&#10;mvn -B compile pmd:check" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#eef4fa;strokeColor=#36516b;fontSize=20;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="365" y="440" width="340" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="build" value="&lt;&lt;executionEnvironment&gt;&gt;&#10;Build and run the app&#10;Package JAR (-DskipTests)&#10;Docker Compose smoke run" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#eef4fa;strokeColor=#36516b;fontSize=20;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="830" y="235" width="310" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="release" value="&lt;&lt;artifact repository&gt;&gt;&#10;GitHub Releases&#10;latest release: executable JAR&#10;Published by build job&#10;only on release branch push" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#eef4fa;strokeColor=#36516b;fontSize=18;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="230" width="315" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;html=0;fontSize=17;strokeColor=#36516b;" edge="1" parent="1" source="dev" target="unit">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="325" y="280" />
+              <mxPoint x="325" y="202" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a2" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;html=0;fontSize=17;strokeColor=#36516b;" edge="1" parent="1" source="dev" target="it">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a3" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;html=0;fontSize=17;strokeColor=#36516b;" edge="1" parent="1" source="dev" target="pmd">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="325" y="340" />
+              <mxPoint x="325" y="487" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a4" value="must pass" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;html=0;fontSize=17;strokeColor=#36516b;" edge="1" parent="1" source="unit" target="build">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="202" />
+              <mxPoint x="760" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a5" value="must pass" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;html=0;fontSize=17;strokeColor=#36516b;" edge="1" parent="1" source="it" target="build">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a6" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;html=0;fontSize=17;strokeColor=#36516b;" edge="1" parent="1" source="build" target="release">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ciNote" value="PMD runs independently; build depends on both test jobs.&#10;All CI jobs use Ubuntu 22.04 runners and Java 17." style="rounded=0;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#36516b;fontSize=19;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="830" y="445" width="725" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="runtime" value="&lt;&lt;device&gt;&gt; Runtime host - Docker Engine / Docker Compose" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#dce8f4;strokeColor=#36516b;fontSize=23;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="45" y="590" width="1510" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="app" value="&lt;&lt;executionEnvironment&gt;&gt; app container&#10;population_app&#10;amazoncorretto:17 / Java 17&#10;&lt;&lt;artifact&gt;&gt;&#10;set08103-group4-jar-with-dependencies.jar&#10;Runs with --all" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#eef4fa;strokeColor=#36516b;fontSize=19;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="125" y="715" width="515" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="mysql" value="&lt;&lt;executionEnvironment&gt;&gt; mysql container&#10;mysql_db / mysql:8.4&#10;&lt;&lt;database&gt;&gt; world&#10;country / city / countrylanguage&#10;Host port 3306 -&gt; container port 3306" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#eef4fa;strokeColor=#36516b;fontSize=19;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="950" y="715" width="510" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="jdbc" value="JDBC / TCP 3306&#10;DB_HOST=mysql" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;html=0;fontSize=17;strokeColor=#36516b;" edge="1" parent="1" source="app" target="mysql">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="volume" value="&lt;&lt;storage&gt;&gt; mysql_data&#10;Mounted at /var/lib/mysql" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#eef4fa;strokeColor=#36516b;fontSize=20;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="985" y="1010" width="440" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="init" value="&lt;&lt;artifact&gt;&gt; ./db initialization scripts&#10;Mounted at /docker-entrypoint-initdb.d" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#eef4fa;strokeColor=#36516b;fontSize=19;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="125" y="1010" width="515" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="v" value="persistent data" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;html=0;fontSize=17;strokeColor=#36516b;" edge="1" parent="1" source="mysql" target="volume">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dbinit" value="initialize" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;html=0;fontSize=17;strokeColor=#36516b;" edge="1" parent="1" source="init" target="mysql">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="830" y="1057" />
+              <mxPoint x="830" y="865" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note" value="app waits for mysql to become healthy.&#10;Dockerfile copies the locally built target JAR." style="rounded=0;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#36516b;fontSize=18;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="125" y="915" width="515" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="foot" value="Source: docker-compose.yml, Dockerfile and .github/workflows/main.yml supplied for issue #249." style="rounded=0;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#36516b;fontSize=17;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="45" y="1130" width="1510" height="45" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -82,3 +82,42 @@ A PR with a real review is evidence of teamwork, so everyone should review at le
 
 ## Where to ask for help
 Post in the Teams chat. Nobody minds questions, and Git is easier when we learn it together.
+
+## Bugs
+
+### Reporting a bug
+Open a GitHub issue using the **Bug report** template. Include steps to reproduce, expected and actual behaviour, the environment, and relevant error messages or screenshots.
+
+Choose one priority and one severity in the template. A team member applies the matching GitHub labels; ticking a box does not apply labels automatically.
+
+### Bug labels
+Every bug uses the `bug` label, one priority label and one severity label.
+
+| Priority label | Meaning |
+|---|---|
+| `priority: high` | Needs attention first |
+| `priority: medium` | Should be scheduled soon |
+| `priority: low` | Can wait until higher-priority work is complete |
+
+| Severity label | Meaning |
+|---|---|
+| `severity: blocker` | Prevents building or running the app |
+| `severity: major` | Produces incorrect results or breaks an important feature |
+| `severity: minor` | Small issue, such as a typo or formatting problem |
+
+Priority describes urgency. Severity describes the impact of the bug.
+
+### Fixing a bug
+1. Assign the issue and move it to **In progress**.
+2. Create a branch from the latest `develop`, named `bugfix/issue-<number>-<short-name>`. For example:
+   ```text
+   git switch develop
+   git pull --ff-only origin develop
+   git switch -c bugfix/issue-300-country-output
+   ```
+3. Reproduce the problem, add a regression test where appropriate, and make the fix.
+4. Run the relevant tests and `mvn verify` with the database available.
+5. Commit the changed files by name and push the bugfix branch.
+6. Open a PR into `develop` with `Fixes #<number>` in its description, replacing `<number>` with the actual issue number.
+7. Request teammate review and move the issue to **In review**.
+8. After approval, passing checks and merge, confirm the acceptance criteria before closing the issue and moving it to **Done**.
