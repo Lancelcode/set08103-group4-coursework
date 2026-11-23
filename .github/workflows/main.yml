@@ -6,6 +6,7 @@ on: push
 #   integration-tests -> *IT classes, against the MySQL World database
 #   code-quality      -> PMD static analysis, report uploaded as an artifact
 #   build             -> packages the JAR and runs the app, only if both test jobs pass
+#   versioned-release -> on a v* tag, publishes a GitHub Release for that version with the JAR
 
 jobs:
   unit-tests:
@@ -164,3 +165,34 @@ jobs:
             --target "$GITHUB_SHA" \
             --title "Latest automated release" \
             --notes "Automated deployment from the release branch"
+
+  versioned-release:
+    name: Publish versioned release
+    needs: [build]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Package JAR with Maven
+        run: mvn -B package -DskipTests
+
+      - name: Publish the GitHub Release for this tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" target/set08103-group4-jar-with-dependencies.jar \
+            --verify-tag \
+            --title "$GITHUB_REF_NAME" \
+            --generate-notes
