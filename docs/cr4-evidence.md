@@ -46,3 +46,7 @@ Bugs logged and fixed with this process during Sprint 4:
 | #242 README report count | `priority: low`, `severity: minor` | PR #257 |
  
 Bug hunt (#245): every menu option was run in Docker, including invalid input, with no new bugs found.
+ 
+## Sprint evidence
+ 
+[Sprint 4 notes](sprints/sprint-4.md): goal, rotated roles, tasks, check-ins, review, retrospective and contribution.
