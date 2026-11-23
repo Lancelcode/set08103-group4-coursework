@@ -1,3 +1,9 @@
+---
+name: Feature request
+about: Suggest a new feature or improvement
+title: "Feature: "
+labels: enhancement
+---
 ## Feature request
 <!-- Describe the feature you would like added. -->
 
