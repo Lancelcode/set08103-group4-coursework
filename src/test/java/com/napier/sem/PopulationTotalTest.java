@@ -4,8 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Unit tests for the PopulationTotal model.
+ */
 class PopulationTotalTest
 {
+    /**
+     * The population is a long, so values above Integer.MAX_VALUE fit.
+     */
     @Test
     void storesValueLargerThanIntMax()
     {

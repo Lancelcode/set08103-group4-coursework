@@ -11,12 +11,18 @@ import java.util.List;
  */
 class PopulationTotalIT extends IntegrationTestBase
 {
+    /**
+     * Population of the world.
+     */
     @Test
     void worldPopulationIs6078749450()
     {
         assertEquals(6078749450L, app.getWorldPopulation());
     }
 
+    /**
+     * Population of Europe.
+     */
     @Test
     void europePopulationIs730074600()
     {
@@ -27,12 +33,18 @@ class PopulationTotalIT extends IntegrationTestBase
         assertEquals(730074600L, totals.get(0).population);
     }
 
+    /**
+     * An unknown continent returns no result.
+     */
     @Test
     void unknownContinentReturnsNoResult()
     {
         assertTrue(app.getPopulationByContinent("Atlantis").isEmpty());
     }
 
+    /**
+     * Population of the Caribbean.
+     */
     @Test
     void caribbeanPopulationIs38140000()
     {
@@ -43,6 +55,9 @@ class PopulationTotalIT extends IntegrationTestBase
         assertEquals(38140000L, totals.get(0).population);
     }
 
+    /**
+     * Population of the British Islands.
+     */
     @Test
     void britishIslandsPopulationIs63398500()
     {
@@ -53,6 +68,9 @@ class PopulationTotalIT extends IntegrationTestBase
         assertEquals(63398500L, totals.get(0).population);
     }
 
+    /**
+     * An unknown region returns no result.
+     */
     @Test
     void unknownRegionReturnsNoResult()
     {
@@ -60,6 +78,9 @@ class PopulationTotalIT extends IntegrationTestBase
     }
 
 
+    /**
+     * Population of the United Kingdom.
+     */
     @Test
     void unitedKingdomPopulationIs59623400()
     {
@@ -70,6 +91,9 @@ class PopulationTotalIT extends IntegrationTestBase
         assertEquals(59623400L, totals.get(0).population);
     }
 
+    /**
+     * An unknown country returns no result.
+     */
     @Test
     void unknownCountryReturnsNoResult()
     {
@@ -78,6 +102,9 @@ class PopulationTotalIT extends IntegrationTestBase
 
 
 
+    /**
+     * Population of Scotland, from its recorded cities.
+     */
     @Test
     void scotlandPopulationIs1429620()
     {
@@ -89,6 +116,9 @@ class PopulationTotalIT extends IntegrationTestBase
         assertEquals(1429620L, totals.get(0).population);
     }
 
+    /**
+     * Distrito Federal is looked up in the right country.
+     */
     @Test
     void distritoFederalPopulationIsInMexico()
     {
@@ -100,6 +130,9 @@ class PopulationTotalIT extends IntegrationTestBase
         assertTrue(totals.get(0).population > 0);
     }
 
+    /**
+     * A district in the wrong country returns no result.
+     */
     @Test
     void scotlandInFranceReturnsNoResult()
     {
@@ -108,6 +141,9 @@ class PopulationTotalIT extends IntegrationTestBase
 
 
 
+    /**
+     * Population of Edinburgh.
+     */
     @Test
     void edinburghPopulationIs450180()
     {
@@ -119,6 +155,9 @@ class PopulationTotalIT extends IntegrationTestBase
         assertEquals(450180L, totals.get(0).population);
     }
 
+    /**
+     * Hamilton in Canada, not in another country.
+     */
     @Test
     void hamiltonCanadaPopulationIs335614()
     {
@@ -130,6 +169,9 @@ class PopulationTotalIT extends IntegrationTestBase
         assertEquals(335614L, totals.get(0).population);
     }
 
+    /**
+     * Richmond in the United States matches two cities.
+     */
     @Test
     void richmondUnitedStatesReturnsTwoCities()
     {
@@ -145,6 +187,9 @@ class PopulationTotalIT extends IntegrationTestBase
                 city.population == 94100L));
     }
 
+    /**
+     * A city in the wrong country returns no result.
+     */
     @Test
     void edinburghInFranceReturnsNoResult()
     {

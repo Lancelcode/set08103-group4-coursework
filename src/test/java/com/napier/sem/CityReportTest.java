@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Unit tests for the city report display.
+ */
 public class CityReportTest
 {
     /**

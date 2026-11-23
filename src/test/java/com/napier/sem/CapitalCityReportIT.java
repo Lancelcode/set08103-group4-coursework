@@ -12,6 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class CapitalCityReportIT extends IntegrationTestBase
 {
+    /**
+     * All capital cities in the world: 232 rows, largest first.
+     */
     @Test
     void allCapitalsReturns232RowsLargestFirst()
     {
@@ -37,6 +40,9 @@ class CapitalCityReportIT extends IntegrationTestBase
         }
     }
 
+    /**
+     * The capital is matched by city ID, not by name.
+     */
     @Test
     void capitalFoundByIdNotName()
     {
@@ -51,6 +57,9 @@ class CapitalCityReportIT extends IntegrationTestBase
         }
     }
 
+    /**
+     * Top 2 capital cities in Europe.
+     */
     @Test
     void topTwoCapitalsInEurope()
     {
@@ -63,6 +72,9 @@ class CapitalCityReportIT extends IntegrationTestBase
         assertEquals("London", capitals.get(1).name);
     }
 
+    /**
+     * Top N capital cities in an unknown continent returns an empty list.
+     */
     @Test
     void topNCapitalsInUnknownContinentReturnsEmpty()
     {
@@ -73,6 +85,9 @@ class CapitalCityReportIT extends IntegrationTestBase
         assertTrue(capitals.isEmpty());
     }
 
+    /**
+     * Top 3 capital cities in the Caribbean.
+     */
     @Test
     void topThreeCapitalsInCaribbean()
     {
@@ -86,6 +101,9 @@ class CapitalCityReportIT extends IntegrationTestBase
         assertEquals("Port-au-Prince", capitals.get(2).name);
     }
 
+    /**
+     * N larger than the number of capitals in a region returns them all.
+     */
     @Test
     void topNLargerThanRegionReturnsAllCapitals()
     {
@@ -101,6 +119,9 @@ class CapitalCityReportIT extends IntegrationTestBase
         assertEquals(481854L, capitals.get(1).population);
     }
 
+    /**
+     * Top 3 capital cities in the world.
+     */
     @Test
     void topThreeCapitalsInWorld()
     {
@@ -113,6 +134,9 @@ class CapitalCityReportIT extends IntegrationTestBase
         assertEquals("Ciudad de México", capitals.get(2).name);
     }
 
+    /**
+     * N larger than the number of capitals in the world returns them all.
+     */
     @Test
     void topNLargerThanCapitalCountReturnsAll()
     {
