@@ -6,8 +6,14 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the language report display.
+ */
 class LanguageReportTest
 {
+    /**
+     * A null list does not throw.
+     */
     @Test
     void nullLanguageStatisticsDoesNotThrow()
     {
@@ -16,6 +22,9 @@ class LanguageReportTest
         assertDoesNotThrow(() -> app.displayLanguageStatistics(null));
     }
 
+    /**
+     * A null list prints a message.
+     */
     @Test
     void nullLanguageStatisticsDisplaysMessage()
     {
@@ -38,6 +47,9 @@ class LanguageReportTest
         }
     }
 
+    /**
+     * An empty list prints the table header only.
+     */
     @Test
     void emptyLanguageStatisticsDisplaysHeader()
     {
@@ -63,6 +75,9 @@ class LanguageReportTest
         }
     }
 
+    /**
+     * A null row is skipped.
+     */
     @Test
     void nullLanguageEntryIsSkipped()
     {
@@ -91,6 +106,9 @@ class LanguageReportTest
         }
     }
 
+    /**
+     * A language row shows the speakers and the percentage.
+     */
     @Test
     void chineseLanguageStatisticsDisplaysCorrectly()
     {
@@ -123,6 +141,9 @@ class LanguageReportTest
         }
     }
 
+    /**
+     * Four languages print four rows.
+     */
     @Test
     void fourLanguagesDisplayFourRows()
     {

@@ -11,11 +11,18 @@ import java.io.ByteArrayOutputStream;
 
 import java.io.PrintStream;
 
+/**
+ * Unit tests for the country report display.
+ */
 class CountryReportTest
 {
+    /** App used only for its display method. */
     private final App app = new App();
 
 
+    /**
+     * A null list prints a message instead of crashing.
+     */
     @Test
     void displayCountriesTestNull()
     {
@@ -38,6 +45,9 @@ class CountryReportTest
 
 
 
+    /**
+     * An empty list prints the table header only.
+     */
     @Test
     void displayCountriesTestEmpty()
     {
@@ -64,6 +74,9 @@ class CountryReportTest
 
 
 
+    /**
+     * A null row is skipped and the other rows still print.
+     */
     @Test
     void displayCountriesTestNullEntry()
     {
@@ -101,6 +114,9 @@ class CountryReportTest
     }
 
 
+    /**
+     * A country prints every column in the right order.
+     */
     @Test
     void displayCountriesTestNormal()
     {
@@ -133,6 +149,9 @@ class CountryReportTest
     }
 
 
+    /**
+     * A country with no capital prints N/A.
+     */
     @Test
     void displayCountriesTestNoCapital()
     {

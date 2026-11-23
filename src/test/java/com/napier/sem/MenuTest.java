@@ -70,6 +70,9 @@ class MenuTest
         }
     }
 
+    /**
+     * World and "each" reports do not ask for a name.
+     */
     @Test
     void needsNameIsFalseForWorldAndEachReports()
     {
@@ -82,6 +85,9 @@ class MenuTest
         }
     }
 
+    /**
+     * The name prompt matches the kind of place the report needs.
+     */
     @Test
     void nameLabelMatchesTheKindOfPlace()
     {
@@ -103,6 +109,9 @@ class MenuTest
         assertNull(app.lastCall);
     }
 
+    /**
+     * The menu exits cleanly when there is no input.
+     */
     @Test
     void noInputExitsWithoutError()
     {
@@ -110,6 +119,9 @@ class MenuTest
         assertNull(app.lastCall);
     }
 
+    /**
+     * A report number that does not exist shows a message.
+     */
     @Test
     void choiceOutOfRangeShowsMessage()
     {
@@ -119,6 +131,9 @@ class MenuTest
         assertNull(app.lastCall);
     }
 
+    /**
+     * Text instead of a number shows a message.
+     */
     @Test
     void textChoiceShowsMessage()
     {
@@ -206,6 +221,9 @@ class MenuTest
         assertEquals("topNCountries 5", app.lastCall);
     }
 
+    /**
+     * N must be a positive whole number.
+     */
     @Test
     void topNRejectsZeroNegativeTextAndDecimals()
     {
@@ -215,6 +233,9 @@ class MenuTest
         assertEquals("topNCountries 3", app.lastCall);
     }
 
+    /**
+     * The Top N prompt stops if the input ends.
+     */
     @Test
     void topNStopsIfInputRunsOutBeforeN()
     {
@@ -233,6 +254,9 @@ class MenuTest
         assertEquals("countriesByContinent Europe", app.lastCall);
     }
 
+    /**
+     * Top N in a district asks for the district, then N.
+     */
     @Test
     void topNDistrictAsksForDistrictThenN()
     {
@@ -243,6 +267,9 @@ class MenuTest
         assertEquals("topNCitiesByDistrict Scotland 3", app.lastCall);
     }
 
+    /**
+     * A name with no results shows a not found message.
+     */
     @Test
     void unknownNameShowsNotFoundMessage()
     {
@@ -251,6 +278,9 @@ class MenuTest
         assertTrue(printed("No countries found. Check the name is spelled correctly."));
     }
 
+    /**
+     * The city lookup asks for the city, then the country.
+     */
     @Test
     void cityPopulationAsksForCityThenCountry()
     {
@@ -261,6 +291,9 @@ class MenuTest
         assertEquals("populationByCity Edinburgh United Kingdom", app.lastCall);
     }
 
+    /**
+     * When several cities match, the user picks one.
+     */
     @Test
     void duplicateCityNamesLetTheUserChoose()
     {
