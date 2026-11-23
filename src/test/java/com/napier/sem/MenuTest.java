@@ -174,7 +174,7 @@ class MenuTest
         runMenu("7\n0\n");
 
         assertEquals("getCities", app.lastCall);
-        assertTrue(printed("Edinburgh | United Kingdom | Scotland | 450000"));
+        assertTrue(printed("Edinburgh | United Kingdom | Scotland | 450,000"));
     }
     /**
      * Checks that the menu displays a capital city when results are available.
@@ -192,7 +192,7 @@ class MenuTest
         runMenu("22\n0\n");
 
         assertEquals("getCapitalCities", app.lastCall);
-        assertTrue(printed("London | United Kingdom | 7000000"));
+        assertTrue(printed("London | United Kingdom | 7,000,000"));
     }
 
     // ---------- Top N prompt ----------
@@ -271,8 +271,8 @@ class MenuTest
 
         assertTrue(printed("Multiple cities found:"));
         assertTrue(printed("Please enter a valid number."));
-        assertTrue(printed("United States - Richmond (California) | 94100"));
-        assertFalse(printed("United States - Richmond (Virginia) | 197790"));
+        assertTrue(printed("United States - Richmond (California) | 94,100"));
+        assertFalse(printed("United States - Richmond (Virginia) | 197,790"));
     }
 
     // ---------- Missing input ----------
@@ -329,14 +329,15 @@ class MenuTest
     }
 
     /**
-     * Checks whether the menu printed some text.
+     * Checks whether the menu printed some text. Runs of spaces from table
+     * padding are collapsed first.
      *
      * @param text text to look for
      * @return true if it was printed
      */
     private boolean printed(String text)
     {
-        return output.toString(StandardCharsets.UTF_8).contains(text);
+        return output.toString(StandardCharsets.UTF_8).replaceAll(" +", " ").contains(text);
     }
 
     /**
