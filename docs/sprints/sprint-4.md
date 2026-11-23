@@ -86,7 +86,7 @@ The team agreed on these deadlines:
 
 **23 Nov 2026, during the day:** Zain opened PRs for all four bug-reporting and design issues (#258 - #261). Kyle opened #257 and #262 and posted the bug hunt results on #245.
 
-**23 Nov 2026, evening:** All open PRs were reviewed and merged, PMD was set to fail the build on any finding, and v1.0 was released through `develop` -> `release` -> `main`.
+**23 Nov 2026, evening (Teams):** With CR4 the next day and not everyone up to speed with the remaining tasks, Julia and Djiby decided to complete the rest of the work themselves: the CR4 evidence page (#239), the final Sprint 4 notes (#238) and the v1.0 release (#244). Each piece was done in its own small branch and pull request and reviewed by the other. All open PRs were then merged, the PMD job was set to fail on any new finding, and v1.0 was released through `develop` -> `release` -> `main`.
 
 ## Sprint review
 
@@ -115,6 +115,7 @@ _Written on 23 Nov 2026._
 - Some members started late and most of the work was done in the last two days, leaving little time for reviews.
 - The PRs opened on 23 Nov were not reviewed until the evening, so the 15:00 merge deadline was missed.
 - The v1.0 release was reassigned on the last day to add automated versioned releases.
+- Not everyone was up to speed with the remaining tasks on the last evening, so Julia and Djiby completed the rest of the work.
 
 ### What we would improve
 
