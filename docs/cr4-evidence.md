@@ -25,3 +25,24 @@ Everything the CR4 marker needs, with a link to the proof for each item. All fig
 | Run a release | Download the JAR, start MySQL with `docker compose up -d mysql` from the repository folder and run `java -jar set08103-group4-jar-with-dependencies.jar` ([README](../README.md#releases), #233) |
  
 The [UML deployment diagram](diagrams/deployment-diagram.png) (#249) shows the CI jobs, GitHub Releases and the app and MySQL containers.
+ 
+## Bug reporting
+ 
+| Part | Where |
+|---|---|
+| Bug report template | [`.github/ISSUE_TEMPLATE/bug_report.md`](../.github/ISSUE_TEMPLATE/bug_report.md): steps to reproduce, expected and actual result, priority and severity |
+| Feature request template | [`.github/ISSUE_TEMPLATE/feature_request.md`](../.github/ISSUE_TEMPLATE/feature_request.md) |
+| Issue chooser | [`.github/ISSUE_TEMPLATE/config.yml`](../.github/ISSUE_TEMPLATE/config.yml): blank issues are off, so every issue uses a template |
+| Labels | `bug`, `priority: high / medium / low`, `severity: blocker / major / minor` |
+| Process | [CONTRIBUTING: Bugs](CONTRIBUTING.md#bugs): report, label, `bugfix/issue-<number>-<name>` branch, regression test, PR with `Fixes #<number>` |
+| README | [Reporting a bug](../README.md#reporting-a-bug) (#248) |
+ 
+Bugs logged and fixed with this process during Sprint 4:
+ 
+| Bug | Labels | Fixed by |
+|---|---|---|
+| #231 Workflow file does not parse | `priority: high`, `severity: blocker` | PR #230 |
+| #232 `latest` release points to the old commit | `priority: high`, `severity: major` | PR #230 |
+| #242 README report count | `priority: low`, `severity: minor` | PR #257 |
+ 
+Bug hunt (#245): every menu option was run in Docker, including invalid input, with no new bugs found.
