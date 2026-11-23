@@ -6,8 +6,14 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the language report display.
+ */
 class LanguageReportTest
 {
+    /**
+     * A null list does not throw.
+     */
     @Test
     void nullLanguageStatisticsDoesNotThrow()
     {
@@ -16,6 +22,9 @@ class LanguageReportTest
         assertDoesNotThrow(() -> app.displayLanguageStatistics(null));
     }
 
+    /**
+     * A null list prints a message.
+     */
     @Test
     void nullLanguageStatisticsDisplaysMessage()
     {
@@ -38,6 +47,9 @@ class LanguageReportTest
         }
     }
 
+    /**
+     * An empty list prints the table header only.
+     */
     @Test
     void emptyLanguageStatisticsDisplaysHeader()
     {
@@ -54,8 +66,8 @@ class LanguageReportTest
 
             String result = output.toString();
 
-            assertTrue(result.contains("Language | Speakers | % of world population"));
-            assertEquals(1, result.lines().count());
+            assertTrue(squash(result).contains("| Language | Speakers | % of world population |"));
+            assertEquals(4, result.lines().count());
         }
         finally
         {
@@ -63,6 +75,9 @@ class LanguageReportTest
         }
     }
 
+    /**
+     * A null row is skipped.
+     */
     @Test
     void nullLanguageEntryIsSkipped()
     {
@@ -82,8 +97,8 @@ class LanguageReportTest
 
             String result = output.toString();
 
-            assertTrue(result.contains("Language | Speakers | % of world population"));
-            assertEquals(1, result.lines().count());
+            assertTrue(squash(result).contains("| Language | Speakers | % of world population |"));
+            assertEquals(4, result.lines().count());
         }
         finally
         {
@@ -91,6 +106,9 @@ class LanguageReportTest
         }
     }
 
+    /**
+     * A language row shows the speakers and the percentage.
+     */
     @Test
     void chineseLanguageStatisticsDisplaysCorrectly()
     {
@@ -115,7 +133,7 @@ class LanguageReportTest
 
             String result = output.toString();
 
-            assertTrue(result.contains("Chinese | 1191843539 | 19.61%"));
+            assertTrue(squash(result).contains("| Chinese | 1,191,843,539 | 19.61% |"));
         }
         finally
         {
@@ -123,6 +141,9 @@ class LanguageReportTest
         }
     }
 
+    /**
+     * Four languages print four rows.
+     */
     @Test
     void fourLanguagesDisplayFourRows()
     {
@@ -152,16 +173,27 @@ class LanguageReportTest
 
             String result = output.toString();
 
-            assertEquals(5, result.lines().count());
+            assertEquals(8, result.lines().count());
 
             for (String language : languages)
             {
-                assertTrue(result.contains(language + " | "));
+                assertTrue(squash(result).contains("| " + language + " | "));
             }
         }
         finally
         {
             System.setOut(originalOut);
         }
+    }
+
+    /**
+     * Collapses runs of spaces, so table padding does not affect the checks.
+     *
+     * @param text printed output
+     * @return the output with single spaces
+     */
+    private static String squash(String text)
+    {
+        return text.replaceAll(" +", " ");
     }
 }

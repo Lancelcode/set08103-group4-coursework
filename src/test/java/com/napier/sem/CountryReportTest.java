@@ -11,11 +11,18 @@ import java.io.ByteArrayOutputStream;
 
 import java.io.PrintStream;
 
+/**
+ * Unit tests for the country report display.
+ */
 class CountryReportTest
 {
+    /** App used only for its display method. */
     private final App app = new App();
 
 
+    /**
+     * A null list prints a message instead of crashing.
+     */
     @Test
     void displayCountriesTestNull()
     {
@@ -38,6 +45,9 @@ class CountryReportTest
 
 
 
+    /**
+     * An empty list prints the table header only.
+     */
     @Test
     void displayCountriesTestEmpty()
     {
@@ -56,14 +66,17 @@ class CountryReportTest
             System.setOut(original);
         }
 
-        assertEquals(
-                "Code | Name | Continent | Region | Population | Capital",
-                out.toString().trim());
+        assertTrue(squash(out.toString()).contains(
+                "| Code | Name | Continent | Region | Population | Capital |"));
+        assertEquals(4, out.toString().lines().count());
     }
 
 
 
 
+    /**
+     * A null row is skipped and the other rows still print.
+     */
     @Test
     void displayCountriesTestNullEntry()
     {
@@ -94,13 +107,16 @@ class CountryReportTest
 
         String output = out.toString();
 
-        assertTrue(output.contains(
-                "CHN | China | Asia | Eastern Asia | 1277558000 | Peking"));
+        assertTrue(squash(output).contains(
+                "| CHN | China | Asia | Eastern Asia | 1,277,558,000 | Peking |"));
 
-        assertEquals(2, output.lines().count());
+        assertEquals(5, output.lines().count());
     }
 
 
+    /**
+     * A country prints every column in the right order.
+     */
     @Test
     void displayCountriesTestNormal()
     {
@@ -128,11 +144,14 @@ class CountryReportTest
             System.setOut(original);
         }
 
-        assertTrue(out.toString().contains(
-                "CHN | China | Asia | Eastern Asia | 1277558000 | Peking"));
+        assertTrue(squash(out.toString()).contains(
+                "| CHN | China | Asia | Eastern Asia | 1,277,558,000 | Peking |"));
     }
 
 
+    /**
+     * A country with no capital prints N/A.
+     */
     @Test
     void displayCountriesTestNoCapital()
     {
@@ -160,10 +179,18 @@ class CountryReportTest
             System.setOut(original);
         }
 
-        assertTrue(out.toString().contains(
-                "ATA | Antarctica | Antarctica | Antarctica | 0 | N/A"));
+        assertTrue(squash(out.toString()).contains(
+                "| ATA | Antarctica | Antarctica | Antarctica | 0 | N/A |"));
     }
 
-
+    /**
+     * Collapses runs of spaces, so table padding does not affect the checks.
+     *
+     * @param text printed output
+     * @return the output with single spaces
+     */
+    private static String squash(String text)
+    {
+        return text.replaceAll(" +", " ");
+    }
 }
-

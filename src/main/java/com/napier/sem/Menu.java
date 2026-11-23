@@ -210,15 +210,17 @@ public class Menu
      */
     private void printOptions()
     {
-        System.out.println();
-        System.out.println("POPULATION REPORTS");
+        List<String[]> rows = new ArrayList<>();
 
         for (int i = 0; i < OPTIONS.length; i++)
         {
-            System.out.println((i + 1) + ". " + OPTIONS[i]);
+            rows.add(new String[] {String.format("%2d. %s", i + 1, OPTIONS[i])});
         }
 
-        System.out.println("0. Exit");
+        rows.add(new String[] {" 0. Exit"});
+
+        System.out.println();
+        TablePrinter.print(new String[] {"POPULATION REPORTS"}, rows);
     }
 
     /**
@@ -409,12 +411,14 @@ public class Menu
             return;
         }
 
-        System.out.println("Name | Population");
+        List<String[]> rows = new ArrayList<>();
 
         for (PopulationTotal total : totals)
         {
-            System.out.println(total.name + " | " + total.population);
+            rows.add(new String[] {total.name, TablePrinter.number(total.population)});
         }
+
+        TablePrinter.print(new String[] {"Name", "Population"}, rows, false, true);
     }
 
     /**

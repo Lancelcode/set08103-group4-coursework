@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.List;
 
@@ -1005,8 +1004,7 @@ public class App
             System.out.println("No countries to display");
             return;
         }
-        System.out.println(
-                "Code | Name | Continent | Region | Population | Capital");
+        List<String[]> rows = new ArrayList<>();
 
         for (Country country : countries)
         {
@@ -1014,14 +1012,14 @@ public class App
             {
                 continue;
             }
-            System.out.println(
-                    country.code + " | "
-                            + country.name + " | "
-                            + country.continent + " | "
-                            + country.region + " | "
-                            + country.population + " | "
-                            + country.capital);
+            rows.add(new String[] {
+                    country.code, country.name, country.continent, country.region,
+                    TablePrinter.number(country.population), country.capital});
         }
+
+        TablePrinter.print(
+                new String[] {"Code", "Name", "Continent", "Region", "Population", "Capital"},
+                rows, false, false, false, false, true, false);
     }
 
     /**
@@ -1037,7 +1035,7 @@ public class App
             return;
         }
 
-        System.out.println("Language | Speakers | % of world population");
+        List<String[]> rows = new ArrayList<>();
 
         for (LanguageStatistic stat : stats)
         {
@@ -1046,11 +1044,14 @@ public class App
                 continue;
             }
 
-            System.out.println(
-                    stat.language + " | "
-                            + stat.speakers + " | "
-                            + String.format("%.2f", stat.worldPercentage) + "%");
+            rows.add(new String[] {
+                    stat.language, TablePrinter.number(stat.speakers),
+                    TablePrinter.percent(stat.worldPercentage)});
         }
+
+        TablePrinter.print(
+                new String[] {"Language", "Speakers", "% of world population"},
+                rows, false, true, true);
     }
 
     /**
@@ -1066,8 +1067,7 @@ public class App
             return;
         }
 
-        System.out.println(
-                "Name | Country | District | Population");
+        List<String[]> rows = new ArrayList<>();
 
         for (City city : cities)
         {
@@ -1076,12 +1076,14 @@ public class App
                 continue;
             }
 
-            System.out.println(
-                    city.name + " | "
-                            + city.country + " | "
-                            + city.district + " | "
-                            + city.population);
+            rows.add(new String[] {
+                    city.name, city.country, city.district,
+                    TablePrinter.number(city.population)});
         }
+
+        TablePrinter.print(
+                new String[] {"Name", "Country", "District", "Population"},
+                rows, false, false, false, true);
     }
 
     /**
@@ -1097,7 +1099,7 @@ public class App
             return;
         }
 
-        System.out.println("Name | Country | Population");
+        List<String[]> rows = new ArrayList<>();
 
         for (CapitalCity capitalCity : capitalCities)
         {
@@ -1106,11 +1108,14 @@ public class App
                 continue;
             }
 
-            System.out.println(
-                    capitalCity.name + " | "
-                            + capitalCity.country + " | "
-                            + capitalCity.population);
+            rows.add(new String[] {
+                    capitalCity.name, capitalCity.country,
+                    TablePrinter.number(capitalCity.population)});
         }
+
+        TablePrinter.print(
+                new String[] {"Name", "Country", "Population"},
+                rows, false, false, true);
     }
 
     /**
@@ -1146,9 +1151,7 @@ public class App
             return;
         }
 
-        System.out.println(
-                "Name | Total Population | City Population | City % "
-                        + "| Non-city Population | Non-city %");
+        List<String[]> rows = new ArrayList<>();
 
         for (PopulationBreakdown breakdown : breakdowns)
         {
@@ -1158,14 +1161,17 @@ public class App
                 continue;
             }
 
-            System.out.printf(
-                    Locale.UK,
-                    "%s | %d | %d | %.2f%% | %d | %.2f%%%n",
+            rows.add(new String[] {
                     breakdown.name,
-                    breakdown.totalPopulation,
-                    breakdown.cityPopulation,
-                    breakdown.getCityPercentage(),
-                    breakdown.getNonCityPopulation(),
-                    breakdown.getNonCityPercentage());
+                    TablePrinter.number(breakdown.totalPopulation),
+                    TablePrinter.number(breakdown.cityPopulation),
+                    TablePrinter.percent(breakdown.getCityPercentage()),
+                    TablePrinter.number(breakdown.getNonCityPopulation()),
+                    TablePrinter.percent(breakdown.getNonCityPercentage())});
         }
+
+        TablePrinter.print(
+                new String[] {"Name", "Total Population", "City Population", "City %",
+                        "Non-city Population", "Non-city %"},
+                rows, false, true, true, true, true, true);
     }}

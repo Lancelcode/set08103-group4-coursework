@@ -99,7 +99,7 @@ class PopulationBreakdownDisplayTest
         app.displayPopulationBreakdowns(rows);
 
         assertEquals(List.of(HEADER,
-                "Europe | 730074600 | 241942813 | 33.14% | 488131787 | 66.86%"), lines());
+                "Europe | 730,074,600 | 241,942,813 | 33.14% | 488,131,787 | 66.86%"), lines());
     }
 
     /**
@@ -117,13 +117,17 @@ class PopulationBreakdownDisplayTest
     }
 
     /**
-     * Gets the printed output as separate lines.
+     * Gets the printed table rows without borders, padding or the outer bars,
+     * so a row reads like "Europe | 730,074,600 | ...".
      *
-     * @return printed lines
+     * @return printed rows
      */
     private List<String> lines()
     {
-        return output.toString(StandardCharsets.UTF_8).lines().toList();
+        return output.toString(StandardCharsets.UTF_8).lines()
+                .filter(line -> !line.startsWith("+"))
+                .map(line -> line.replaceAll(" +", " ").replaceAll("^\\| | \\|$", ""))
+                .toList();
     }
 
     /**
