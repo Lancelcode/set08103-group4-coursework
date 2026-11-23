@@ -20,7 +20,7 @@ class TopNCitiesRegionIT extends IntegrationTestBase
     @Test
     void topThreeInCaribbean()
     {
-        ArrayList<City> cities = app.getTopNCitiesByRegion("Caribbean", 3);
+        List<City> cities = app.getTopNCitiesByRegion("Caribbean", 3);
 
         assertEquals(List.of("La Habana", "Santo Domingo de Guzmán", "Port-au-Prince"),
                 names(cities));
@@ -50,7 +50,7 @@ class TopNCitiesRegionIT extends IntegrationTestBase
      * @param cities cities from a report
      * @return their names
      */
-    private static List<String> names(ArrayList<City> cities)
+    private static List<String> names(List<City> cities)
     {
         return cities.stream().map(city -> city.name).toList();
     }

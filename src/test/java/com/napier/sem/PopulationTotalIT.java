@@ -3,6 +3,7 @@ package com.napier.sem;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 /**
  * Integration tests for population lookups
@@ -19,7 +20,7 @@ class PopulationTotalIT extends IntegrationTestBase
     @Test
     void europePopulationIs730074600()
     {
-        ArrayList<PopulationTotal> totals = app.getPopulationByContinent("Europe");
+        List<PopulationTotal> totals = app.getPopulationByContinent("Europe");
 
         assertEquals(1, totals.size());
         assertEquals("Europe", totals.get(0).name);
@@ -35,7 +36,7 @@ class PopulationTotalIT extends IntegrationTestBase
     @Test
     void caribbeanPopulationIs38140000()
     {
-        ArrayList<PopulationTotal> totals = app.getPopulationByRegion("Caribbean");
+        List<PopulationTotal> totals = app.getPopulationByRegion("Caribbean");
 
         assertEquals(1, totals.size());
         assertEquals("Caribbean", totals.get(0).name);
@@ -45,7 +46,7 @@ class PopulationTotalIT extends IntegrationTestBase
     @Test
     void britishIslandsPopulationIs63398500()
     {
-        ArrayList<PopulationTotal> totals = app.getPopulationByRegion("British Islands");
+        List<PopulationTotal> totals = app.getPopulationByRegion("British Islands");
 
         assertEquals(1, totals.size());
         assertEquals("British Islands", totals.get(0).name);
@@ -62,7 +63,7 @@ class PopulationTotalIT extends IntegrationTestBase
     @Test
     void unitedKingdomPopulationIs59623400()
     {
-        ArrayList<PopulationTotal> totals = app.getPopulationByCountry("United Kingdom");
+        List<PopulationTotal> totals = app.getPopulationByCountry("United Kingdom");
 
         assertEquals(1, totals.size());
         assertEquals("United Kingdom", totals.get(0).name);
@@ -80,7 +81,7 @@ class PopulationTotalIT extends IntegrationTestBase
     @Test
     void scotlandPopulationIs1429620()
     {
-        ArrayList<PopulationTotal> totals =
+        List<PopulationTotal> totals =
                 app.getPopulationByDistrict("Scotland", "United Kingdom");
 
         assertEquals(1, totals.size());
@@ -91,7 +92,7 @@ class PopulationTotalIT extends IntegrationTestBase
     @Test
     void distritoFederalPopulationIsInMexico()
     {
-        ArrayList<PopulationTotal> totals =
+        List<PopulationTotal> totals =
                 app.getPopulationByDistrict("Distrito Federal", "Mexico");
 
         assertEquals(1, totals.size());
@@ -110,7 +111,7 @@ class PopulationTotalIT extends IntegrationTestBase
     @Test
     void edinburghPopulationIs450180()
     {
-        ArrayList<PopulationTotal> totals =
+        List<PopulationTotal> totals =
                 app.getPopulationByCity("Edinburgh", "United Kingdom");
 
         assertEquals(1, totals.size());
@@ -121,7 +122,7 @@ class PopulationTotalIT extends IntegrationTestBase
     @Test
     void hamiltonCanadaPopulationIs335614()
     {
-        ArrayList<PopulationTotal> totals =
+        List<PopulationTotal> totals =
                 app.getPopulationByCity("Hamilton", "Canada");
 
         assertEquals(1, totals.size());
@@ -132,7 +133,7 @@ class PopulationTotalIT extends IntegrationTestBase
     @Test
     void richmondUnitedStatesReturnsTwoCities()
     {
-        ArrayList<PopulationTotal> totals =
+        List<PopulationTotal> totals =
                 app.getPopulationByCity("Richmond", "United States");
 
         assertEquals(2, totals.size());

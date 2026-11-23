@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -226,7 +227,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
      * @param expected independently calculated population totals
      */
     private void checkReport(
-            ArrayList<PopulationBreakdown> rows,
+            List<PopulationBreakdown> rows,
             Map<String, long[]> expected)
     {
         Map<String, PopulationBreakdown> actual = indexReport(rows);
@@ -252,7 +253,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
      * @return report rows indexed by name
      */
     private Map<String, PopulationBreakdown> indexReport(
-            ArrayList<PopulationBreakdown> rows)
+            List<PopulationBreakdown> rows)
     {
         assertNotNull(rows);
         assertFalse(rows.isEmpty(), "Report must contain rows");
@@ -272,7 +273,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
      *
      * @param rows report ordered by descending population
      */
-    private void checkOrder(ArrayList<PopulationBreakdown> rows)
+    private void checkOrder(List<PopulationBreakdown> rows)
     {
         assertNotNull(rows);
         assertFalse(rows.isEmpty());
@@ -310,7 +311,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
     @Test
     void asiaAndEuropeRowsMatchExpectedValues()
     {
-        ArrayList<PopulationBreakdown> rows = app.getContinentBreakdowns();
+        List<PopulationBreakdown> rows = app.getContinentBreakdowns();
 
         assertEquals(7, rows.size());
 
@@ -338,7 +339,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
     @Test
     void antarcticaHasZeroPopulationAndPercentages()
     {
-        ArrayList<PopulationBreakdown> rows = app.getContinentBreakdowns();
+        List<PopulationBreakdown> rows = app.getContinentBreakdowns();
 
         PopulationBreakdown antarctica = rows.stream()
                 .filter(row -> row.name.equals("Antarctica"))
@@ -356,7 +357,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
     @Test
     void easternAsiaAndCaribbeanRowsMatchExpectedValues()
     {
-        ArrayList<PopulationBreakdown> rows = app.getRegionBreakdowns();
+        List<PopulationBreakdown> rows = app.getRegionBreakdowns();
 
         assertEquals(25, rows.size());
 
@@ -387,7 +388,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
     @Test
     void regionPercentagesAddUpToOneHundred()
     {
-        ArrayList<PopulationBreakdown> rows = app.getRegionBreakdowns();
+        List<PopulationBreakdown> rows = app.getRegionBreakdowns();
 
         for (PopulationBreakdown region : rows)
         {
@@ -407,7 +408,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
 
     void chinaAndUnitedKingdomRowsMatchExpectedValues()
     {
-        ArrayList<PopulationBreakdown> rows = app.getCountryBreakdowns();
+        List<PopulationBreakdown> rows = app.getCountryBreakdowns();
 
         assertEquals(239, rows.size());
 
@@ -440,7 +441,7 @@ class PopulationBreakdownIT extends IntegrationTestBase
     @Test
     void singaporeCityPopulationExceedsCountryPopulation()
     {
-        ArrayList<PopulationBreakdown> rows = app.getCountryBreakdowns();
+        List<PopulationBreakdown> rows = app.getCountryBreakdowns();
 
         PopulationBreakdown singapore = rows.stream()
                 .filter(row -> row.name.equals("Singapore"))
