@@ -1,9 +1,7 @@
 # Sprint 4 - CR4 (deployment)
 
-**Dates:** 19 - 24 Nov 2026
-
-**Milestone:** Sprint 4 - CR4 (deployment)
-
+**Dates:** 19 - 24 Nov 2026  
+**Milestone:** Sprint 4 - CR4 (deployment)  
 **Code Review 4:** Tuesday 24 Nov 2026
 
 ## Sprint goal
@@ -16,10 +14,10 @@ The Sprint 3 roles were rotated for Sprint 4.
 
 | Member | Sprint 3 role | Sprint 4 role | What it means |
 |---|---|---|---|
-| Julia (jkasiuk) | Product Owner | Scrum Master | Keeps the sprint organised, checks progress and reviews PRs |
+| Julia (jkasiuk) | Product Owner | Scrum Master | Keeps the sprint organised, checks progress, reviews PRs and writes the CR4 evidence page |
 | Hassan (Hasni243) | Review evidence lead | Deployment | GitHub Releases, deployment documentation and deployment fixes |
 | Kyle (Ky1eM05) | Release manager | Code quality and testing | PMD fixes in `App.java`, README fix and the bug hunt |
-| Zain (zainali-uni) | Design and diagrams lead | Bug reporting, design and CR4 evidence | Bug-reporting process, issue templates, the deployment diagram and the CR4 evidence page |
+| Zain (zainali-uni) | Design and diagrams lead | Bug reporting and design | Bug-reporting process, issue templates and the deployment diagram |
 | Djiby (Lancelcode) | Scrum Master, CI and test setup | Release manager and code quality setup | PMD in CI, versioned releases and the v1.0 release (taken over from Kyle on 23 Nov) |
 
 ## Planning
@@ -46,7 +44,7 @@ The team agreed on these deadlines:
 | #236 | Test failed connection and disconnect paths | Djiby | Done (PR #252) |
 | #237 | CR4 contribution spreadsheet and Moodle submission | Djiby | Done before CR4 |
 | #238 | Sprint 4 notes | Hassan | Done (PR #256) |
-| #239 | CR4 evidence page | Zain | Done (taken over from Julia) |
+| #239 | CR4 evidence page | Julia | Done |
 | #240 | Fix PMD findings in Menu and the model classes | Julia | Done (PR #254) |
 | #241 | Unit tests for `Menu.runAll` and uncovered Menu branches | Julia | Done (PR #253) |
 | #242 | Bug: README report count | Kyle | Done (PR #257), corrected to 36 menu options |
