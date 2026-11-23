@@ -34,9 +34,21 @@ their attributes, methods, and relationships.
 - [Sprint notes](docs/sprints/)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Testing Guide](docs/testing.md)
-
+  
 ## Releases
-See [Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases) for the latest JAR.
+
+Pushing changes to the `release` branch runs the GitHub Actions workflow, which runs the tests, builds the application JAR and automatically publishes it to the `latest` GitHub Release.
+
+The latest JAR can be downloaded from [GitHub Releases](https://github.com/Lancelcode/set08103-group4-coursework/releases).
+
+To run the downloaded JAR with the MySQL World database:
+
+~~~bash
+docker compose up -d mysql
+java -jar set08103-group4-jar-with-dependencies.jar
+~~~
+
+Versioned releases such as `v0.1`, `v0.2`, `v0.3` and `v1.0` are created by the release manager.
 
 ## Badges
 [![Java](https://img.shields.io/badge/Java-17-b07219)](https://adoptium.net/)
