@@ -156,7 +156,7 @@ class AppWithoutDatabaseTest
     @Test
     void countryReportsReturnEmptyListsWithoutDatabase()
     {
-        List<ArrayList<Country>> results = List.of(
+        List<List<Country>> results = List.of(
                 app.getCountries(),
                 app.getCountriesByContinent("Europe"),
                 app.getCountriesByRegion("Caribbean"),
@@ -175,7 +175,7 @@ class AppWithoutDatabaseTest
     @Test
     void cityReportsReturnEmptyListsWithoutDatabase()
     {
-        List<ArrayList<City>> results = List.of(
+        List<List<City>> results = List.of(
                 app.getCities(),
                 app.getCitiesByContinent("Europe"),
                 app.getCitiesByRegion("Caribbean"),
@@ -198,7 +198,7 @@ class AppWithoutDatabaseTest
     @Test
     void capitalCityReportsReturnEmptyListsWithoutDatabase()
     {
-        List<ArrayList<CapitalCity>> results = List.of(
+        List<List<CapitalCity>> results = List.of(
                 app.getCapitalCities(),
                 app.getCapitalCitiesByContinent("Europe"),
                 app.getCapitalCitiesByRegion("Caribbean"),
@@ -228,7 +228,7 @@ class AppWithoutDatabaseTest
     @Test
     void populationLookupsReturnEmptyListsWithoutDatabase()
     {
-        List<ArrayList<PopulationTotal>> results = List.of(
+        List<List<PopulationTotal>> results = List.of(
                 app.getPopulationByContinent("Europe"),
                 app.getPopulationByRegion("Caribbean"),
                 app.getPopulationByCountry("United Kingdom"),
@@ -259,7 +259,7 @@ class AppWithoutDatabaseTest
     @Test
     void populationBreakdownsReturnEmptyListsWithoutDatabase()
     {
-        List<ArrayList<PopulationBreakdown>> results = List.of(
+        List<List<PopulationBreakdown>> results = List.of(
                 app.getContinentBreakdowns(),
                 app.getRegionBreakdowns(),
                 app.getCountryBreakdowns());

@@ -30,7 +30,7 @@ class TopNCitiesDistrictIT extends IntegrationTestBase
     @Test
     void nLargerThanDistrictGivesAll()
     {
-        ArrayList<City> cities = app.getTopNCitiesByDistrict("Scotland", 10);
+        List<City> cities = app.getTopNCitiesByDistrict("Scotland", 10);
 
         assertEquals(List.of("Glasgow", "Edinburgh", "Aberdeen", "Dundee"), names(cities));
         assertLargestFirst(cities);
@@ -51,7 +51,7 @@ class TopNCitiesDistrictIT extends IntegrationTestBase
      * @param cities cities from a report
      * @return their names
      */
-    private static List<String> names(ArrayList<City> cities)
+    private static List<String> names(List<City> cities)
     {
         return cities.stream().map(city -> city.name).toList();
     }
@@ -61,7 +61,7 @@ class TopNCitiesDistrictIT extends IntegrationTestBase
      *
      * @param cities cities from a report
      */
-    private static void assertLargestFirst(ArrayList<City> cities)
+    private static void assertLargestFirst(List<City> cities)
     {
         for (int i = 1; i < cities.size(); i++)
         {

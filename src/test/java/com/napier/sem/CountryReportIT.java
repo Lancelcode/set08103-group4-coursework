@@ -3,13 +3,14 @@ package com.napier.sem;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
+import java.util.List;
 
 class CountryReportIT extends IntegrationTestBase
 {
     @Test
     void testAllCountries()
     {
-        ArrayList<Country> countries = app.getCountries();
+        List<Country> countries = app.getCountries();
 
         assertNotNull(countries);
         assertEquals(239, countries.size());
@@ -30,7 +31,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void testAntarcticaCapital()
     {
-        ArrayList<Country> countries = app.getCountries();
+        List<Country> countries = app.getCountries();
 
         Country antarctica = countries.stream()
                 .filter(c -> c.code.equals("ATA"))
@@ -44,7 +45,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void topThreeCountriesInCaribbean()
     {
-        ArrayList<Country> countries = app.getTopNCountriesByRegion("Caribbean", 3);
+        List<Country> countries = app.getTopNCountriesByRegion("Caribbean", 3);
 
         assertEquals(3, countries.size());
         assertEquals("Cuba", countries.get(0).name);
@@ -55,7 +56,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void topTenCountriesInBritishIslands()
     {
-        ArrayList<Country> countries = app.getTopNCountriesByRegion("British Islands", 10);
+        List<Country> countries = app.getTopNCountriesByRegion("British Islands", 10);
 
         assertEquals(2, countries.size());
         assertEquals("United Kingdom", countries.get(0).name);
@@ -65,7 +66,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void topThreeCountriesInEurope()
     {
-        ArrayList<Country> countries = app.getTopNCountriesByContinent("Europe", 3);
+        List<Country> countries = app.getTopNCountriesByContinent("Europe", 3);
 
         assertEquals(3, countries.size());
         assertEquals("Russian Federation", countries.get(0).name);
@@ -76,7 +77,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void top100CountriesInEuropeReturns46Rows()
     {
-        ArrayList<Country> countries = app.getTopNCountriesByContinent("Europe", 100);
+        List<Country> countries = app.getTopNCountriesByContinent("Europe", 100);
 
         assertNotNull(countries);
         assertEquals(46, countries.size());
@@ -90,7 +91,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void topFiveCountriesInWorld()
     {
-        ArrayList<Country> countries = app.getTopNCountries(5);
+        List<Country> countries = app.getTopNCountries(5);
 
         assertEquals(5, countries.size());
         assertEquals("China", countries.get(0).name);
@@ -103,7 +104,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void top300CountriesInWorldReturns239Rows()
     {
-        ArrayList<Country> countries = app.getTopNCountries(300);
+        List<Country> countries = app.getTopNCountries(300);
 
         assertEquals(239, countries.size());
     }
@@ -111,7 +112,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void topZeroCountriesInWorldReturnsEmptyList()
     {
-        ArrayList<Country> countries = app.getTopNCountries(0);
+        List<Country> countries = app.getTopNCountries(0);
 
         assertNotNull(countries);
         assertTrue(countries.isEmpty());
@@ -120,7 +121,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void countriesInCaribbeanReturns24RowsLargestFirst()
     {
-        ArrayList<Country> countries = app.getCountriesByRegion("Caribbean");
+        List<Country> countries = app.getCountriesByRegion("Caribbean");
 
         assertEquals(24, countries.size());
         assertEquals("Cuba", countries.get(0).name);
@@ -136,7 +137,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void countriesInEuropeReturns46RowsLargestFirst()
     {
-        ArrayList<Country> countries = app.getCountriesByContinent("Europe");
+        List<Country> countries = app.getCountriesByContinent("Europe");
 
         assertEquals(46, countries.size());
         assertEquals("Russian Federation", countries.get(0).name);
@@ -157,7 +158,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void unknownRegionReturnsEmptyList()
     {
-        ArrayList<Country> countries = app.getCountriesByRegion("Atlantis");
+        List<Country> countries = app.getCountriesByRegion("Atlantis");
 
         assertNotNull(countries);
         assertTrue(countries.isEmpty());
@@ -166,7 +167,7 @@ class CountryReportIT extends IntegrationTestBase
     @Test
     void unknownContinentReturnsEmptyList()
     {
-        ArrayList<Country> countries = app.getCountriesByContinent("Atlantis");
+        List<Country> countries = app.getCountriesByContinent("Atlantis");
 
         assertNotNull(countries);
         assertTrue(countries.isEmpty());
