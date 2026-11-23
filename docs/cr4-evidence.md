@@ -50,3 +50,14 @@ Bug hunt (#245): every menu option was run in Docker, including invalid input, w
 ## Sprint evidence
  
 [Sprint 4 notes](sprints/sprint-4.md): goal, rotated roles, tasks, check-ins, review, retrospective and contribution.
+ 
+## Running order (15 minutes)
+ 
+| Time | Who | Shows |
+|---|---|---|
+| 0 - 1 min | Djiby | The Sprint 4 board and this page |
+| 1 - 4 min | Hassan | The deployment workflow, the `latest` release and the deployment README |
+| 4 - 7 min | Zain | The issue templates, labels, the bug process in CONTRIBUTING and the deployment diagram |
+| 7 - 10 min | Kyle | PMD at 0 findings, the `App.java` fixes and the bug hunt |
+| 10 - 12 min | Julia | The green CI run, the tests and coverage, and the Sprint 4 notes |
+| 12 - 15 min | Everyone | Questions |
