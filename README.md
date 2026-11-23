@@ -25,6 +25,10 @@ their attributes, methods, and relationships.
 
 [View UML Class Diagram](docs/diagrams/class-diagram.drawio.png)
 
+The deployment diagram shows GitHub Actions testing and building the app, JAR publication to GitHub Releases, and the app and MySQL containers at runtime.
+
+[View UML Deployment Diagram](docs/diagrams/deployment-diagram.png) | [Editable draw.io source](docs/diagrams/deployment-diagram.drawio)
+
 ## Known data limitations
 - In the World database, the recorded cities of **Singapore**, **Gibraltar** and **Cocos (Keeling) Islands** add up to more people than the country itself, because the figures come from different years. The city and non-city breakdown (reports 29 - 31) shows their recorded city population unchanged, their non-city population as 0, and their city percentage as 100.00% (#118).
 - The population of a district (lookup 35) is the sum of the district's **recorded cities only**, so it can be lower than the real population of the district.
