@@ -1,0 +1,17 @@
+# Code Review 4 Evidence
+ 
+Everything the CR4 marker needs, with a link to the proof for each item. All figures are from `develop` on 23 Nov 2026, released as [v1.0](https://github.com/Lancelcode/set08103-group4-coursework/releases/tag/v1.0).
+ 
+## CR4 checklist
+ 
+| CR4 item | Evidence |
+|---|---|
+| Deployment working | Every push to `release` tests, builds and publishes the JAR to the [`latest` release](https://github.com/Lancelcode/set08103-group4-coursework/releases/tag/latest) (#229). Every version tag on `main` publishes its own release with the JAR and notes, for example [v1.0](https://github.com/Lancelcode/set08103-group4-coursework/releases/tag/v1.0) (#244). See [Deployment](#deployment) |
+| Bug reporting set up | [Issue templates](https://github.com/Lancelcode/set08103-group4-coursework/issues/new/choose) for bugs and feature requests (#246), priority and severity labels, and the [bugfix process](CONTRIBUTING.md#bugs) (#247). See [Bug reporting](#bug-reporting) |
+| GitHub metrics | [Merged PRs in Sprint 4](https://github.com/Lancelcode/set08103-group4-coursework/pulls?q=is%3Apr+is%3Amerged+merged%3A%3E%3D2026-11-19), one issue per task, every member with merged PRs |
+| Code quality and comments | PMD runs on every push (#234). All findings were fixed (#240, #243) and the PMD job now fails on any new finding. Public methods have Javadoc comments |
+| Branch usage | `feature/*`, `bugfix/*` and `docs/*` -> `develop` -> `release` -> `main`. `main`, `develop` and `release` are protected: every change needs a pull request, one approval and passing checks |
+| CI working | Four jobs on every push: Unit tests, Integration tests, Code quality (PMD), then Build and run the app. [Runs on `main`](https://github.com/Lancelcode/set08103-group4-coursework/actions?query=branch%3Amain). Workflow: [`.github/workflows/main.yml`](../.github/workflows/main.yml) |
+| Kanban in use | [Group_4 board, Sprint 4 milestone](https://github.com/users/Lancelcode/projects/1/views/1?filterQuery=milestone%3A%22Sprint%204%20-%20CR4%20(deployment)%22). Every issue has an owner, labels and a status |
+| Unit test quality and coverage | **70 unit tests** in 10 classes and **93 integration tests** in 18 classes. Sprint 4 added tests for the connection retry and disconnect paths (#236) and the uncovered Menu branches (#241). [Codecov report](https://app.codecov.io/gh/Lancelcode/set08103-group4-coursework) |
+| Requirements met | All 25 reports, 6 lookups and the language report, each tested against the World database (see the [CR3 evidence](cr3-evidence.md#user-stories-and-their-tests)) |
