@@ -129,9 +129,9 @@ _Based on GitHub activity up to 23 Nov 2026._
 
 | Member | GitHub | Sprint 4 contribution | CR4 % |
 |---|---|---|---|
-| Djiby Sow Rebollo | Lancelcode | Sprint planning and all 20 issues, PMD in CI (#234), DB credentials (#235), connection tests (#236), versioned releases and v1.0 (#244), contribution and Moodle (#237), completed the remaining work with Julia, reviewed and merged the final PRs | 26 |
-| Hassan | Hasni243 | Automated deployment (#229) and its bug fixes (#231, #232), deployment README (#233), Sprint 4 notes (#238) | 20 |
-| Kyle | Ky1eM05 | All PMD findings in `App.java` and Menu with 18 test classes updated (#243), README count (#242), bug hunt (#245) | 18 |
-| Zain | zainali-uni | Feature request template and issue config (#246), bug process (#247), README bug section (#248), UML deployment diagram (#249) | 18 |
-| Julia | jkasiuk | Scrum Master, PMD fixes in Menu (#240), Menu coverage tests (#241), CR4 evidence page (#239), completed the remaining work with Djiby and approved the release PRs | 18 |
+| Djiby Sow Rebollo | Lancelcode | Sprint planning and all 20 issues, PMD in CI (#234), DB credentials (#235), connection tests (#236), versioned releases and v1.0 (#244), contribution and Moodle (#237), completed the remaining work with Julia, reviewed and merged the final PRs | 30 |
+| Hassan | Hasni243 | Automated deployment (#229) and its bug fixes (#231, #232), deployment README (#233), Sprint 4 notes (#238) | 17 |
+| Kyle | Ky1eM05 | All PMD findings in `App.java` and Menu with 18 test classes updated (#243), README count (#242), bug hunt (#245) | 14 |
+| Zain | zainali-uni | Feature request template and issue config (#246), bug process (#247), README bug section (#248), UML deployment diagram (#249) | 17 |
+| Julia | jkasiuk | Scrum Master, PMD fixes in Menu (#240), Menu coverage tests (#241), CR4 evidence page (#239), completed the remaining work with Djiby and approved the release PRs | 22 |
 | **Total** | | | **100** |
